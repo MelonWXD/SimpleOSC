@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SimpleOSC</string>
+
+    <string name="nav_string_news">综合</string>
+    <string name="nav_string_tweet">动弹</string>
+    <string name="nav_string_discover">发现</string>
+    <string name="nav_string_my">我的</string>
 </resources>

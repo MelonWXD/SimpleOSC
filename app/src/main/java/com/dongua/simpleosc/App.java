@@ -4,6 +4,11 @@ import android.app.Application;
 import android.content.Context;
 
 
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.FormatStrategy;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
+
 import org.greenrobot.greendao.database.Database;
 
 /**
@@ -28,11 +33,19 @@ public class App extends Application {
 //        setupDatabase(this);
 
 
+        initLog();
+
+
 
 
     }
 
-
+    private void initLog() {
+        FormatStrategy formatStrategy = PrettyFormatStrategy.newBuilder()
+                .tag("WXD")   // (Optional) Global tag for every log. Default PRETTY_LOGGER
+                .build();
+        Logger.addLogAdapter(new AndroidLogAdapter(formatStrategy));
+    }
 
 
 //
