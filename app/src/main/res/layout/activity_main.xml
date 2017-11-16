@@ -8,14 +8,13 @@
 
 
 
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bnv_main"
+    <com.ashokvarma.bottomnavigation.BottomNavigationBar
+        android:id="@+id/bnb_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/menu_nav_main">
+        android:layout_alignParentBottom="true">
 
-    </android.support.design.widget.BottomNavigationView>
+    </com.ashokvarma.bottomnavigation.BottomNavigationBar>
+
 
 </RelativeLayout>

@@ -5,4 +5,5 @@
     <string name="nav_string_tweet">动弹</string>
     <string name="nav_string_discover">发现</string>
     <string name="nav_string_my">我的</string>
+    <string name="nav_string_pub">发布</string>
 </resources>

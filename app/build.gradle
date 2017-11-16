@@ -39,6 +39,8 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.2'
     //log
     compile 'com.orhanobut:logger:2.1.1'
+    //nav bar
+    compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.3'
 
     implementation 'com.android.support:design:26.1.0'
     compile'com.android.support:support-v4:26.1.0'
