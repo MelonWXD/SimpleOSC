@@ -37,6 +37,7 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
     //greendao
     compile 'org.greenrobot:greendao:3.2.2'
+
     //log
     compile 'com.orhanobut:logger:2.1.1'
     //nav bar

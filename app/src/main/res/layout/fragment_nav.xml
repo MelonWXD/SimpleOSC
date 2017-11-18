@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/lay_48">
+
+    <com.dongua.simpleosc.nav.NavigationItem
+        android:id="@+id/nav_item_news"
+        style="@style/BottomNavItem" />
+
+    <com.dongua.simpleosc.nav.NavigationItem
+        android:id="@+id/nav_item_tweet"
+        style="@style/BottomNavItem" />
+
+    <ImageView
+        android:id="@+id/nav_item_pub"
+        style="@style/BottomNavItem"
+        android:padding="2dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_nav_add_actived" />
+
+    <com.dongua.simpleosc.nav.NavigationItem
+        android:id="@+id/nav_item_discover"
+        style="@style/BottomNavItem" />
+
+    <com.dongua.simpleosc.nav.NavigationItem
+        android:id="@+id/nav_item_me"
+        style="@style/BottomNavItem" />
+
+</LinearLayout>
