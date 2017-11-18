@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.dongua.simpleosc.base.BaseView;
+import com.orhanobut.logger.Logger;
+
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -14,7 +16,7 @@ import butterknife.Unbinder;
  * Created by duoyi on 17-11-15.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseView{
+public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
     private Unbinder mUnbinder;
 
@@ -25,18 +27,19 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
         mUnbinder = ButterKnife.bind(this);
 
+        Logger.d("onCreate");
 
         init(savedInstanceState);
         initView();
         initData();
     }
 
-    protected void init(Bundle savedInstanceState){
+    protected void init(Bundle savedInstanceState) {
 
     }
 
 
-    protected abstract int getLayoutID() ;
+    protected abstract int getLayoutID();
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -46,9 +49,18 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mUnbinder.unbind();
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+        }
+        Logger.d("onDestroy");
+
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        Logger.d("onSaveInstanceState");
+    }
 
     protected void initView() {
 

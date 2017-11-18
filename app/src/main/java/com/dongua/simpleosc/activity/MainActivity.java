@@ -1,18 +1,20 @@
 package com.dongua.simpleosc.activity;
 
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.FrameLayout;
 
-import com.ashokvarma.bottomnavigation.BottomNavigationBar;
-import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.fragment.BaseFragment;
+import com.dongua.simpleosc.fragment.DiscoverFragment;
+import com.dongua.simpleosc.fragment.MeFragment;
+import com.dongua.simpleosc.fragment.NewsFragment;
+import com.dongua.simpleosc.fragment.TweetFragment;
 import com.dongua.simpleosc.nav.BottomNavFragment;
-import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -30,8 +32,17 @@ public class MainActivity extends BaseActivity {
 
     @BindView(R.id.main_container)
     FrameLayout mMainContainer;
-//    @BindView(R.id.fag_nav)
+
     BottomNavFragment mBottomNavFragment;
+
+    private int mTabPostion = 0;
+
+    private NewsFragment mNewsFragment;
+    private TweetFragment mTweetFragment;
+    private DiscoverFragment mDiscoverFragment;
+    private MeFragment mMeFragment;
+    List<Fragment> mFragmentList = new ArrayList<>();
+
     @Override
     protected int getLayoutID() {
         return R.layout.activity_main;
@@ -45,11 +56,51 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void init(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            mTabPostion = savedInstanceState.getInt("Pos", 0);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("Pos", mBottomNavFragment.getPostion());
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        super.onAttachFragment(fragment);
+        if (fragment instanceof BottomNavFragment) {
+            mBottomNavFragment = (BottomNavFragment) fragment;
+        }else {
+            mFragmentList.add(fragment);
+        }
+//        if (fragment instanceof NewsFragment)
+//            mNewsFragment = (NewsFragment) fragment;
+//
+//        else if (fragment instanceof TweetFragment) {
+//            mTweetFragment = (TweetFragment) fragment;
+//
+//        } else if (fragment instanceof DiscoverFragment) {
+//            mDiscoverFragment = (DiscoverFragment) fragment;
+//
+//        } else if (fragment instanceof MeFragment) {
+//            mMeFragment = (MeFragment) fragment;
+//
+//        }else if (fragment instanceof BottomNavFragment) {
+//            mBottomNavFragment = (BottomNavFragment) fragment;
+//        }
+    }
+
+    @Override
     protected void initView() {
         FragmentManager manager = getSupportFragmentManager();
-        mBottomNavFragment = (BottomNavFragment)manager.findFragmentById(R.id.fag_nav);
-        mBottomNavFragment.setup(this,manager,R.id.main_container);
-
+        if (mBottomNavFragment == null) {
+            mBottomNavFragment = (BottomNavFragment) manager.findFragmentById(R.id.fag_nav);
+        }
+        mBottomNavFragment.setFragments(mFragmentList);
+        mBottomNavFragment.setup(this, manager, R.id.main_container, mTabPostion);
 
 
 //        mNavNews = new BottomNavigationItem(R.mipmap.ic_nav_news_normal,this.getString(R.string.nav_string_news));

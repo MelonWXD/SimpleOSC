@@ -11,8 +11,14 @@
         android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/fag_nav"/>
+        android:layout_above="@id/line"/>
 
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/gray"
+        android:layout_above="@id/fag_nav"/>
     <fragment
         android:id="@+id/fag_nav"
         android:name="com.dongua.simpleosc.nav.BottomNavFragment"

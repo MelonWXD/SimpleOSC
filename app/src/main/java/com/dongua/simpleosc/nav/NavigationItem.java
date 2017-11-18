@@ -31,7 +31,7 @@ public class NavigationItem extends FrameLayout {
 
     private Class mClass;
     private String mTag;
-
+    private Fragment mFragment;
 
 
     private int mType = TYPE_NORMAL;
@@ -90,4 +90,19 @@ public class NavigationItem extends FrameLayout {
     }
 
 
+    public Class getClx() {
+        return mClass;
+    }
+
+    public void setClx(Class mClass) {
+        this.mClass = mClass;
+    }
+
+    public Fragment getFragment() {
+        return mFragment;
+    }
+
+    public void setFragment(Fragment mFragment) {
+        this.mFragment = mFragment;
+    }
 }

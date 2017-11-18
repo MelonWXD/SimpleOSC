@@ -1,13 +1,23 @@
 package com.dongua.simpleosc.nav;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.fragment.BaseFragment;
+import com.dongua.simpleosc.fragment.DiscoverFragment;
+import com.dongua.simpleosc.fragment.MeFragment;
+import com.dongua.simpleosc.fragment.NewsFragment;
+import com.dongua.simpleosc.fragment.TweetFragment;
+import com.dongua.simpleosc.nav.NavigationItem;
 import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,6 +45,7 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
     private FragmentManager mFragmentManager;
     private NavigationItem mCurrentNavItem;
 
+    private List<NavigationItem> mNavItemList = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -44,10 +55,35 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        mNavNews.init(R.drawable.tab_news_selector, R.string.nav_string_news,NewsFragment.class);
-        mNavTweet.init(R.drawable.tab_tweet_selector, R.string.nav_string_tweet,TweetFragment.class);
-        mNavDiscover.init(R.drawable.tab_discover_selector, R.string.nav_string_discover,DiscoverFragment.class);
-        mNavMe.init(R.drawable.tab_me_selector, R.string.nav_string_me,MeFragment.class);
+        mNavNews.init(R.drawable.tab_news_selector, R.string.nav_string_news, NewsFragment.class);
+        mNavTweet.init(R.drawable.tab_tweet_selector, R.string.nav_string_tweet, TweetFragment.class);
+        mNavDiscover.init(R.drawable.tab_discover_selector, R.string.nav_string_discover, DiscoverFragment.class);
+        mNavMe.init(R.drawable.tab_me_selector, R.string.nav_string_me, MeFragment.class);
+
+
+        mNavItemList.add(mNavNews);
+        mNavItemList.add(mNavTweet);
+        mNavItemList.add(mNavDiscover);
+        mNavItemList.add(mNavMe);
+
+    }
+
+
+    public void setFragments(List<Fragment> mFragmentList) {
+        for (Fragment fragment : mFragmentList){
+            setFragment(fragment);
+        }
+    }
+    public void setFragment(Fragment fragment) {
+        if (fragment instanceof NewsFragment)
+            mNavNews.setFragment(fragment);
+        else if (fragment instanceof TweetFragment) {
+            mNavTweet.setFragment(fragment);
+        } else if (fragment instanceof DiscoverFragment) {
+            mNavDiscover.setFragment(fragment);
+        } else if (fragment instanceof MeFragment) {
+            mNavMe.setFragment(fragment);
+        }
     }
 
     @OnClick({R.id.nav_item_pub, R.id.nav_item_news, R.id.nav_item_tweet,
@@ -55,24 +91,83 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void onClick(View view) {
         if (view instanceof NavigationItem) {
-            NavItemClick((NavigationItem)view);
+            NavItemSelect((NavigationItem) view);
         } else {
             PubItemClick();
         }
     }
 
-    private void NavItemClick(NavigationItem item) {
-        Logger.d(item.getTag());
+    private void NavItemSelect(NavigationItem newNavItem) {
+        NavigationItem oldNavItem = null;
+        if (mCurrentNavItem != null) {
+            oldNavItem = mCurrentNavItem;
+            if (oldNavItem == newNavItem) {
+                onReselect(oldNavItem);
+                return;
+            }
+            oldNavItem.setSelected(false);
+        }
+        newNavItem.setSelected(true);
+        mCurrentNavItem = newNavItem;
+        doTabChanged(oldNavItem, newNavItem);
+
+//        Logger.d(newNavItem.getTag());
     }
+
+    private void onReselect(NavigationItem oldNavItem) {
+        Logger.d(null);
+    }
+
+    private void doTabChanged(NavigationItem oldNavItem, NavigationItem newNavItem) {
+        FragmentTransaction ft = mFragmentManager.beginTransaction();
+        if (oldNavItem != null) {
+            if (oldNavItem.getFragment() != null) {
+                ft.detach(oldNavItem.getFragment());
+            }
+        }
+        if (newNavItem != null) {
+            if (newNavItem.getFragment() == null) {
+                Fragment fragment = Fragment.instantiate(mContext, newNavItem.getTag(), null);
+                fragment.setRetainInstance(true);
+                ft.add(mContainerId, fragment, newNavItem.getTag());
+                newNavItem.setFragment(fragment);
+            } else {
+                ft.attach(newNavItem.getFragment());
+            }
+        }
+        ft.commit();
+    }
+
 
     private void PubItemClick() {
     }
 
 
+    public void setup(Context context, FragmentManager manager, int main_container_id, int postion) {
+        mContext = context;
+        mFragmentManager = manager;
+        mContainerId = main_container_id;
+
+
+        NavItemSelect(mNavItemList.get(postion));
+//        if (postion >= 0) {
+//            NavItemSelect(mNavItemList.get(postion));
+//        } else {
+//            NavItemSelect(mNavNews);
+//        }
+    }
 
     public void setup(Context context, FragmentManager manager, int main_container_id) {
         mContext = context;
         mFragmentManager = manager;
         mContainerId = main_container_id;
+
+
     }
+
+    public int getPostion() {
+        return mNavItemList.indexOf(mCurrentNavItem);
+    }
+
+
 }
