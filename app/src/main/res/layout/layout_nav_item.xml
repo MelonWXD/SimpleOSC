@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/nav_iv_icon"
+            android:id="@+id/iv_nav_icon"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_horizontal"
@@ -23,7 +23,7 @@
             android:src="@drawable/tab_news_selector" />
 
         <TextView
-            android:id="@+id/nav_tv_dot"
+            android:id="@+id/tv_nav_dot"
             android:layout_width="wrap_content"
             android:layout_height="14dp"
             android:layout_gravity="top|center"
@@ -43,7 +43,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/nav_tv_title"
+        android:id="@+id/tv_nav_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
