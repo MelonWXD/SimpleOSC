@@ -1,14 +1,17 @@
 package com.dongua.simpleosc.nav;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.fragment.BaseFragment;
+import com.dongua.simpleosc.fragment.BaseRecyclerViewFragment;
 import com.dongua.simpleosc.fragment.DiscoverFragment;
 import com.dongua.simpleosc.fragment.MeFragment;
 import com.dongua.simpleosc.fragment.NewsFragment;
@@ -27,6 +30,9 @@ import butterknife.OnClick;
  */
 
 public class BottomNavFragment extends BaseFragment implements View.OnClickListener {
+
+    public static final String TAB_POSTION = "pos";
+    public static final String TAB_SCROLL = "scroll";
 
     @BindView(R.id.nav_item_news)
     NavigationItem mNavNews;
@@ -69,12 +75,13 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
     }
 
 
-    public void setFragments(List<Fragment> mFragmentList) {
-        for (Fragment fragment : mFragmentList){
+    public void setFragments(List<BaseFragment> mFragmentList) {
+        for (BaseFragment fragment : mFragmentList) {
             setFragment(fragment);
         }
     }
-    public void setFragment(Fragment fragment) {
+
+    public void setFragment(BaseFragment fragment) {
         if (fragment instanceof NewsFragment)
             mNavNews.setFragment(fragment);
         else if (fragment instanceof TweetFragment) {
@@ -111,11 +118,11 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
         mCurrentNavItem = newNavItem;
         doTabChanged(oldNavItem, newNavItem);
 
-//        Logger.d(newNavItem.getTag());
+
     }
 
     private void onReselect(NavigationItem oldNavItem) {
-        Logger.d(null);
+
     }
 
     private void doTabChanged(NavigationItem oldNavItem, NavigationItem newNavItem) {
@@ -127,7 +134,7 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
         }
         if (newNavItem != null) {
             if (newNavItem.getFragment() == null) {
-                Fragment fragment = Fragment.instantiate(mContext, newNavItem.getTag(), null);
+                BaseFragment fragment = (BaseFragment) Fragment.instantiate(mContext, newNavItem.getTag(), null);
                 fragment.setRetainInstance(true);
                 ft.add(mContainerId, fragment, newNavItem.getTag());
                 newNavItem.setFragment(fragment);
@@ -142,14 +149,25 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
     private void PubItemClick() {
     }
 
-
-    public void setup(Context context, FragmentManager manager, int main_container_id, int postion) {
+    public void setup(Context context, FragmentManager manager, int main_container_id, Bundle state) {
         mContext = context;
         mFragmentManager = manager;
         mContainerId = main_container_id;
 
 
-        NavItemSelect(mNavItemList.get(postion));
+        if (state != null) {
+            int pos = state.getInt(TAB_POSTION, 0);
+            Logger.d(pos);
+
+            NavItemSelect(mNavItemList.get(pos));
+            if (mNavItemList.get(pos).getFragment() instanceof BaseRecyclerViewFragment) {
+                BaseRecyclerViewFragment fragment = (BaseRecyclerViewFragment) mNavItemList.get(pos).getFragment();
+                fragment.setScroll(state.getInt(TAB_SCROLL, 0));
+                Logger.d(state.getInt(TAB_SCROLL, 0));
+            }
+        } else {
+            NavItemSelect(mNavItemList.get(0));
+        }
 //        if (postion >= 0) {
 //            NavItemSelect(mNavItemList.get(postion));
 //        } else {
@@ -157,12 +175,14 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
 //        }
     }
 
+
+
     public void setup(Context context, FragmentManager manager, int main_container_id) {
         mContext = context;
         mFragmentManager = manager;
         mContainerId = main_container_id;
 
-
+        NavItemSelect(mNavItemList.get(0));
     }
 
     public int getPostion() {
@@ -170,4 +190,13 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
     }
 
 
+    public Bundle getStateBundle() {
+        Bundle state = new Bundle();
+        state.putInt(TAB_POSTION, mNavItemList.indexOf(mCurrentNavItem));
+        if (mCurrentNavItem.getFragment() instanceof BaseRecyclerViewFragment) {
+            BaseRecyclerViewFragment fragment = (BaseRecyclerViewFragment) mCurrentNavItem.getFragment();
+            state.putInt(TAB_SCROLL, fragment.getScroll());
+        }
+        return state;
+    }
 }

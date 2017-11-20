@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.fragment.BaseFragment;
 
 
 public class NavigationItem extends FrameLayout {
@@ -31,7 +32,7 @@ public class NavigationItem extends FrameLayout {
 
     private Class mClass;
     private String mTag;
-    private Fragment mFragment;
+    private BaseFragment mFragment;
 
 
     private int mType = TYPE_NORMAL;
@@ -98,11 +99,11 @@ public class NavigationItem extends FrameLayout {
         this.mClass = mClass;
     }
 
-    public Fragment getFragment() {
+    public BaseFragment getFragment() {
         return mFragment;
     }
 
-    public void setFragment(Fragment mFragment) {
+    public void setFragment(BaseFragment mFragment) {
         this.mFragment = mFragment;
     }
 }

@@ -32,7 +32,6 @@ public abstract class BaseFragment extends Fragment {
     public void onAttach(Context context) {
         mContext =context;
         super.onAttach(context);
-        Logger.d("onAttach");
     }
 
 
@@ -41,7 +40,6 @@ public abstract class BaseFragment extends Fragment {
     public void onDetach() {
         mContext = null;
         super.onDetach();
-        Logger.d("onDetach");
 
     }
 
@@ -50,7 +48,6 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mBundle = getArguments();
         initBundle(mBundle);
-        Logger.d("onCreate");
 
 
     }
@@ -58,7 +55,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Logger.d("onSaveInstanceState");
 
     }
 
@@ -68,7 +64,6 @@ public abstract class BaseFragment extends Fragment {
         if(mUnbinder!=null){
             mUnbinder.unbind();
         }
-        Logger.d("onDestroy");
 
 
     }
@@ -85,7 +80,6 @@ public abstract class BaseFragment extends Fragment {
 
 
 
-        Logger.d("onCreateView");
 
         return mRoot;
     }

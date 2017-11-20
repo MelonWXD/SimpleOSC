@@ -27,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
         mUnbinder = ButterKnife.bind(this);
 
-        Logger.d("onCreate");
+
 
         init(savedInstanceState);
         initView();
@@ -52,8 +52,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         if (mUnbinder != null) {
             mUnbinder.unbind();
         }
-        Logger.d("onDestroy");
-
     }
 
     @Override

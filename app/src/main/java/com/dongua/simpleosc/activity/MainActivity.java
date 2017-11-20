@@ -41,7 +41,9 @@ public class MainActivity extends BaseActivity {
     private TweetFragment mTweetFragment;
     private DiscoverFragment mDiscoverFragment;
     private MeFragment mMeFragment;
-    List<Fragment> mFragmentList = new ArrayList<>();
+    List<BaseFragment> mFragmentList = new ArrayList<>();
+
+    private Bundle mBottomNavStateBundle;
 
     @Override
     protected int getLayoutID() {
@@ -58,14 +60,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void init(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
-            mTabPostion = savedInstanceState.getInt("Pos", 0);
+//            mTabPostion = savedInstanceState.getInt("Pos", 0);
+            mBottomNavStateBundle = savedInstanceState.getBundle("BottomNavState");
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("Pos", mBottomNavFragment.getPostion());
+//        outState.putInt("Pos", mBottomNavFragment.getPostion());
+        outState.putBundle("BottomNavState",mBottomNavFragment.getStateBundle());
     }
 
     @Override
@@ -74,7 +78,7 @@ public class MainActivity extends BaseActivity {
         if (fragment instanceof BottomNavFragment) {
             mBottomNavFragment = (BottomNavFragment) fragment;
         }else {
-            mFragmentList.add(fragment);
+            mFragmentList.add((BaseFragment)fragment);
         }
 //        if (fragment instanceof NewsFragment)
 //            mNewsFragment = (NewsFragment) fragment;
@@ -100,7 +104,7 @@ public class MainActivity extends BaseActivity {
             mBottomNavFragment = (BottomNavFragment) manager.findFragmentById(R.id.fag_nav);
         }
         mBottomNavFragment.setFragments(mFragmentList);
-        mBottomNavFragment.setup(this, manager, R.id.main_container, mTabPostion);
+        mBottomNavFragment.setup(this, manager, R.id.main_container, mBottomNavStateBundle);
 
 
 //        mNavNews = new BottomNavigationItem(R.mipmap.ic_nav_news_normal,this.getString(R.string.nav_string_news));
