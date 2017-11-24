@@ -5,18 +5,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.fragment.BaseFragment;
-import com.dongua.simpleosc.fragment.BaseRecyclerViewFragment;
+import com.dongua.simpleosc.fragment.BaseViewPagerFragment;
 import com.dongua.simpleosc.fragment.DiscoverFragment;
 import com.dongua.simpleosc.fragment.MeFragment;
 import com.dongua.simpleosc.fragment.NewsFragment;
 import com.dongua.simpleosc.fragment.TweetFragment;
-import com.dongua.simpleosc.nav.NavigationItem;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -160,8 +158,8 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
             Logger.d(pos);
 
             NavItemSelect(mNavItemList.get(pos));
-            if (mNavItemList.get(pos).getFragment() instanceof BaseRecyclerViewFragment) {
-                BaseRecyclerViewFragment fragment = (BaseRecyclerViewFragment) mNavItemList.get(pos).getFragment();
+            if (mNavItemList.get(pos).getFragment() instanceof BaseViewPagerFragment) {
+                BaseViewPagerFragment fragment = (BaseViewPagerFragment) mNavItemList.get(pos).getFragment();
                 fragment.setScroll(state.getInt(TAB_SCROLL, 0));
                 Logger.d(state.getInt(TAB_SCROLL, 0));
             }
@@ -193,8 +191,8 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
     public Bundle getStateBundle() {
         Bundle state = new Bundle();
         state.putInt(TAB_POSTION, mNavItemList.indexOf(mCurrentNavItem));
-        if (mCurrentNavItem.getFragment() instanceof BaseRecyclerViewFragment) {
-            BaseRecyclerViewFragment fragment = (BaseRecyclerViewFragment) mCurrentNavItem.getFragment();
+        if (mCurrentNavItem.getFragment() instanceof BaseViewPagerFragment) {
+            BaseViewPagerFragment fragment = (BaseViewPagerFragment) mCurrentNavItem.getFragment();
             state.putInt(TAB_SCROLL, fragment.getScroll());
         }
         return state;
