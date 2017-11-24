@@ -8,6 +8,8 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import static com.dongua.simpleosc.net.ApiService.BASE_URL;
+
 
 /**
  * Created by duoyi on 17-11-22.
@@ -16,7 +18,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class RetrofitClient {
 
 
-    public static final String BASE_URL = "http://www.oschina.net";
 
     private static RetrofitClient mInstance;
 
