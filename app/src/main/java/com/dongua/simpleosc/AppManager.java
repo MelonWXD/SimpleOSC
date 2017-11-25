@@ -19,7 +19,9 @@ public class AppManager {
     public Context getAppContext() {
         return appContext;
     }
-
+    public void setContext(Context context) {
+        this.appContext = context;
+    }
     private Context appContext;
     private AppManager() {
     }
@@ -107,8 +109,6 @@ public class AppManager {
         }
     }
 
-    public void setContext(Context context) {
-        this.appContext = context;
-    }
+
 }
 

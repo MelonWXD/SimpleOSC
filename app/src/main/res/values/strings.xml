@@ -8,4 +8,8 @@
     <string name="nav_string_pub">发布</string>
 
 
+
+    <string name="hint_authorize">没有本地授权信息，请授权登录</string>
+
+
 </resources>

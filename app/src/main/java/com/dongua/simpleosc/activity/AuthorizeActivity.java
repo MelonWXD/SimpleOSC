@@ -1,6 +1,8 @@
 package com.dongua.simpleosc.activity;
 
+import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
+
 
 import com.dongua.simpleosc.R;
 
@@ -38,4 +40,6 @@ public class AuthorizeActivity extends BaseActivity {
         }
         mWebView.loadUrl(oauthURL);
     }
+
+
 }

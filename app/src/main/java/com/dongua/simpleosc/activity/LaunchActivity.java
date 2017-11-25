@@ -7,6 +7,7 @@ import android.webkit.WebView;
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.utils.ActivitySwitcher;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
+import com.dongua.simpleosc.utils.UIUtil;
 
 import butterknife.BindView;
 
@@ -46,6 +47,7 @@ public class LaunchActivity extends BaseActivity {
 
         String accessToken = (String) SharedPreferenceUtil.getSharedPreferences(ACCESS_TOKEN, "");
         if (accessToken == null || accessToken.isEmpty()) {
+            UIUtil.showLongToast(this,getString(R.string.hint_authorize));
             requestLogin();
         }else {
             initLoginInfo();
@@ -58,6 +60,12 @@ public class LaunchActivity extends BaseActivity {
 
 
     private void requestLogin() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+//        ActivitySwitcher.switchTo(this, MainActivity.class);
         ActivitySwitcher.switchTo(this, AuthorizeActivity.class);
     }
 
