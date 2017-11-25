@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
+import android.view.WindowManager;
 
+import com.dongua.simpleosc.base.BasePresenter;
 import com.dongua.simpleosc.base.BaseView;
 import com.orhanobut.logger.Logger;
 
@@ -20,6 +23,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     private Unbinder mUnbinder;
 
+//    protected BasePresenter mPresenter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,11 +33,19 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         mUnbinder = ButterKnife.bind(this);
 
 
-
         init(savedInstanceState);
+        initPresenter();
         initView();
         initData();
     }
+
+    protected void initPresenter(){
+//        mPresenter = getPresenter();
+    }
+//
+//    protected BasePresenter getPresenter() {
+//        return null;
+//    }
 
     protected void init(Bundle savedInstanceState) {
 
@@ -73,4 +86,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     public void setPresenter(Object presenter) {
 
     }
+
+
+
+
 }

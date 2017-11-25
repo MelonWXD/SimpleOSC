@@ -18,7 +18,7 @@ public class SharedPreferenceUtil {
     public static final String ACCESS_TOKEN = "a_token";
     public static final String REFRESH_TOKEN = "r_token";
 
-    public static void putSharedPreferences(String key, Object value) {
+    public static void put(String key, Object value) {
         Context context = AppManager.getInstance().getAppContext();
         String type = value.getClass().getSimpleName();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -40,7 +40,7 @@ public class SharedPreferenceUtil {
         }
         editor.commit();
     }
-    public static Object getSharedPreferences(String key, Object defValue) {
+    public static Object get(String key, Object defValue) {
         Context context = AppManager.getInstance().getAppContext();
         String type = defValue.getClass().getSimpleName();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);

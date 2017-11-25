@@ -5,7 +5,7 @@ import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Set;
+
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -21,7 +21,7 @@ public class SetCookiesInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
-        HashSet<String> cookies = (HashSet<String>) SharedPreferenceUtil.getSharedPreferences(PREF_COOKIE,new HashSet());
+        HashSet<String> cookies = (HashSet<String>) SharedPreferenceUtil.get(PREF_COOKIE,new HashSet());
         if(!cookies.isEmpty()){
             for(String cookie:cookies)
             builder.addHeader("Cookie",cookie);

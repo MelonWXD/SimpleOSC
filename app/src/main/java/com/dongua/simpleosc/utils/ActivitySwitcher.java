@@ -16,6 +16,10 @@ import android.content.Intent;
 public class ActivitySwitcher {
 
 
+
+
+
+
     public static void switchTo(Activity activity,
                                 Class<? extends Activity> cls) {
         Intent intent = new Intent(activity, cls);

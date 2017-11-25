@@ -3,6 +3,7 @@ package com.dongua.simpleosc.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
 import com.dongua.simpleosc.R;
@@ -18,7 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseToolBarActivity {
 //
 //    @BindView(R.id.bnb_main)
 //    BottomNavigationBar mNavigationBar;
@@ -50,6 +51,11 @@ public class MainActivity extends BaseActivity {
         return R.layout.activity_main;
     }
 
+
+    @Override
+    protected void setCustomToolbar(Toolbar toolbar) {
+        toolbar.setTitle("综合");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
