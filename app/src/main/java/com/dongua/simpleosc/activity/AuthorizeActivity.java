@@ -1,10 +1,7 @@
 package com.dongua.simpleosc.activity;
 
 import android.content.Intent;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -14,8 +11,6 @@ import com.dongua.simpleosc.R;
 import com.orhanobut.logger.Logger;
 
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,8 +18,8 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 
-import static com.dongua.simpleosc.activity.LaunchActivity.CODE_AUTHORIZE;
-import static com.dongua.simpleosc.activity.LaunchActivity.CODE_KEY;
+import static com.dongua.simpleosc.LaunchActivity.CODE_AUTHORIZE;
+import static com.dongua.simpleosc.LaunchActivity.CODE_KEY;
 import static com.dongua.simpleosc.net.RetrofitClient.*;
 
 /**

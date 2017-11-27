@@ -3,17 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="start|top"
-
     android:orientation="vertical">
 
-    <TextView
-        android:text="1"
-        android:textSize="@dimen/font_20"
-        android:gravity="center"
-        android:background="@color/yellow200"
-        android:layout_width="100dp"
-        android:layout_height="100dp"  />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tl_news_tab"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:id="@+id/iv_arrow_down"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"/>
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </android.support.v4.view.ViewPager>
+
 
 
 
