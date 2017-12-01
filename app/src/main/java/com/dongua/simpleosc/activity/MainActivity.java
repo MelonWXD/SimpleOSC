@@ -4,7 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.fragment.BaseFragment;
@@ -59,10 +61,7 @@ public class MainActivity extends BaseToolBarActivity {
         mToolBar =toolbar;
     }
 
-    public void setToolbarTitle(String title){
-        if(title!=null)
-            mToolBar.setTitle(title);
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,5 +155,16 @@ public class MainActivity extends BaseToolBarActivity {
 //            }
 //        });
 
+    }
+
+    public void setToolBarVisibility(int visibility) {
+        mToolBar.setVisibility(visibility);
+    }
+
+    public void setToolBarTitle(String title){
+        if(title!=null){
+           TextView tv = mToolBar.findViewById(R.id.tv_title);
+           tv.setText(title);
+        }
     }
 }

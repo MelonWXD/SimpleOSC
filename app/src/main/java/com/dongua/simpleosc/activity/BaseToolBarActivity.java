@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.support.v7.widget.Toolbar;
+import android.widget.RelativeLayout;
 
 import com.dongua.simpleosc.R;
 
@@ -20,7 +21,7 @@ import com.dongua.simpleosc.R;
 public abstract class BaseToolBarActivity extends BaseActivity {
 
 
-
+    private RelativeLayout mToolBarLayout;
     private Toolbar mToolBar;
     //根布局
     private LinearLayout mRootView = null;
@@ -49,7 +50,8 @@ public abstract class BaseToolBarActivity extends BaseActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT));
         mRootView.setOrientation(LinearLayout.VERTICAL);
         initToolBar();
-        mRootView.addView(mToolBar);
+        mRootView.addView(mToolBarLayout);
+//        mRootView.addView(mToolBar);
         mRootView.addView(mContentView);
     }
 
@@ -57,7 +59,8 @@ public abstract class BaseToolBarActivity extends BaseActivity {
      * 初始化ToolBar
      */
     private void initToolBar() {
-        mToolBar = (Toolbar) getLayoutInflater().inflate(R.layout.layout_toolbar,mRootView,false);
+        mToolBarLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.layout_toolbar,mRootView,false);
+        mToolBar = mToolBarLayout.findViewById(R.id.toolbar);
         setCustomToolbar(mToolBar);
     }
 
