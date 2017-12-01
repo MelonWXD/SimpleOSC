@@ -106,4 +106,8 @@ public class NavigationItem extends FrameLayout {
     public void setFragment(BaseFragment mFragment) {
         this.mFragment = mFragment;
     }
+
+    public String getTitle() {
+        return mTitle.getText().toString();
+    }
 }

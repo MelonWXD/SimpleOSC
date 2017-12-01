@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.activity.MainActivity;
 import com.dongua.simpleosc.fragment.BaseFragment;
 import com.dongua.simpleosc.fragment.BaseViewPagerFragment;
 import com.dongua.simpleosc.fragment.DiscoverFragment;
@@ -141,6 +142,10 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
             }
         }
         ft.commit();
+
+        //change tab title
+        MainActivity act = (MainActivity) getActivity();
+        act.setToolbarTitle(newNavItem.getTitle());
     }
 
 

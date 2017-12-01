@@ -46,6 +46,8 @@ public class MainActivity extends BaseToolBarActivity {
 
     private Bundle mBottomNavStateBundle;
 
+    private Toolbar mToolBar;
+
     @Override
     protected int getLayoutID() {
         return R.layout.activity_main;
@@ -54,7 +56,12 @@ public class MainActivity extends BaseToolBarActivity {
 
     @Override
     protected void setCustomToolbar(Toolbar toolbar) {
-        toolbar.setTitle("综合");
+        mToolBar =toolbar;
+    }
+
+    public void setToolbarTitle(String title){
+        if(title!=null)
+            mToolBar.setTitle(title);
     }
 
     @Override
@@ -83,7 +90,7 @@ public class MainActivity extends BaseToolBarActivity {
         super.onAttachFragment(fragment);
         if (fragment instanceof BottomNavFragment) {
             mBottomNavFragment = (BottomNavFragment) fragment;
-        }else {
+        }else if(fragment instanceof BaseFragment) {
             mFragmentList.add((BaseFragment)fragment);
         }
 //        if (fragment instanceof NewsFragment)

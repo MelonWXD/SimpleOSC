@@ -1,7 +1,6 @@
 package com.dongua.simpleosc.ui.news;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.bean.NewsTab;
 import com.orhanobut.logger.Logger;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -23,15 +23,28 @@ import butterknife.BindView;
  */
 
 public class TabFragment extends BaseRecyclerFragment {
-
-    public static final String BANNER_SHOW = "banner";
+    public static final String TAB_NAME = "tab_name";
+    public static final String TAB_HERF = "tab_herf";
+    public static final String TAB_BANNER = "tab_banner";
+    public static final String BEAN_TAB = "tab";
 
     @BindView(R.id.rv_banner)
     Banner mBanner;
     @BindView(R.id.rv_content)
     RecyclerView mRecyclerView;
 
-    private boolean hasBanner = false;
+    private NewsTab mTab;
+
+    public static TabFragment newInstance(Context context, NewsTab tab) {
+        TabFragment fragment = new TabFragment();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(TAB_BANNER, tab.getShowBanner());
+        bundle.putString(TAB_NAME, tab.getName());
+        bundle.putString(TAB_HERF, tab.getHerf());
+        fragment.setArguments(bundle);
+        return fragment;
+
+    }
 
     @Override
     protected int getLayoutId() {
@@ -42,19 +55,26 @@ public class TabFragment extends BaseRecyclerFragment {
     @Override
     protected void initBundle(Bundle bundle) {
         super.initBundle(bundle);
-        hasBanner = bundle.getBoolean(BANNER_SHOW, false);
+        String name = bundle.getString(TAB_NAME);
+        String herf = bundle.getString(TAB_HERF);
+        Boolean showBanner = bundle.getBoolean(TAB_BANNER);
+        mTab = new NewsTab(name,showBanner,herf);
     }
 
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-        if (hasBanner) {
+        if (mTab != null && mTab.getShowBanner()) {
             mBanner.setImageLoader(new GlideImageLoader());
             List<String> imgUrl = new ArrayList<>();
             imgUrl.add("haha");
             mBanner.setImages(imgUrl);
             mBanner.start();
         }
+    }
+
+    public CharSequence getName() {
+        return mTab.getName();
     }
 
     class GlideImageLoader extends ImageLoader {
@@ -71,7 +91,7 @@ public class TabFragment extends BaseRecyclerFragment {
 
             //Glide 加载图片简单用法
             Glide.with(context).load(path).into(imageView);
-            Logger.d("path="+path);
+            Logger.d("path=" + path);
 
 
         }

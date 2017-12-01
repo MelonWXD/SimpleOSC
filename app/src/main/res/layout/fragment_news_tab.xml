@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,13 +14,18 @@
             android:id="@+id/tl_news_tab"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content"/>
+            android:layout_height="30dp"
+            app:tabSelectedTextColor="@color/green200"
+            app:tabIndicatorColor="@color/green200"
+            app:tabBackground="@drawable/tl_tab_selector"/>
 
         <ImageView
             android:id="@+id/iv_arrow_down"
-            android:layout_width="40dp"
+            android:layout_width="30dp"
+            android:padding="5dp"
             android:layout_height="match_parent"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:src="@mipmap/ic_subscribe"/>
     </LinearLayout>
 
     <android.support.v4.view.ViewPager

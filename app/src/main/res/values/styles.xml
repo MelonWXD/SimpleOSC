@@ -17,5 +17,9 @@
         <item name="android:paddingLeft">@dimen/lay_12</item>
         <item name="android:paddingRight">@dimen/lay_12</item>
     </style>
+    
+    <style name="NewsTabText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+
+    </style>
 
 </resources>
