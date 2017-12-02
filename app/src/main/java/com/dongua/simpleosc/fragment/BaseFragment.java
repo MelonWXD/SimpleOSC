@@ -50,6 +50,8 @@ public abstract class BaseFragment extends Fragment {
         initBundle(mBundle);
 
 
+
+
     }
 
     @Override
@@ -77,9 +79,6 @@ public abstract class BaseFragment extends Fragment {
 
         initWidget(mRoot);
         initData();
-
-
-
 
         return mRoot;
     }

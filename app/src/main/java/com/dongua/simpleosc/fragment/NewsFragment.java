@@ -1,6 +1,5 @@
 package com.dongua.simpleosc.fragment;
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,8 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.dongua.simpleosc.R;
-import com.dongua.simpleosc.activity.BaseToolBarActivity;
-import com.dongua.simpleosc.activity.MainActivity;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.ui.news.TabFragment;
 
@@ -19,14 +16,19 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.dongua.simpleosc.bean.NewsTab.TYPE_ALL;
+import static com.dongua.simpleosc.bean.NewsTab.TYPE_BLOG;
+import static com.dongua.simpleosc.bean.NewsTab.TYPE_DAILY;
+
 /**
  * Created by duoyi on 17-11-18.
  */
 
 public class NewsFragment extends BaseViewPagerFragment {
 
-    private String[] tabs = new String[] {"开源资讯","推荐博客","技术问答","每日一搏"};
+    private String[] tabs = new String[]{"开源资讯", "推荐博客", "技术问答", "每日一搏"};
 
+    private List<NewsTab> tabList = new ArrayList<>();
 
     @BindView(R.id.tl_news_tab)
     TabLayout mTabLayout;
@@ -47,21 +49,36 @@ public class NewsFragment extends BaseViewPagerFragment {
         super.initWidget(root);
 
 
-
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        List<NewsTab> data = new ArrayList<>();
-        NewsTab tab1 = new NewsTab("开源资讯",true,"");
-        NewsTab tab2 = new NewsTab("推荐博客",false,"");
-        NewsTab tab3 = new NewsTab("技术问答",false,"");
-        NewsTab tab4 = new NewsTab("每日一搏",false,"");
-        data.add(tab1);
-        data.add(tab2);
-        data.add(tab3);
-        data.add(tab4);
-        mAdapter = new ContentPagerAdapter(getChildFragmentManager(),data);
+        NewsTab tab1 = new NewsTab("开源资讯", TYPE_ALL, false, "");
+        NewsTab tab2 = new NewsTab("推荐博客", TYPE_BLOG, false, "");
+        NewsTab tab3 = new NewsTab("技术问答", TYPE_ALL, false, "");
+        NewsTab tab4 = new NewsTab("每日一搏", TYPE_DAILY, false, "");
+        tabList.add(tab1);
+        tabList.add(tab2);
+        tabList.add(tab3);
+        tabList.add(tab4);
+        mAdapter = new ContentPagerAdapter(getChildFragmentManager(), tabList);
         mViewPager.setAdapter(mAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         mTabLayout.setupWithViewPager(mViewPager);
+
 
     }
 
@@ -69,7 +86,6 @@ public class NewsFragment extends BaseViewPagerFragment {
     public int getScroll() {
         return 200;
     }
-
 
 
     public class ContentPagerAdapter extends FragmentPagerAdapter {

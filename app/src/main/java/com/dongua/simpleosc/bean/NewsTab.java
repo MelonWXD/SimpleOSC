@@ -1,10 +1,19 @@
 package com.dongua.simpleosc.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by duoyi on 17-11-27.
  */
 
-public class NewsTab {
+public class NewsTab implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    public static final int TYPE_ALL = 1;
+    public static final int TYPE_BLOG = 2;
+    public static final int TYPE_DAILY = 3;
+
     private String name;
     private Boolean showBanner;
     private int type;
