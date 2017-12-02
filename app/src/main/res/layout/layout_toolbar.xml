@@ -19,6 +19,7 @@
             android:textSize="@dimen/font_20"
             android:textColor="@color/white"
             android:text="综合"
+            android:paddingTop="@dimen/lay_8"
             android:layout_gravity="center"/>
 
 

@@ -32,6 +32,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
         mUnbinder = ButterKnife.bind(this);
 
+        setTranslucentStatus(true);
 
         init(savedInstanceState);
         initPresenter();
@@ -88,6 +89,18 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
     }
 
 
+
+    private void setTranslucentStatus(boolean on) {
+        Window win = getWindow();
+        WindowManager.LayoutParams winParams = win.getAttributes();
+        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+        if (on) {
+            winParams.flags |= bits;
+        } else {
+            winParams.flags &= ~bits;
+        }
+        win.setAttributes(winParams);
+    }
 
 
 }

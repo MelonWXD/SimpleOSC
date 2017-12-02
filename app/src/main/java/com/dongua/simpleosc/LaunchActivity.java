@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 
-import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.activity.AuthorizeActivity;
 import com.dongua.simpleosc.activity.BaseActivity;
 import com.dongua.simpleosc.activity.MainActivity;
@@ -22,11 +24,8 @@ import com.orhanobut.logger.Logger;
 import java.io.IOException;
 
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import static com.dongua.simpleosc.utils.SharedPreferenceUtil.ACCESS_TOKEN;
@@ -50,7 +49,7 @@ public class LaunchActivity extends BaseActivity {
 
     @Override
     protected int getLayoutID() {
-        return R.layout.activity_login;
+        return R.layout.activity_launch;
     }
 
     @Override
@@ -62,9 +61,17 @@ public class LaunchActivity extends BaseActivity {
     protected void initView() {
         super.initView();
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+//        if (getSupportActionBar() != null) {
+//            getSupportActionBar().hide();
+//        }
+
+        ViewGroup viewGroup = (ViewGroup) this.findViewById(Window.ID_ANDROID_CONTENT);
+        View childView = viewGroup.getChildAt(0);
+        if (null != childView) {
+            childView.setFitsSystemWindows(false);
         }
+
+
     }
 
     @Override
