@@ -27,4 +27,11 @@ public interface ApiService {
             , @Query("dataType") String dataType);
 
 
+    @GET("/action/openapi/token")
+    Observable<ResponseBody> getNewsList(
+            @Query("access_token") String access_token
+            , @Query("catalog") int catalog
+            , @Query("page") int page
+            , @Query("pageSize") int pageSize
+            , @Query("dataType") String dataType);
 }

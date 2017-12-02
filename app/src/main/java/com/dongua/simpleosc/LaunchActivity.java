@@ -85,16 +85,16 @@ public class LaunchActivity extends BaseActivity {
             requestLogin(this);
 //            mPresenter.getToken("code");
         } else {
+            Logger.d(accessToken);
+            RetrofitClient.getInstance().setAccessToken(accessToken);
             initLoginInfo(this);
         }
 
     }
 
 
-
     private void initLoginInfo(final Activity act) {
-        Logger.d("找到本地授权tokne");
-        new  Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -102,7 +102,7 @@ public class LaunchActivity extends BaseActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                ActivitySwitcher.switchTo(act,MainActivity.class);
+                ActivitySwitcher.switchTo(act, MainActivity.class);
 
             }
         }).start();
@@ -137,7 +137,7 @@ public class LaunchActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CODE_AUTHORIZE) {
             String code = data.getStringExtra(CODE_KEY);
-            if (code != null || !code.isEmpty()) {
+            if (code != null && !code.isEmpty()) {
                 mPresenter.getToken(code);
             }
         }

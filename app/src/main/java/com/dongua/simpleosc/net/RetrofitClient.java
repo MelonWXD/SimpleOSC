@@ -30,6 +30,12 @@ public class RetrofitClient {
     public static final String DATA_TYPE = "json";
     public static final String REDIRECT_URL = "http://chun0dong-001-site1.site4future.com/";
 
+    public static final int DEFAULT_CATALOG = 1;
+    public static final int DEFAULT_PAGE = 1;
+    public static final int DEFAULT_PAGESIZE = 20;
+
+
+    private String mAccessToken;
 
     private static RetrofitClient mInstance;
 
@@ -67,8 +73,24 @@ public class RetrofitClient {
         mApi = mRetrofit.create(ApiService.class);
     }
 
+    public void setAccessToken(String mAccessToken) {
+        this.mAccessToken = mAccessToken;
+    }
+
 
     public Observable<ResponseBody> getToken(String code){
         return mApi.getToken(APP_ID,APP_KEY,GRANT_TYPE,REDIRECT_URL,code,DATA_TYPE);
     }
+    public Observable<ResponseBody> getNewsList(){
+        if(mAccessToken==null){
+            return null;
+        }
+        return mApi.getNewsList(mAccessToken,DEFAULT_CATALOG,DEFAULT_PAGE,DEFAULT_PAGESIZE,DATA_TYPE);
+    }
+
+    public Observable<ResponseBody> getNewsList(String access_code){
+        return mApi.getNewsList(access_code,DEFAULT_CATALOG,DEFAULT_PAGE,DEFAULT_PAGESIZE,DATA_TYPE);
+    }
+
+
 }

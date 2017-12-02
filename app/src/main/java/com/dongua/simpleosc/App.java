@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 
+import com.dongua.simpleosc.db.DaoMaster;
+import com.dongua.simpleosc.db.DaoSession;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.FormatStrategy;
 import com.orhanobut.logger.Logger;
@@ -17,11 +19,11 @@ import org.greenrobot.greendao.database.Database;
 
 public class App extends Application {
 
-//    private static DaoSession mDaoSession;
+    public static final String DB_NAME = "socs";
+    private static DaoSession mDaoSession;
 
 
     private Context mContext;
-
 
 
     @Override
@@ -30,12 +32,9 @@ public class App extends Application {
 
         mContext = this.getApplicationContext();
         AppManager.getInstance().setContext(mContext);
-//        setupDatabase(this);
-
+        setupDatabase(this);
 
         initLog();
-
-
 
 
     }
@@ -51,22 +50,19 @@ public class App extends Application {
     }
 
 
+    //
+    private void setupDatabase(Context context) {
+        DaoMaster.DevOpenHelper openHelper = new DaoMaster.DevOpenHelper(context, DB_NAME);
+        Database db = openHelper.getWritableDb();
+        DaoMaster daoMaster = new DaoMaster(db);
+        mDaoSession = daoMaster.newSession();
+    }
 //
-//    private void setupDatabase(Context context) {
-//        DaoMaster.DevOpenHelper openHelper = new DaoMaster.DevOpenHelper(context, DATABASE_WEATHER);
-//        Database db = openHelper.getWritableDb();
-//        DaoMaster daoMaster = new DaoMaster(db);
-//        mDaoSession = daoMaster.newSession();
-//    }
-//
-
-//
-//    public static DaoSession getDaoSession() {
-//        return mDaoSession;
-//    }
 
 
-
+    public static DaoSession getDaoSession() {
+        return mDaoSession;
+    }
 
 
 }

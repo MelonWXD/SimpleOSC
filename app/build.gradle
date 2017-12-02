@@ -55,6 +55,6 @@ dependencies {
 }
 greendao {
     targetGenDir 'src/main/java'
-    daoPackage 'com.dongua.geather.db'
+    daoPackage 'com.dongua.simpleosc.db'
     schemaVersion 1
 }
