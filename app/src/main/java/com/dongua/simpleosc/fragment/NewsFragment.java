@@ -1,5 +1,6 @@
 package com.dongua.simpleosc.fragment;
 
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,7 +29,7 @@ public class NewsFragment extends BaseViewPagerFragment {
 
     private String[] tabs = new String[]{"开源资讯", "推荐博客", "技术问答", "每日一搏"};
 
-    private List<NewsTab> tabList = new ArrayList<>();
+    private List<NewsTab> tabList  ;
 
     @BindView(R.id.tl_news_tab)
     TabLayout mTabLayout;
@@ -45,15 +46,21 @@ public class NewsFragment extends BaseViewPagerFragment {
 
 
     @Override
+    protected void initBundle(Bundle bundle) {
+        super.initBundle(bundle);
+
+    }
+
+    @Override
     protected void initWidget(View root) {
         super.initWidget(root);
-
 
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         NewsTab tab1 = new NewsTab("开源资讯", TYPE_ALL, false, "");
         NewsTab tab2 = new NewsTab("推荐博客", TYPE_BLOG, false, "");
         NewsTab tab3 = new NewsTab("技术问答", TYPE_ALL, false, "");
         NewsTab tab4 = new NewsTab("每日一搏", TYPE_DAILY, false, "");
+        tabList = new ArrayList<>();
         tabList.add(tab1);
         tabList.add(tab2);
         tabList.add(tab3);
