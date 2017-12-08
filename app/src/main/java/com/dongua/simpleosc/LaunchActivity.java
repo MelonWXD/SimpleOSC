@@ -40,7 +40,7 @@ public class LaunchActivity extends BaseActivity {
     public static final int CODE_AUTHORIZE = 1;
     public static final String CODE_KEY = "code";
 
-    AuthorizePresenter mPresenter;
+//    AuthorizePresenter mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,9 +52,9 @@ public class LaunchActivity extends BaseActivity {
         return R.layout.activity_launch;
     }
 
-    @Override
+
     protected void initPresenter() {
-        mPresenter = new AuthorizePresenter(this);
+//        mPresenter = new AuthorizePresenter(this);
     }
 
     @Override
@@ -86,6 +86,7 @@ public class LaunchActivity extends BaseActivity {
 //            mPresenter.getToken("code");
         } else {
             Logger.d(accessToken);
+            Logger.d(SharedPreferenceUtil.get(REFRESH_TOKEN, ""));
             RetrofitClient.getInstance().setAccessToken(accessToken);
             initLoginInfo(this);
         }
@@ -138,61 +139,91 @@ public class LaunchActivity extends BaseActivity {
         if (requestCode == CODE_AUTHORIZE) {
             String code = data.getStringExtra(CODE_KEY);
             if (code != null && !code.isEmpty()) {
-                mPresenter.getToken(code);
+                 getToken(code);
             }
         }
 
     }
 
-    @Override
-    public void setPresenter(Object presenter) {
-        mPresenter = (AuthorizePresenter) presenter;
-    }
 
-    class AuthorizePresenter implements BasePresenter {
 
-        private BaseView mView;
-
-        public AuthorizePresenter(BaseView view) {
-            mView = view;
-//            mView.setPresenter(this);
-        }
-
-        @Override
-        public Object getView() {
-            return mView;
-        }
-
-        private void getToken(String code) {
-            RetrofitClient client = RetrofitClient.getInstance();
-            client.getToken(code)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .subscribe(new Consumer<ResponseBody>() {
-                        @Override
-                        public void accept(ResponseBody responseBody) throws Exception {
-                            try {
-                                JsonObject jsonObject = Util.string2Json(responseBody.string());
-                                String a_token = jsonObject.get("access_token").getAsString();
-                                String r_token = jsonObject.get("refresh_token").getAsString();
-                                Logger.d("Token:" + a_token);
-                                Logger.d(r_token);
-                                if (!a_token.isEmpty() && !r_token.isEmpty()) {
-                                    SharedPreferenceUtil.put(ACCESS_TOKEN, a_token);
-                                    SharedPreferenceUtil.put(REFRESH_TOKEN, r_token);
-                                }
-                            } catch (IOException e) {
-                                Logger.e(e.getMessage());
+    private void getToken(String code) {
+        RetrofitClient client = RetrofitClient.getInstance();
+        client.getToken(code)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new Consumer<ResponseBody>() {
+                    @Override
+                    public void accept(ResponseBody responseBody) throws Exception {
+                        try {
+                            JsonObject jsonObject = Util.string2Json(responseBody.string());
+                            String a_token = jsonObject.get("access_token").getAsString();
+                            String r_token = jsonObject.get("refresh_token").getAsString();
+                            Logger.d("Token:" + a_token);
+                            Logger.d(r_token);
+                            if (!a_token.isEmpty() && !r_token.isEmpty()) {
+                                SharedPreferenceUtil.put(ACCESS_TOKEN, a_token);
+                                SharedPreferenceUtil.put(REFRESH_TOKEN, r_token);
+                                RetrofitClient.getInstance().setAccessToken(a_token);
+                                initLoginInfo(LaunchActivity.this);
                             }
+                        } catch (IOException e) {
+                            Logger.e(e.getMessage());
                         }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
-                            Logger.e(throwable.getMessage());
-                        }
-                    });
-        }
-
-
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Logger.e(throwable.getMessage());
+                    }
+                });
     }
+
+//
+//    class AuthorizePresenter implements BasePresenter {
+//
+//        private BaseView mView;
+//
+//        public AuthorizePresenter(BaseView view) {
+//            mView = view;
+////            mView.setPresenter(this);
+//        }
+//
+//        @Override
+//        public Object getView() {
+//            return mView;
+//        }
+//
+//        private void getToken(String code) {
+//            RetrofitClient client = RetrofitClient.getInstance();
+//            client.getToken(code)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(Schedulers.io())
+//                    .subscribe(new Consumer<ResponseBody>() {
+//                        @Override
+//                        public void accept(ResponseBody responseBody) throws Exception {
+//                            try {
+//                                JsonObject jsonObject = Util.string2Json(responseBody.string());
+//                                String a_token = jsonObject.get("access_token").getAsString();
+//                                String r_token = jsonObject.get("refresh_token").getAsString();
+//                                Logger.d("Token:" + a_token);
+//                                Logger.d(r_token);
+//                                if (!a_token.isEmpty() && !r_token.isEmpty()) {
+//                                    SharedPreferenceUtil.put(ACCESS_TOKEN, a_token);
+//                                    SharedPreferenceUtil.put(REFRESH_TOKEN, r_token);
+//                                }
+//                            } catch (IOException e) {
+//                                Logger.e(e.getMessage());
+//                            }
+//                        }
+//                    }, new Consumer<Throwable>() {
+//                        @Override
+//                        public void accept(Throwable throwable) throws Exception {
+//                            Logger.e(throwable.getMessage());
+//                        }
+//                    });
+//        }
+//
+//
+//    }
 }
