@@ -1,9 +1,11 @@
 package com.dongua.simpleosc.utils;
 
+import com.dongua.simpleosc.bean.News;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -13,6 +15,8 @@ import java.util.List;
  */
 
 public class Util {
+
+    static Gson gson = new Gson();
 
     public static JsonObject string2Json(String jsonstr){
         JsonObject jsonData = new JsonParser().parse(jsonstr).getAsJsonObject();
@@ -25,19 +29,25 @@ public class Util {
     }
 
     public static Object json2Bean(String json, Class beanClass) {
-        Gson gson = new Gson();
+
         Object res = gson.fromJson(json, beanClass);
         return res;
     }
 
     public static JsonArray beanList2JsonArray(List<Object> beanList){
-        JsonArray jsonArray = new Gson().toJsonTree(beanList).getAsJsonArray();
+        JsonArray jsonArray = gson.toJsonTree(beanList).getAsJsonArray();
         return jsonArray;
     }
 
 
-    public static List jsonArray2BeanList(String json, Type type){
+    public static List jsonArray2BeanList(String jsonarray, Type type){
 //        type = new TypeToken<beanClass>().getType()
-        return new Gson().fromJson(json,type);
+        return gson.fromJson(jsonarray,type);
+
+    }
+
+    public static String jsonArray2String(JsonArray jsonarray){
+//        type = new TypeToken<beanClass>().getType()
+        return gson.toJson(jsonarray);
     }
 }

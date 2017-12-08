@@ -1,5 +1,9 @@
 package com.dongua.simpleosc.net;
 
+import com.dongua.simpleosc.bean.News;
+
+import java.util.List;
+
 import io.reactivex.Observable;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -27,8 +31,8 @@ public interface ApiService {
             , @Query("dataType") String dataType);
 
 
-    @GET("/action/openapi/token")
-    Observable<ResponseBody> getNewsList(
+    @GET("/action/openapi/news_list")
+    Observable<List<News>> getNewsList(
             @Query("access_token") String access_token
             , @Query("catalog") int catalog
             , @Query("page") int page

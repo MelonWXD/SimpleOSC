@@ -1,9 +1,15 @@
 package com.dongua.simpleosc.net;
 
+import com.dongua.simpleosc.bean.News;
+import com.dongua.simpleosc.net.convert.CustomConverterFactory;
 import com.dongua.simpleosc.net.interceptor.LoggingInterceptor;
 import com.dongua.simpleosc.net.interceptor.SaveCookiesInterceptor;
 import com.dongua.simpleosc.net.interceptor.SetCookiesInterceptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
@@ -59,6 +65,7 @@ public class RetrofitClient {
 
     private RetrofitClient(){
 
+
         mHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new LoggingInterceptor())
                 .addInterceptor(new SaveCookiesInterceptor())
@@ -66,6 +73,7 @@ public class RetrofitClient {
                 .build();
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
+                .addConverterFactory(CustomConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(mHttpClient)
                 .build();
@@ -81,14 +89,14 @@ public class RetrofitClient {
     public Observable<ResponseBody> getToken(String code){
         return mApi.getToken(APP_ID,APP_KEY,GRANT_TYPE,REDIRECT_URL,code,DATA_TYPE);
     }
-    public Observable<ResponseBody> getNewsList(){
+    public Observable<List<News>> getNewsList(){
         if(mAccessToken==null){
             return null;
         }
         return mApi.getNewsList(mAccessToken,DEFAULT_CATALOG,DEFAULT_PAGE,DEFAULT_PAGESIZE,DATA_TYPE);
     }
 
-    public Observable<ResponseBody> getNewsList(String access_code){
+    public Observable<List<News>>  getNewsList(String access_code){
         return mApi.getNewsList(access_code,DEFAULT_CATALOG,DEFAULT_PAGE,DEFAULT_PAGESIZE,DATA_TYPE);
     }
 

@@ -9,117 +9,107 @@ import org.greenrobot.greendao.annotation.Generated;
 public class News {
 
     @Id(autoincrement = true)
-    private Long id;
-    private String title;
-    private int newsId;
+    private Long dbID;
+    private int id;
     private String author;
-    private int authorId;
-    private String type;
     private String pubDate;
+    private String title;
+    private int authorid;
     private int commentCount;
-    private int object;
+    private String type;
 
 
-    public News(String title, int newsId, String author, int authorid, String type, String pubDate, int commentCount, int object) {
-        this.title = title;
-        this.newsId = newsId;
+    public News(int id, String author, String pubDate, String title,
+                int authorid, int commentCount, String type) {
+        this.id = id;
         this.author = author;
-        this.authorId = authorid;
-        this.type = type;
         this.pubDate = pubDate;
+        this.title = title;
+        this.authorid = authorid;
         this.commentCount = commentCount;
-        this.object = object;
+        this.type = type;
     }
 
-    @Generated(hash = 304419995)
-    public News(Long id, String title, int newsId, String author, int authorId, String type, String pubDate, int commentCount,
-            int object) {
+    @Generated(hash = 971210210)
+    public News(Long dbID, int id, String author, String pubDate, String title,
+                int authorid, int commentCount, String type) {
+        this.dbID = dbID;
         this.id = id;
-        this.title = title;
-        this.newsId = newsId;
         this.author = author;
-        this.authorId = authorId;
-        this.type = type;
         this.pubDate = pubDate;
+        this.title = title;
+        this.authorid = authorid;
         this.commentCount = commentCount;
-        this.object = object;
+        this.type = type;
     }
 
     @Generated(hash = 1579685679)
     public News() {
     }
 
-    public String getTitle() {
-        return title;
+    public Long getDbID() {
+        return this.dbID;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDbID(Long dbID) {
+        this.dbID = dbID;
     }
 
-
-    public int getNewsId() {
-        return newsId;
+    public int getId() {
+        return this.id;
     }
 
-    public void setNewsId(int newsId) {
-        this.newsId = newsId;
-    }
-
-    public int getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getAuthor() {
-        return author;
+        return this.author;
     }
 
     public void setAuthor(String author) {
         this.author = author;
     }
 
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public String getPubDate() {
-        return pubDate;
+        return this.pubDate;
     }
 
     public void setPubDate(String pubDate) {
         this.pubDate = pubDate;
     }
 
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getAuthorid() {
+        return this.authorid;
+    }
+
+    public void setAuthorid(int authorid) {
+        this.authorid = authorid;
+    }
+
     public int getCommentCount() {
-        return commentCount;
+        return this.commentCount;
     }
 
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
     }
 
-    public int getObject() {
-        return object;
+    public String getType() {
+        return this.type;
     }
 
-    public void setObject(int object) {
-        this.object = object;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Long getId() {
-        return this.id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 }

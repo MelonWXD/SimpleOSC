@@ -24,15 +24,14 @@ public class NewsDao extends AbstractDao<News, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Title = new Property(1, String.class, "title", false, "TITLE");
-        public final static Property NewsId = new Property(2, int.class, "newsId", false, "NEWS_ID");
-        public final static Property Author = new Property(3, String.class, "author", false, "AUTHOR");
-        public final static Property AuthorId = new Property(4, int.class, "authorId", false, "AUTHOR_ID");
-        public final static Property Type = new Property(5, String.class, "type", false, "TYPE");
-        public final static Property PubDate = new Property(6, String.class, "pubDate", false, "PUB_DATE");
-        public final static Property CommentCount = new Property(7, int.class, "commentCount", false, "COMMENT_COUNT");
-        public final static Property Object = new Property(8, int.class, "object", false, "OBJECT");
+        public final static Property DbID = new Property(0, Long.class, "dbID", true, "_id");
+        public final static Property Id = new Property(1, int.class, "id", false, "ID");
+        public final static Property Author = new Property(2, String.class, "author", false, "AUTHOR");
+        public final static Property PubDate = new Property(3, String.class, "pubDate", false, "PUB_DATE");
+        public final static Property Title = new Property(4, String.class, "title", false, "TITLE");
+        public final static Property Authorid = new Property(5, int.class, "authorid", false, "AUTHORID");
+        public final static Property CommentCount = new Property(6, int.class, "commentCount", false, "COMMENT_COUNT");
+        public final static Property Type = new Property(7, String.class, "type", false, "TYPE");
     }
 
 
@@ -48,15 +47,14 @@ public class NewsDao extends AbstractDao<News, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"NEWS\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"TITLE\" TEXT," + // 1: title
-                "\"NEWS_ID\" INTEGER NOT NULL ," + // 2: newsId
-                "\"AUTHOR\" TEXT," + // 3: author
-                "\"AUTHOR_ID\" INTEGER NOT NULL ," + // 4: authorId
-                "\"TYPE\" TEXT," + // 5: type
-                "\"PUB_DATE\" TEXT," + // 6: pubDate
-                "\"COMMENT_COUNT\" INTEGER NOT NULL ," + // 7: commentCount
-                "\"OBJECT\" INTEGER NOT NULL );"); // 8: object
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: dbID
+                "\"ID\" INTEGER NOT NULL ," + // 1: id
+                "\"AUTHOR\" TEXT," + // 2: author
+                "\"PUB_DATE\" TEXT," + // 3: pubDate
+                "\"TITLE\" TEXT," + // 4: title
+                "\"AUTHORID\" INTEGER NOT NULL ," + // 5: authorid
+                "\"COMMENT_COUNT\" INTEGER NOT NULL ," + // 6: commentCount
+                "\"TYPE\" TEXT);"); // 7: type
     }
 
     /** Drops the underlying database table. */
@@ -69,68 +67,66 @@ public class NewsDao extends AbstractDao<News, Long> {
     protected final void bindValues(DatabaseStatement stmt, News entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
+        Long dbID = entity.getDbID();
+        if (dbID != null) {
+            stmt.bindLong(1, dbID);
         }
- 
-        String title = entity.getTitle();
-        if (title != null) {
-            stmt.bindString(2, title);
-        }
-        stmt.bindLong(3, entity.getNewsId());
+        stmt.bindLong(2, entity.getId());
  
         String author = entity.getAuthor();
         if (author != null) {
-            stmt.bindString(4, author);
-        }
-        stmt.bindLong(5, entity.getAuthorId());
- 
-        String type = entity.getType();
-        if (type != null) {
-            stmt.bindString(6, type);
+            stmt.bindString(3, author);
         }
  
         String pubDate = entity.getPubDate();
         if (pubDate != null) {
-            stmt.bindString(7, pubDate);
+            stmt.bindString(4, pubDate);
         }
-        stmt.bindLong(8, entity.getCommentCount());
-        stmt.bindLong(9, entity.getObject());
+ 
+        String title = entity.getTitle();
+        if (title != null) {
+            stmt.bindString(5, title);
+        }
+        stmt.bindLong(6, entity.getAuthorid());
+        stmt.bindLong(7, entity.getCommentCount());
+ 
+        String type = entity.getType();
+        if (type != null) {
+            stmt.bindString(8, type);
+        }
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, News entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
+        Long dbID = entity.getDbID();
+        if (dbID != null) {
+            stmt.bindLong(1, dbID);
         }
- 
-        String title = entity.getTitle();
-        if (title != null) {
-            stmt.bindString(2, title);
-        }
-        stmt.bindLong(3, entity.getNewsId());
+        stmt.bindLong(2, entity.getId());
  
         String author = entity.getAuthor();
         if (author != null) {
-            stmt.bindString(4, author);
-        }
-        stmt.bindLong(5, entity.getAuthorId());
- 
-        String type = entity.getType();
-        if (type != null) {
-            stmt.bindString(6, type);
+            stmt.bindString(3, author);
         }
  
         String pubDate = entity.getPubDate();
         if (pubDate != null) {
-            stmt.bindString(7, pubDate);
+            stmt.bindString(4, pubDate);
         }
-        stmt.bindLong(8, entity.getCommentCount());
-        stmt.bindLong(9, entity.getObject());
+ 
+        String title = entity.getTitle();
+        if (title != null) {
+            stmt.bindString(5, title);
+        }
+        stmt.bindLong(6, entity.getAuthorid());
+        stmt.bindLong(7, entity.getCommentCount());
+ 
+        String type = entity.getType();
+        if (type != null) {
+            stmt.bindString(8, type);
+        }
     }
 
     @Override
@@ -141,42 +137,40 @@ public class NewsDao extends AbstractDao<News, Long> {
     @Override
     public News readEntity(Cursor cursor, int offset) {
         News entity = new News( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // title
-            cursor.getInt(offset + 2), // newsId
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // author
-            cursor.getInt(offset + 4), // authorId
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // type
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // pubDate
-            cursor.getInt(offset + 7), // commentCount
-            cursor.getInt(offset + 8) // object
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // dbID
+            cursor.getInt(offset + 1), // id
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // author
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // pubDate
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // title
+            cursor.getInt(offset + 5), // authorid
+            cursor.getInt(offset + 6), // commentCount
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // type
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, News entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setTitle(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setNewsId(cursor.getInt(offset + 2));
-        entity.setAuthor(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setAuthorId(cursor.getInt(offset + 4));
-        entity.setType(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setPubDate(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setCommentCount(cursor.getInt(offset + 7));
-        entity.setObject(cursor.getInt(offset + 8));
+        entity.setDbID(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setId(cursor.getInt(offset + 1));
+        entity.setAuthor(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setPubDate(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setTitle(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setAuthorid(cursor.getInt(offset + 5));
+        entity.setCommentCount(cursor.getInt(offset + 6));
+        entity.setType(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     @Override
     protected final Long updateKeyAfterInsert(News entity, long rowId) {
-        entity.setId(rowId);
+        entity.setDbID(rowId);
         return rowId;
     }
     
     @Override
     public Long getKey(News entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getDbID();
         } else {
             return null;
         }
@@ -184,7 +178,7 @@ public class NewsDao extends AbstractDao<News, Long> {
 
     @Override
     public boolean hasKey(News entity) {
-        return entity.getId() != null;
+        return entity.getDbID() != null;
     }
 
     @Override
