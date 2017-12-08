@@ -19,7 +19,7 @@ import butterknife.Unbinder;
  * Created by duoyi on 17-11-15.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements BaseView {
+public abstract class BaseActivity extends AppCompatActivity {
 
     private Unbinder mUnbinder;
 
@@ -35,7 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         setTranslucentStatus(true);
 
         init(savedInstanceState);
-        initPresenter();
+//        initPresenter();
         initView();
         initData();
     }
@@ -83,10 +83,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
 
     }
 
-    @Override
-    public void setPresenter(Object presenter) {
-
-    }
+//    @Override
+//    public void setPresenter(Object presenter) {
+//
+//    }
 
 
 

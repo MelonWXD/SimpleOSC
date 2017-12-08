@@ -14,7 +14,7 @@ import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.bean.News;
 import com.dongua.simpleosc.bean.NewsTab;
-import com.orhanobut.logger.Logger;
+import com.dongua.simpleosc.fragment.BaseRecyclerFragment;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -27,7 +27,7 @@ import butterknife.BindView;
  * Created by duoyi on 17-11-27.
  */
 
-public class TabFragment extends BaseRecyclerFragment {
+public class TabFragment extends BaseRecyclerFragment implements NewsContract.View{
     public static final String TAB_NAME = "tab_name";
     public static final String TAB_HERF = "tab_herf";
     public static final String TAB_BANNER = "tab_banner";
@@ -41,6 +41,13 @@ public class TabFragment extends BaseRecyclerFragment {
     private NewsTab mTab;
     private TabRecyclerAdapter mAdapter;
     private List<News> dataList ;
+
+
+
+    private NewsContract.Presenter mPresenter;
+
+
+
 
     public static TabFragment newInstance(Context context, NewsTab tab) {
         TabFragment fragment = new TabFragment();
@@ -68,6 +75,8 @@ public class TabFragment extends BaseRecyclerFragment {
 //        Boolean showBanner = bundle.getBoolean(TAB_BANNER);
 //        mTab = new NewsTab(name,showBanner,herf);
         mTab = (NewsTab) bundle.getSerializable(TAB_BEAN);
+
+        mPresenter = new TabPresenter(this);
     }
 
     @Override
@@ -104,8 +113,13 @@ public class TabFragment extends BaseRecyclerFragment {
 
 
     private void requestData() {
+        mPresenter.requestAllNews();
     }
 
+    @Override
+    public void updateRecyclerView(News data) {
+
+    }
 
     class TabRecyclerAdapter extends RecyclerView.Adapter<TabRecyclerAdapter.NewsHolder> {
         @Override
@@ -137,7 +151,7 @@ public class TabFragment extends BaseRecyclerFragment {
             TextView time;
             TextView comment;
 
-            public NewsHolder(View itemView) {
+            NewsHolder(View itemView) {
                 super(itemView);
                 title = itemView.findViewById(R.id.tv_title);
                 description = itemView.findViewById(R.id.tv_description);

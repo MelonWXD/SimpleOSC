@@ -1,4 +1,4 @@
-package com.dongua.simpleosc.ui.news;
+package com.dongua.simpleosc.fragment;
 
 import com.dongua.simpleosc.fragment.BaseFragment;
 
