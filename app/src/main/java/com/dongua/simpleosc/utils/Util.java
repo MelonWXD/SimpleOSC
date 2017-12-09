@@ -73,10 +73,11 @@ public class Util {
         String ret = "";
         try {
             long pubDate = sdf.parse(d).getTime();
-
-            long time = (new Date().getTime() - pubDate) / (24 * 60 * 60 * 1000);
+            long now = new Date().getTime();
+//            com.orhanobut.logger.Logger.d(now-pubDate);
+            float time = (now - pubDate) / (24*60*60*1000F);
             if (time < 1) {
-                ret = String.format(Locale.getDefault(),"%d小时前", (int) time * 24);
+                ret = String.format(Locale.getDefault(),"%d小时前", (int) (time * 24));
             } else if (time < 2){
                 ret = "昨天";
             }else if(time<3){

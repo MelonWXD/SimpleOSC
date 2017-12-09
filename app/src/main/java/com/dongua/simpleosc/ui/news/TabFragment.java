@@ -21,7 +21,7 @@ import com.dongua.simpleosc.bean.News;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
-import com.orhanobut.logger.Logger;
+import com.dongua.simpleosc.utils.UIUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -45,7 +45,8 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
 
     public static final String LAST_UPDATE_NEWS = "update_news";
 
-    public static final int MSG_REQUEST = 1;
+    public static final int MSG_REQUEST_SUCCESS = 1;
+    private static final int MSG_REQUEST_FAIL = 2;
 
     @BindView(R.id.rv_banner)
     Banner mBanner;
@@ -66,10 +67,13 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case MSG_REQUEST:
+                case MSG_REQUEST_SUCCESS:
                     mRefreshLayout.setRefreshing(false);
                     mAdapter.notifyDataSetChanged();
                     break;
+                case MSG_REQUEST_FAIL:
+                    mRefreshLayout.setRefreshing(false);
+                    UIUtil.showShortToast(getContext(),getString(R.string.request_fail));
                 default:
                     ;
 
@@ -180,14 +184,19 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
 //        mNewsDataList.clear();
         if (data != null) {
             mNewsDataList.addAll(0, data);
-
-            Message message = Message.obtain();
-            message.what = MSG_REQUEST;
-            mHandler.sendMessage(message);
         }
+        Message message = Message.obtain();
+        message.what = MSG_REQUEST_SUCCESS;
+        mHandler.sendMessage(message);
 
     }
 
+    @Override
+    public void requestFailed() {
+        Message message = Message.obtain();
+        message.what = MSG_REQUEST_FAIL;
+        mHandler.sendMessage(message);
+    }
 
     class TabRecyclerAdapter extends RecyclerView.Adapter<TabRecyclerAdapter.NewsHolder> {
 

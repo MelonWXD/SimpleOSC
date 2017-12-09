@@ -15,6 +15,7 @@ public interface NewsContract  {
 //        void updateRecyclerView(News data);
         void requestFinished(List<News> data);
 
+        void requestFailed();
     }
 
 
@@ -32,5 +33,6 @@ public interface NewsContract  {
 
     interface OnRequestListener<T>{
         void successed(T bean);
+        void failed();
     }
 }

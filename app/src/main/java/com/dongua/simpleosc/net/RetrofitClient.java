@@ -10,6 +10,7 @@ import com.google.gson.GsonBuilder;
 
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
@@ -68,8 +69,9 @@ public class RetrofitClient {
 
         mHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new LoggingInterceptor())
-                .addInterceptor(new SaveCookiesInterceptor())
-                .addInterceptor(new SetCookiesInterceptor())
+//                .addInterceptor(new SaveCookiesInterceptor())
+//                .addInterceptor(new SetCookiesInterceptor())
+                .connectTimeout(10, TimeUnit.SECONDS)
                 .build();
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)

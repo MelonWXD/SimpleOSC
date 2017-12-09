@@ -33,9 +33,10 @@ public class CustomConverterFactory extends Converter.Factory {
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
         ParameterizedType t = (ParameterizedType) type;
-//        Logger.d(t.getOwnerType());
-        Logger.d(t.getRawType());
-        Logger.d(t.getActualTypeArguments());
+
+
+//        Logger.d(t.getRawType());
+//        Logger.d(t.getActualTypeArguments());
 
         if (t.getRawType() == List.class) {
             if (t.getActualTypeArguments()[0] == News.class)

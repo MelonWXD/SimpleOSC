@@ -85,8 +85,8 @@ public class LaunchActivity extends BaseActivity {
             requestLogin(this);
 //            mPresenter.getToken("code");
         } else {
-            Logger.d(accessToken);
-            Logger.d(SharedPreferenceUtil.get(REFRESH_TOKEN, ""));
+//            Logger.d(accessToken);
+//            Logger.d(SharedPreferenceUtil.get(REFRESH_TOKEN, ""));
             RetrofitClient.getInstance().setAccessToken(accessToken);
             initLoginInfo(this);
         }

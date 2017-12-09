@@ -23,7 +23,6 @@ public class TabPresenter implements NewsContract.Presenter,NewsContract.OnReque
 
     @Override
     public void requestAllNews() {
-        Logger.d("requestAllNews");
         mModel.getNews(null);
     }
 
@@ -31,6 +30,11 @@ public class TabPresenter implements NewsContract.Presenter,NewsContract.OnReque
     @Override
     public void successed(List<News> data) {
         mView.requestFinished(data);
+    }
+
+    @Override
+    public void failed() {
+        mView.requestFailed();
     }
 
     @Override

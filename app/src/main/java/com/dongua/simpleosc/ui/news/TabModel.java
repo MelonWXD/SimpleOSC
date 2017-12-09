@@ -41,19 +41,21 @@ public class TabModel implements NewsContract.Model {
                         }else {
                             if(Util.dateCompare(news.get(0).getPubDate(),pubDate)){
                                 mListener.successed(news);
+                            }else {
+                                mListener.successed(null);
                             }
                         }
-                        Logger.d(news);
+//                        Logger.d(news);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        mListener.failed();
                     }
 
                     @Override
                     public void onComplete() {
-                        Logger.d("onComplete");
+//                        Logger.d("onComplete");
 
                     }
                 });
