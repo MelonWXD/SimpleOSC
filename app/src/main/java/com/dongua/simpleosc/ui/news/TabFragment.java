@@ -31,6 +31,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.dongua.simpleosc.utils.Util.dateFormat;
+
 /**
  * Created by duoyi on 17-11-27.
  */
@@ -201,8 +203,11 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
             News data = mNewsDataList.get(position);
             holder.title.setText(data.getTitle());
 //            holder.description = data.get();
-            holder.time.setText(data.getPubDate());
-            holder.comment.setText(data.getCommentCount() + "");
+            holder.time.setText(dateFormat(data.getPubDate()));
+//            if (data.getCommentCount() > 0) {
+//                holder.comment.setCompoundDrawables(getResources().getDrawable(R.mipmap.ic_comment), null, null, null);
+//            }
+            holder.comment.setText(String.valueOf(data.getCommentCount()));
         }
 
         @Override

@@ -99,6 +99,7 @@ public class News {
         return this.commentCount;
     }
 
+
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
     }

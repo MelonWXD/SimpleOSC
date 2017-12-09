@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by duoyi on 17-11-25.
@@ -65,5 +66,30 @@ public class Util {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static String dateFormat(String d) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
+        String ret = "";
+        try {
+            long pubDate = sdf.parse(d).getTime();
+
+            long time = (new Date().getTime() - pubDate) / (24 * 60 * 60 * 1000);
+            if (time < 1) {
+                ret = String.format(Locale.getDefault(),"%d小时前", (int) time * 24);
+            } else if (time < 2){
+                ret = "昨天";
+            }else if(time<3){
+                ret="前天";
+            }else {
+                ret = String.format(Locale.getDefault(),"%d天前", (int) time );
+            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+        return ret;
     }
 }
