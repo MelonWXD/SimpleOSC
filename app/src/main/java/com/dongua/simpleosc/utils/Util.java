@@ -8,6 +8,9 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,7 +21,7 @@ public class Util {
 
     static Gson gson = new Gson();
 
-    public static JsonObject string2Json(String jsonstr){
+    public static JsonObject string2Json(String jsonstr) {
         JsonObject jsonData = new JsonParser().parse(jsonstr).getAsJsonObject();
         return jsonData;
     }
@@ -34,20 +37,33 @@ public class Util {
         return res;
     }
 
-    public static JsonArray beanList2JsonArray(List<Object> beanList){
+    public static JsonArray beanList2JsonArray(List<Object> beanList) {
         JsonArray jsonArray = gson.toJsonTree(beanList).getAsJsonArray();
         return jsonArray;
     }
 
 
-    public static List jsonArray2BeanList(String jsonarray, Type type){
+    public static List jsonArray2BeanList(String jsonarray, Type type) {
 //        type = new TypeToken<beanClass>().getType()
-        return gson.fromJson(jsonarray,type);
+        return gson.fromJson(jsonarray, type);
 
     }
 
-    public static String jsonArray2String(JsonArray jsonarray){
+    public static String jsonArray2String(JsonArray jsonarray) {
 //        type = new TypeToken<beanClass>().getType()
         return gson.toJson(jsonarray);
+    }
+
+    //2017-12-09 08:24:49
+    public static boolean dateCompare(String d1, String d2) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date1 = sdf.parse(d1);
+            Date date2 = sdf.parse(d2);
+            return date1.getTime() > date2.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

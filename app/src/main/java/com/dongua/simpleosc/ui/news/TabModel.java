@@ -2,6 +2,7 @@ package com.dongua.simpleosc.ui.news;
 
 import com.dongua.simpleosc.bean.News;
 import com.dongua.simpleosc.net.RetrofitClient;
+import com.dongua.simpleosc.utils.Util;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -19,39 +20,45 @@ import okhttp3.ResponseBody;
 
 public class TabModel implements NewsContract.Model {
 
-    private NewsContract.OnRequestListener mListener;
+    private NewsContract.OnRequestListener<List<News>> mListener;
 
     @Override
-    public void getNews() {
+    public void getNews(final String pubDate) {
         RetrofitClient.getInstance().getNewsList()
                 .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
                 .subscribe(new Observer<List<News>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        Logger.i("news",d);
+
                     }
 
+                    //todo cache
                     @Override
                     public void onNext(List<News> news) {
-                        Logger.i("news",news);
-
-
+                        if(pubDate==null || pubDate.isEmpty()){
+                            mListener.successed(news);
+                        }else {
+                            if(Util.dateCompare(news.get(0).getPubDate(),pubDate)){
+                                mListener.successed(news);
+                            }
+                        }
+                        Logger.d(news);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Logger.i("news"+e.getCause());
 
                     }
 
                     @Override
                     public void onComplete() {
-                        Logger.i("news");
+                        Logger.d("onComplete");
 
                     }
                 });
     }
+
 
 
     @Override
