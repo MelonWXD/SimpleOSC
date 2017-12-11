@@ -13,4 +13,8 @@
     <string name="request_fail">网络请求失败,请检查网络链接</string>
 
 
+
+    <string name="pub_info">\@%s \u0020 %s</string>
+    <string name="iv_string_comment">评论图片</string>
+
 </resources>

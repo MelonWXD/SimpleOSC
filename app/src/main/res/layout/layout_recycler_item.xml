@@ -34,7 +34,7 @@
             android:id="@+id/tv_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:layout_marginBottom="4dp"
             android:layout_marginTop="2dp"
             android:ellipsize="end"
@@ -60,15 +60,18 @@
                 android:lines="1"
                 android:textColor="@color/gray"
                 android:textSize="12sp"
+                android:layout_toLeftOf="@+id/iv_comment"
                 tools:text="2012-12-01 22:10" />
 
             <ImageView
+                android:id="@+id/iv_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
                 android:layout_alignTop="@+id/tv_comment"
                 android:layout_alignBottom="@+id/tv_comment"
                 android:layout_toStartOf="@+id/tv_comment"
+                android:contentDescription="@string/iv_string_comment"
                 android:layout_marginEnd="@dimen/lay_8"
                 android:src="@mipmap/ic_comment_empty"/>
 
@@ -88,6 +91,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/divider"
         style="@style/h_line"
         android:layout_marginLeft="16dp" />
 </LinearLayout>

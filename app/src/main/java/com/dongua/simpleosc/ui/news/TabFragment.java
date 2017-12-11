@@ -2,6 +2,10 @@ package com.dongua.simpleosc.ui.news;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -73,7 +77,7 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
                     break;
                 case MSG_REQUEST_FAIL:
                     mRefreshLayout.setRefreshing(false);
-                    UIUtil.showShortToast(getContext(),getString(R.string.request_fail));
+                    UIUtil.showShortToast(getContext(), getString(R.string.request_fail));
                 default:
                     ;
 
@@ -119,7 +123,6 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
         mPresenter.attach(this);
 
 
-
         if (mTab != null && mTab.getShowBanner()) {
             mBanner.setImageLoader(new ImageLoader() {
                 @Override
@@ -135,6 +138,8 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
         mAdapter = new TabRecyclerAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),1));
 
         mRefreshLayout.setDistanceToTriggerSync(300);
 //        mRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
@@ -226,11 +231,14 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
             News data = mNewsDataList.get(position);
             holder.title.setText(data.getTitle());
 //            holder.description = data.get();
-            holder.time.setText(dateFormat(data.getPubDate()));
+            holder.time.setText(String.format(getResources().getString(R.string.pub_info), data.getAuthor(), dateFormat(data.getPubDate())));
 //            if (data.getCommentCount() > 0) {
 //                holder.comment.setCompoundDrawables(getResources().getDrawable(R.mipmap.ic_comment), null, null, null);
 //            }
             holder.comment.setText(String.valueOf(data.getCommentCount()));
+            if(position==mNewsDataList.size()-1){
+                holder.line.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -245,6 +253,7 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
             TextView description;
             TextView time;
             TextView comment;
+            View line;
 
             NewsHolder(View itemView) {
                 super(itemView);
@@ -252,6 +261,7 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
                 description = itemView.findViewById(R.id.tv_description);
                 time = itemView.findViewById(R.id.tv_time);
                 comment = itemView.findViewById(R.id.tv_comment);
+                line = itemView.findViewById(R.id.divider);
             }
         }
     }
