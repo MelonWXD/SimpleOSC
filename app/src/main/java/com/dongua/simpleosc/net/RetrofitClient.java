@@ -13,14 +13,16 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import okhttp3.OkHttpClient;
 
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import android.support.v4.util.ArrayMap;
 
-
+import org.reactivestreams.Subscription;
 
 
 /**
@@ -41,6 +43,8 @@ public class RetrofitClient {
     public static final int DEFAULT_PAGE = 1;
     public static final int DEFAULT_PAGESIZE = 20;
 
+
+    private ArrayMap<String,Observer> requestMap;
 
     private String mAccessToken;
 
@@ -66,6 +70,7 @@ public class RetrofitClient {
 
     private RetrofitClient(){
 
+        requestMap = new ArrayMap<>();
 
         mHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new LoggingInterceptor())
@@ -102,5 +107,13 @@ public class RetrofitClient {
         return mApi.getNewsList(access_code,DEFAULT_CATALOG,DEFAULT_PAGE,DEFAULT_PAGESIZE,DATA_TYPE);
     }
 
-
+    public void add(String key,Observer request){
+        requestMap.put(key,request);
+    }
+    public void cancel(String key){
+        requestMap.remove(key);
+    }
+    public void cancelAll(){
+        requestMap.clear();
+    }
 }

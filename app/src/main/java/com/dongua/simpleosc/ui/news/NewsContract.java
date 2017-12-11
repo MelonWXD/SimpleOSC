@@ -19,15 +19,18 @@ public interface NewsContract  {
     }
 
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenter<View>{
         void requestAllNews();
         void requestNewsBefore(String pubDate);
+        void cancelRequest();
     }
 
     interface Model{
         void getNews(String pubDate);
         void cacheData();
         void setRequestListener(OnRequestListener listener);
+
+        void cancelRequest();
 //        void getNewsBefore(String pubDate);
     }
 

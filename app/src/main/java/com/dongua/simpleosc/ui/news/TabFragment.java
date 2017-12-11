@@ -108,12 +108,18 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
 //        mTab = new NewsTab(name,showBanner,herf);
         mTab = (NewsTab) bundle.getSerializable(TAB_BEAN);
 
-        mPresenter = new TabPresenter(this);
+
     }
 
     @Override
     protected void initWidget(View root) {
         super.initWidget(root);
+
+        mPresenter = new TabPresenter();
+        mPresenter.attach(this);
+
+
+
         if (mTab != null && mTab.getShowBanner()) {
             mBanner.setImageLoader(new ImageLoader() {
                 @Override
@@ -189,6 +195,14 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
         message.what = MSG_REQUEST_SUCCESS;
         mHandler.sendMessage(message);
 
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.detach();
+        mPresenter.cancelRequest();
     }
 
     @Override

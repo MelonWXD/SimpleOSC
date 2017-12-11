@@ -21,7 +21,7 @@ import okhttp3.ResponseBody;
 public class TabModel implements NewsContract.Model {
 
     private NewsContract.OnRequestListener<List<News>> mListener;
-
+    private Disposable mNewsDisposable;
     @Override
     public void getNews(final String pubDate) {
         RetrofitClient.getInstance().getNewsList()
@@ -30,7 +30,7 @@ public class TabModel implements NewsContract.Model {
                 .subscribe(new Observer<List<News>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        mNewsDisposable = d;
                     }
 
                     //todo cache
@@ -73,5 +73,9 @@ public class TabModel implements NewsContract.Model {
         mListener = listener;
     }
 
-
+    @Override
+    public void cancelRequest() {
+        if(!mNewsDisposable.isDisposed())
+            mNewsDisposable.dispose();
+    }
 }

@@ -15,8 +15,7 @@ public class TabPresenter implements NewsContract.Presenter,NewsContract.OnReque
     private NewsContract.Model mModel;
 
 
-    TabPresenter(NewsContract.View view) {
-        mView = view;
+    TabPresenter() {
         mModel = new TabModel();
         mModel.setRequestListener(this);
     }
@@ -40,5 +39,22 @@ public class TabPresenter implements NewsContract.Presenter,NewsContract.OnReque
     @Override
     public void requestNewsBefore(String pubDate) {
         mModel.getNews(pubDate);
+    }
+
+    @Override
+    public void detach() {
+        mView = null;
+
+    }
+
+    @Override
+    public void attach(NewsContract.View view) {
+        mView =  view;
+
+    }
+
+    @Override
+    public void cancelRequest() {
+        mModel.cancelRequest();
     }
 }
