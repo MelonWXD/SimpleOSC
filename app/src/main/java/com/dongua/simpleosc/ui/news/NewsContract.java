@@ -25,10 +25,10 @@ public interface NewsContract  {
         void cancelRequest();
     }
 
-    interface Model{
+    interface Model<T>{
         void getNews(String pubDate);
-        void cacheData();
-        void setRequestListener(OnRequestListener listener);
+        void cacheData(T data);
+        void setRequestListener(OnRequestListener<T> listener);
 
         void cancelRequest();
 //        void getNewsBefore(String pubDate);

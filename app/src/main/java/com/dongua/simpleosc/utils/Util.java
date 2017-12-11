@@ -55,7 +55,10 @@ public class Util {
         return gson.toJson(jsonarray);
     }
 
-    //2017-12-09 08:24:49
+    /**
+     * return true if d1 is later d2
+     * */
+//    /*2017-12-09 08:24:49*/
     public static boolean dateCompare(String d1, String d2) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {

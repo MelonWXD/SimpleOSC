@@ -1,10 +1,13 @@
 package com.dongua.simpleosc.ui.news;
 
+import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.bean.News;
+import com.dongua.simpleosc.db.NewsDao;
 import com.dongua.simpleosc.net.RetrofitClient;
 import com.dongua.simpleosc.utils.Util;
 import com.orhanobut.logger.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -18,10 +21,11 @@ import okhttp3.ResponseBody;
  * Created by duoyi on 17-12-8.
  */
 
-public class TabModel implements NewsContract.Model {
+public class TabModel implements NewsContract.Model<List<News>> {
 
     private NewsContract.OnRequestListener<List<News>> mListener;
     private Disposable mNewsDisposable;
+
     @Override
     public void getNews(final String pubDate) {
         RetrofitClient.getInstance().getNewsList()
@@ -33,17 +37,23 @@ public class TabModel implements NewsContract.Model {
                         mNewsDisposable = d;
                     }
 
-                    //todo cache
+
                     @Override
                     public void onNext(List<News> news) {
-                        if(pubDate==null || pubDate.isEmpty()){
+                        if (pubDate == null || pubDate.isEmpty()) {
                             mListener.successed(news);
-                        }else {
-                            if(Util.dateCompare(news.get(0).getPubDate(),pubDate)){
-                                mListener.successed(news);
-                            }else {
-                                mListener.successed(null);
+                            cacheData(news);
+                        } else {
+                            List<News> update = new ArrayList<>();
+                            for (News n : news) {
+                                if (Util.dateCompare(n.getPubDate(), pubDate)) {
+                                    update.add(n);
+                                }
                             }
+                            mListener.successed(update);
+                            cacheData(update);
+                            Logger.d("新闻数据是否为空: " + update.isEmpty());
+
                         }
 //                        Logger.d(news);
                     }
@@ -62,20 +72,23 @@ public class TabModel implements NewsContract.Model {
     }
 
 
-
     @Override
-    public void cacheData() {
+    public void cacheData(List<News> data) {
+        NewsDao dao = App.getDaoSession().getNewsDao();
+        for (News n : data) {
+            dao.save(n);
+        }
 
     }
 
     @Override
-    public void setRequestListener(NewsContract.OnRequestListener listener) {
+    public void setRequestListener(NewsContract.OnRequestListener<List<News>> listener) {
         mListener = listener;
     }
 
     @Override
     public void cancelRequest() {
-        if(!mNewsDisposable.isDisposed())
+        if (!mNewsDisposable.isDisposed())
             mNewsDisposable.dispose();
     }
 }

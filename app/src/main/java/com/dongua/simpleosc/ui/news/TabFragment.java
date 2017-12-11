@@ -188,7 +188,7 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
     public void requestFinished(List<News> data) {
 //        Logger.d(Thread.currentThread().getId());
 //        mNewsDataList.clear();
-        if (data != null) {
+        if (data != null && !data.isEmpty()) {
             mNewsDataList.addAll(0, data);
         }
         Message message = Message.obtain();
