@@ -23,14 +23,18 @@ public interface NewsContract  {
         void requestAllNews();
         void requestNewsBefore(String pubDate);
         void cancelRequest();
+
+        void loadMore();
     }
 
     interface Model<T>{
         void getNews(String pubDate);
         void cacheData(T data);
         void setRequestListener(OnRequestListener<T> listener);
-
         void cancelRequest();
+
+        void loadMore();
+
 //        void getNewsBefore(String pubDate);
     }
 

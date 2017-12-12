@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -25,11 +25,19 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_content"
+                android:layout_below="@+id/rv_banner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
             </android.support.v7.widget.RecyclerView>
-        </LinearLayout>
+
+            <com.dongua.simpleosc.ui.LoadMoreView
+                android:id="@+id/cv_loadmore"
+                android:layout_below="@+id/rv_content"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="5px" />
+        </RelativeLayout>
 
 
     </android.support.v4.widget.SwipeRefreshLayout>

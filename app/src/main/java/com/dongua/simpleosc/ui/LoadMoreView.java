@@ -1,5 +1,6 @@
 package com.dongua.simpleosc.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,6 +12,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.dongua.simpleosc.R;
+import com.orhanobut.logger.Logger;
+
+import java.util.Locale;
 
 /**
  * Created by duoyi on 17-12-11.
@@ -18,11 +22,27 @@ import com.dongua.simpleosc.R;
 
 public class LoadMoreView extends View {
 
+    public static final int FAST = 10;
+    public static final int MEDIUM = 15;
+    public static final int SLOW = 20;
+
+
     private Context mContext;
     private int[] mSchemeColors;
     private boolean isLoading = false;
     private boolean isFirstDraw = true;
     private Paint mPaint;
+    private Paint mPaint1;
+    private int halfWidth = 0;
+    private int drawWidth = 0;
+    private int drawLeft = 0;
+    private int drawRight = 0;
+    private int drawTop = 0;
+    private int drawBottom = 0;
+    private int drawStep = 0;
+
+
+    private int drawSpeed = MEDIUM;
 
     public LoadMoreView(Context context) {
         super(context);
@@ -43,6 +63,8 @@ public class LoadMoreView extends View {
 
         mPaint = new Paint();
         mPaint.setStyle(Paint.Style.FILL);
+        mPaint1 = new Paint();
+        mPaint1.setStyle(Paint.Style.FILL);
 
     }
 
@@ -50,6 +72,10 @@ public class LoadMoreView extends View {
         super(context, attrs, defStyleAttr);
         init(context);
 
+    }
+
+    public void setDrawSpeed(int drawSpeed) {
+        this.drawSpeed = drawSpeed;
     }
 
 
@@ -66,20 +92,41 @@ public class LoadMoreView extends View {
         this.mSchemeColors = colorSchemeColors;
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int w = getMeasuredWidth();
+//        int w = getMeasuredWidth();
+
         if (isFirstDraw) {
             isFirstDraw = false;
             mPaint.setColor(mSchemeColors[0]);
-            canvas.drawRect(getLeft(),getTop(),getRight(),getBottom(),mPaint);
+            canvas.drawRect(getLeft(), getTop(), getRight(), getBottom(), mPaint);
+            halfWidth = getMeasuredWidth() / 2;
+            drawStep = halfWidth / drawSpeed;
+            drawTop = 0;
+            drawBottom = getMeasuredHeight();
         } else {
-            for (int i = 1; i < w; i++) {
 
-            }
+            drawWidth += drawStep;
+            drawLeft = halfWidth - drawWidth % halfWidth;
+            drawRight = halfWidth + drawWidth % halfWidth;
+
+
+            int lastColor = mSchemeColors[(drawWidth / halfWidth) % mSchemeColors.length];
+            int curColor = mSchemeColors[(drawWidth / halfWidth + 1) % mSchemeColors.length];
+
+            mPaint.setColor(lastColor);
+            canvas.drawRect(0, drawTop, drawLeft, drawBottom, mPaint);
+            canvas.drawRect(drawRight, drawTop, halfWidth * 2, drawBottom, mPaint);
+            mPaint.setColor(curColor);
+            canvas.drawRect(drawLeft, drawTop, drawRight, drawBottom, mPaint);
+
         }
 
-        postInvalidate();
+//        Logger.d(String.format(Locale.getDefault(), "halfWidth = %d , drawStep = %d ,colorIdx = %d", halfWidth, drawStep, (drawWidth / halfWidth) % mSchemeColors.length + 1));
+//        Logger.d(String.format("leftStart = %d , rightEnd = %d ", drawLeft,drawRight));
+
+        postInvalidateDelayed(100);
     }
 }

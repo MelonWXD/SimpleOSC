@@ -57,4 +57,9 @@ public class TabPresenter implements NewsContract.Presenter,NewsContract.OnReque
     public void cancelRequest() {
         mModel.cancelRequest();
     }
+
+    @Override
+    public void loadMore() {
+
+    }
 }

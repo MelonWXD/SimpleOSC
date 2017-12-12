@@ -91,4 +91,10 @@ public class TabModel implements NewsContract.Model<List<News>> {
         if (!mNewsDisposable.isDisposed())
             mNewsDisposable.dispose();
     }
+
+
+    @Override
+    public void loadMore() {
+
+    }
 }

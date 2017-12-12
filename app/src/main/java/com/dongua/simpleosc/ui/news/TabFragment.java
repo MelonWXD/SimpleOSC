@@ -24,6 +24,7 @@ import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.bean.News;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.fragment.BaseRecyclerFragment;
+import com.dongua.simpleosc.ui.LoadMoreView;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.dongua.simpleosc.utils.UIUtil;
 import com.youth.banner.Banner;
@@ -32,7 +33,7 @@ import com.youth.banner.loader.ImageLoader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import butterknife.BindInt;
 import butterknife.BindView;
 
 import static com.dongua.simpleosc.utils.Util.dateFormat;
@@ -51,6 +52,7 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
 
     public static final int MSG_REQUEST_SUCCESS = 1;
     private static final int MSG_REQUEST_FAIL = 2;
+    private static final int MSG_LOAD_MORE = 3;
 
     @BindView(R.id.rv_banner)
     Banner mBanner;
@@ -58,6 +60,8 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh)
     SwipeRefreshLayout mRefreshLayout;
+    @BindView(R.id.cv_loadmore)
+    LoadMoreView mLoadMore;
 
     private NewsTab mTab;
     private TabRecyclerAdapter mAdapter;
@@ -66,24 +70,36 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
 
     private NewsContract.Presenter mPresenter;
 
+
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_REQUEST_SUCCESS:
-                    mRefreshLayout.setRefreshing(false);
+                    hideProgress();
                     mAdapter.notifyDataSetChanged();
                     break;
                 case MSG_REQUEST_FAIL:
-                    mRefreshLayout.setRefreshing(false);
+                    hideProgress();
                     UIUtil.showShortToast(getContext(), getString(R.string.request_fail));
+                case MSG_LOAD_MORE:
+                    hideProgress();
                 default:
                     ;
 
             }
         }
     };
+
+    private void hideProgress() {
+        if (mRefreshLayout.isRefreshing())
+            mRefreshLayout.setRefreshing(false);
+        if (mLoadMore.getVisibility() != View.GONE)
+            mLoadMore.setVisibility(View.GONE);
+
+
+    }
 
     public static TabFragment newInstance(Context context, NewsTab tab) {
         TabFragment fragment = new TabFragment();
@@ -138,6 +154,21 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
         mAdapter = new TabRecyclerAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (recyclerView.canScrollVertically(1)) {
+                    com.orhanobut.logger.Logger.d("滑动到底部");
+                    mLoadMore.setVisibility(View.VISIBLE);
+                    mPresenter.loadMore();
+                    Message message = new Message();
+                    message.what = MSG_LOAD_MORE;
+                    mHandler.sendMessage(message);
+                }
+            }
+        });
+
 
 //        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),1));
 
@@ -208,6 +239,7 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
         super.onDestroy();
         mPresenter.detach();
         mPresenter.cancelRequest();
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     @Override
@@ -236,7 +268,7 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
 //                holder.comment.setCompoundDrawables(getResources().getDrawable(R.mipmap.ic_comment), null, null, null);
 //            }
             holder.comment.setText(String.valueOf(data.getCommentCount()));
-            if(position==mNewsDataList.size()-1){
+            if (position == mNewsDataList.size() - 1) {
                 holder.line.setVisibility(View.GONE);
             }
         }
