@@ -4,12 +4,14 @@ package com.dongua.simpleosc.bean;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Unique;
 
 @Entity
 public class News {
 
     @Id(autoincrement = true)
     private Long dbID;
+    @Unique
     private int id;
     private String author;
     private String pubDate;

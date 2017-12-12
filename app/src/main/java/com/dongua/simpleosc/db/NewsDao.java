@@ -48,7 +48,7 @@ public class NewsDao extends AbstractDao<News, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"NEWS\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: dbID
-                "\"ID\" INTEGER NOT NULL ," + // 1: id
+                "\"ID\" INTEGER NOT NULL UNIQUE ," + // 1: id
                 "\"AUTHOR\" TEXT," + // 2: author
                 "\"PUB_DATE\" TEXT," + // 3: pubDate
                 "\"TITLE\" TEXT," + // 4: title

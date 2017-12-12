@@ -23,14 +23,20 @@ import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.bean.News;
 import com.dongua.simpleosc.bean.NewsTab;
+import com.dongua.simpleosc.db.NewsDao;
 import com.dongua.simpleosc.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.ui.LoadMoreView;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.dongua.simpleosc.utils.UIUtil;
+import com.dongua.simpleosc.utils.Util;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
+import org.greenrobot.greendao.query.QueryBuilder;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import butterknife.BindInt;
@@ -138,6 +144,7 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
         mPresenter = new TabPresenter();
         mPresenter.attach(this);
 
+        mLoadMore.setDrawSpeed(LoadMoreView.FAST);
 
         if (mTab != null && mTab.getShowBanner()) {
             mBanner.setImageLoader(new ImageLoader() {
@@ -158,13 +165,14 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (recyclerView.canScrollVertically(1)) {
+                if (!recyclerView.canScrollVertically(1)) {
                     com.orhanobut.logger.Logger.d("滑动到底部");
                     mLoadMore.setVisibility(View.VISIBLE);
-                    mPresenter.loadMore();
+                    loadMoreFromDB();
+//                    mPresenter.loadMore();
                     Message message = new Message();
                     message.what = MSG_LOAD_MORE;
-                    mHandler.sendMessage(message);
+                    mHandler.sendMessageDelayed(message,5000);
                 }
             }
         });
@@ -202,15 +210,36 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
 
     private void searchDB() {
 
-        List<News> data = App.getDaoSession().getNewsDao().loadAll();
+        List<News> data = App.getDaoSession().getNewsDao().queryBuilder().limit(15).orderDesc(NewsDao.Properties.PubDate).list();
         if (data != null && !data.isEmpty()) {
+            Collections.sort(data, new Comparator<News>() {
+                @Override
+                public int compare(News n1, News n2) {
+                    if(Util.dateCompare(n1.getPubDate(),n2.getPubDate())){
+                        return -1;
+                    }
+                    return 1;
+                }
+            });
+
+
             mNewsDataList.clear();
             mNewsDataList.addAll(data);
         }
     }
 
+    private void loadMoreFromDB() {
+        String time = mNewsDataList.get(mNewsDataList.size()-1).getPubDate();
+        QueryBuilder<News> qb = App.getDaoSession().getNewsDao().queryBuilder();
+        qb.limit(15);
+//        qb.where(NewsDao.Properties.PubDate);
 
-    //todo list->set 防止重复?
+        List<News> data = qb.list();
+        mNewsDataList.addAll(data);
+    }
+
+
+
     private void requestData() {
         mRefreshLayout.setRefreshing(true);
         if (mNewsDataList.isEmpty()) {

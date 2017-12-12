@@ -22,9 +22,10 @@ import java.util.Locale;
 
 public class LoadMoreView extends View {
 
-    public static final int FAST = 10;
-    public static final int MEDIUM = 15;
-    public static final int SLOW = 20;
+    public static final int FAST = 50;
+    public static final int MEDIUM = 100;
+    public static final int SLOW = 200;
+    private static final int DEFAULT_STEP = 15;
 
 
     private Context mContext;
@@ -40,7 +41,6 @@ public class LoadMoreView extends View {
     private int drawTop = 0;
     private int drawBottom = 0;
     private int drawStep = 0;
-
 
     private int drawSpeed = MEDIUM;
 
@@ -103,7 +103,7 @@ public class LoadMoreView extends View {
             mPaint.setColor(mSchemeColors[0]);
             canvas.drawRect(getLeft(), getTop(), getRight(), getBottom(), mPaint);
             halfWidth = getMeasuredWidth() / 2;
-            drawStep = halfWidth / drawSpeed;
+            drawStep = halfWidth / DEFAULT_STEP;
             drawTop = 0;
             drawBottom = getMeasuredHeight();
         } else {
@@ -127,6 +127,6 @@ public class LoadMoreView extends View {
 //        Logger.d(String.format(Locale.getDefault(), "halfWidth = %d , drawStep = %d ,colorIdx = %d", halfWidth, drawStep, (drawWidth / halfWidth) % mSchemeColors.length + 1));
 //        Logger.d(String.format("leftStart = %d , rightEnd = %d ", drawLeft,drawRight));
 
-        postInvalidateDelayed(100);
+        postInvalidateDelayed(drawSpeed);
     }
 }
