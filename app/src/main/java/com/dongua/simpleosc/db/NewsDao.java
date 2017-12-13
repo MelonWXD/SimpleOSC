@@ -28,10 +28,11 @@ public class NewsDao extends AbstractDao<News, Long> {
         public final static Property Id = new Property(1, int.class, "id", false, "ID");
         public final static Property Author = new Property(2, String.class, "author", false, "AUTHOR");
         public final static Property PubDate = new Property(3, String.class, "pubDate", false, "PUB_DATE");
-        public final static Property Title = new Property(4, String.class, "title", false, "TITLE");
-        public final static Property Authorid = new Property(5, int.class, "authorid", false, "AUTHORID");
-        public final static Property CommentCount = new Property(6, int.class, "commentCount", false, "COMMENT_COUNT");
-        public final static Property Type = new Property(7, String.class, "type", false, "TYPE");
+        public final static Property PubDateLong = new Property(4, long.class, "pubDateLong", false, "PUB_DATE_LONG");
+        public final static Property Title = new Property(5, String.class, "title", false, "TITLE");
+        public final static Property Authorid = new Property(6, int.class, "authorid", false, "AUTHORID");
+        public final static Property CommentCount = new Property(7, int.class, "commentCount", false, "COMMENT_COUNT");
+        public final static Property Type = new Property(8, String.class, "type", false, "TYPE");
     }
 
 
@@ -51,10 +52,11 @@ public class NewsDao extends AbstractDao<News, Long> {
                 "\"ID\" INTEGER NOT NULL UNIQUE ," + // 1: id
                 "\"AUTHOR\" TEXT," + // 2: author
                 "\"PUB_DATE\" TEXT," + // 3: pubDate
-                "\"TITLE\" TEXT," + // 4: title
-                "\"AUTHORID\" INTEGER NOT NULL ," + // 5: authorid
-                "\"COMMENT_COUNT\" INTEGER NOT NULL ," + // 6: commentCount
-                "\"TYPE\" TEXT);"); // 7: type
+                "\"PUB_DATE_LONG\" INTEGER NOT NULL ," + // 4: pubDateLong
+                "\"TITLE\" TEXT," + // 5: title
+                "\"AUTHORID\" INTEGER NOT NULL ," + // 6: authorid
+                "\"COMMENT_COUNT\" INTEGER NOT NULL ," + // 7: commentCount
+                "\"TYPE\" TEXT);"); // 8: type
     }
 
     /** Drops the underlying database table. */
@@ -82,17 +84,18 @@ public class NewsDao extends AbstractDao<News, Long> {
         if (pubDate != null) {
             stmt.bindString(4, pubDate);
         }
+        stmt.bindLong(5, entity.getPubDateLong());
  
         String title = entity.getTitle();
         if (title != null) {
-            stmt.bindString(5, title);
+            stmt.bindString(6, title);
         }
-        stmt.bindLong(6, entity.getAuthorid());
-        stmt.bindLong(7, entity.getCommentCount());
+        stmt.bindLong(7, entity.getAuthorid());
+        stmt.bindLong(8, entity.getCommentCount());
  
         String type = entity.getType();
         if (type != null) {
-            stmt.bindString(8, type);
+            stmt.bindString(9, type);
         }
     }
 
@@ -115,17 +118,18 @@ public class NewsDao extends AbstractDao<News, Long> {
         if (pubDate != null) {
             stmt.bindString(4, pubDate);
         }
+        stmt.bindLong(5, entity.getPubDateLong());
  
         String title = entity.getTitle();
         if (title != null) {
-            stmt.bindString(5, title);
+            stmt.bindString(6, title);
         }
-        stmt.bindLong(6, entity.getAuthorid());
-        stmt.bindLong(7, entity.getCommentCount());
+        stmt.bindLong(7, entity.getAuthorid());
+        stmt.bindLong(8, entity.getCommentCount());
  
         String type = entity.getType();
         if (type != null) {
-            stmt.bindString(8, type);
+            stmt.bindString(9, type);
         }
     }
 
@@ -141,10 +145,11 @@ public class NewsDao extends AbstractDao<News, Long> {
             cursor.getInt(offset + 1), // id
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // author
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // pubDate
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // title
-            cursor.getInt(offset + 5), // authorid
-            cursor.getInt(offset + 6), // commentCount
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // type
+            cursor.getLong(offset + 4), // pubDateLong
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // title
+            cursor.getInt(offset + 6), // authorid
+            cursor.getInt(offset + 7), // commentCount
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8) // type
         );
         return entity;
     }
@@ -155,10 +160,11 @@ public class NewsDao extends AbstractDao<News, Long> {
         entity.setId(cursor.getInt(offset + 1));
         entity.setAuthor(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setPubDate(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setTitle(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setAuthorid(cursor.getInt(offset + 5));
-        entity.setCommentCount(cursor.getInt(offset + 6));
-        entity.setType(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setPubDateLong(cursor.getLong(offset + 4));
+        entity.setTitle(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setAuthorid(cursor.getInt(offset + 6));
+        entity.setCommentCount(cursor.getInt(offset + 7));
+        entity.setType(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
      }
     
     @Override

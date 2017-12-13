@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import com.orhanobut.logger.Logger;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
@@ -20,7 +21,7 @@ import java.util.Locale;
 
 public class Util {
 
-    static Gson gson = new Gson();
+    private static Gson gson = new Gson();
 
     public static JsonObject string2Json(String jsonstr) {
         JsonObject jsonData = new JsonParser().parse(jsonstr).getAsJsonObject();
@@ -95,5 +96,16 @@ public class Util {
 
 
         return ret;
+    }
+
+    public static long str2Date(String d){
+//        Logger.d("str2Date");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
+        try {
+            return sdf.parse(d).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0L;
     }
 }

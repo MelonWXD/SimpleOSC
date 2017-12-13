@@ -76,6 +76,7 @@ public class TabModel implements NewsContract.Model<List<News>> {
     public void cacheData(List<News> data) {
         NewsDao dao = App.getDaoSession().getNewsDao();
         for (News n : data) {
+            n.setPubDateLong(Util.str2Date(n.getPubDate()));
             dao.save(n);
         }
 

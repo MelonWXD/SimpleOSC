@@ -29,6 +29,7 @@ import com.dongua.simpleosc.ui.LoadMoreView;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.dongua.simpleosc.utils.UIUtil;
 import com.dongua.simpleosc.utils.Util;
+import com.orhanobut.logger.Logger;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
@@ -39,6 +40,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
 import butterknife.BindInt;
 import butterknife.BindView;
 
@@ -58,7 +60,8 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
 
     public static final int MSG_REQUEST_SUCCESS = 1;
     private static final int MSG_REQUEST_FAIL = 2;
-    private static final int MSG_LOAD_MORE = 3;
+    private static final int MSG_LOADMORE_SUCCESS = 3;
+    private static final int MSG_LOADMORE_FAIL = 4;
 
     @BindView(R.id.rv_banner)
     Banner mBanner;
@@ -89,8 +92,14 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
                 case MSG_REQUEST_FAIL:
                     hideProgress();
                     UIUtil.showShortToast(getContext(), getString(R.string.request_fail));
-                case MSG_LOAD_MORE:
+                    break;
+                case MSG_LOADMORE_SUCCESS:
                     hideProgress();
+                    mAdapter.notifyDataSetChanged();
+                    break;
+                case MSG_LOADMORE_FAIL:
+                    hideProgress();
+                    break;
                 default:
                     ;
 
@@ -170,9 +179,7 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
                     mLoadMore.setVisibility(View.VISIBLE);
                     loadMoreFromDB();
 //                    mPresenter.loadMore();
-                    Message message = new Message();
-                    message.what = MSG_LOAD_MORE;
-                    mHandler.sendMessageDelayed(message,5000);
+
                 }
             }
         });
@@ -210,17 +217,17 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
 
     private void searchDB() {
 
-        List<News> data = App.getDaoSession().getNewsDao().queryBuilder().limit(15).orderDesc(NewsDao.Properties.PubDate).list();
+        List<News> data = App.getDaoSession().getNewsDao().queryBuilder().limit(7).orderDesc(NewsDao.Properties.PubDateLong).list();
         if (data != null && !data.isEmpty()) {
-            Collections.sort(data, new Comparator<News>() {
-                @Override
-                public int compare(News n1, News n2) {
-                    if(Util.dateCompare(n1.getPubDate(),n2.getPubDate())){
-                        return -1;
-                    }
-                    return 1;
-                }
-            });
+//            Collections.sort(data, new Comparator<News>() {
+//                @Override
+//                public int compare(News n1, News n2) {
+//                    if(Util.dateCompare(n1.getPubDate(),n2.getPubDate())){
+//                        return -1;
+//                    }
+//                    return 1;
+//                }
+//            });
 
 
             mNewsDataList.clear();
@@ -229,15 +236,23 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
     }
 
     private void loadMoreFromDB() {
-        String time = mNewsDataList.get(mNewsDataList.size()-1).getPubDate();
+        Logger.d("loadMoreFromDB");
+        long minTime = mNewsDataList.get(mNewsDataList.size() - 1).getPubDateLong();
         QueryBuilder<News> qb = App.getDaoSession().getNewsDao().queryBuilder();
         qb.limit(15);
-//        qb.where(NewsDao.Properties.PubDate);
-
+        //todo time相同的要做处理
+        qb.where(NewsDao.Properties.PubDateLong.lt(minTime));
         List<News> data = qb.list();
-        mNewsDataList.addAll(data);
-    }
 
+        Message message = new Message();
+        message.what = MSG_LOADMORE_FAIL;
+        if (data != null || !data.isEmpty()) {
+            mNewsDataList.addAll(data);
+            message.what = MSG_LOADMORE_SUCCESS;
+        }
+        mHandler.sendMessageDelayed(message,2000);
+
+    }
 
 
     private void requestData() {

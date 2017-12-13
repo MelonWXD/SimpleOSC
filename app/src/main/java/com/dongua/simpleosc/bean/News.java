@@ -4,7 +4,10 @@ package com.dongua.simpleosc.bean;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Unique;
+
+import static com.dongua.simpleosc.utils.Util.str2Date;
 
 @Entity
 public class News {
@@ -15,6 +18,7 @@ public class News {
     private int id;
     private String author;
     private String pubDate;
+    private long pubDateLong;
     private String title;
     private int authorid;
     private int commentCount;
@@ -26,28 +30,39 @@ public class News {
         this.id = id;
         this.author = author;
         this.pubDate = pubDate;
+        this.pubDateLong = str2Date(pubDate);
         this.title = title;
         this.authorid = authorid;
         this.commentCount = commentCount;
         this.type = type;
     }
 
-    @Generated(hash = 971210210)
-    public News(Long dbID, int id, String author, String pubDate, String title,
-                int authorid, int commentCount, String type) {
+
+
+
+    @Generated(hash = 741270802)
+    public News(Long dbID, int id, String author, String pubDate, long pubDateLong,
+            String title, int authorid, int commentCount, String type) {
         this.dbID = dbID;
         this.id = id;
         this.author = author;
         this.pubDate = pubDate;
+        this.pubDateLong = pubDateLong;
         this.title = title;
         this.authorid = authorid;
         this.commentCount = commentCount;
         this.type = type;
     }
 
+
+
+
     @Generated(hash = 1579685679)
     public News() {
     }
+
+
+
 
     public Long getDbID() {
         return this.dbID;
@@ -79,6 +94,14 @@ public class News {
 
     public void setPubDate(String pubDate) {
         this.pubDate = pubDate;
+    }
+
+    public long getPubDateLong() {
+        return pubDateLong;
+    }
+
+    public void setPubDateLong(long pubDateLong) {
+        this.pubDateLong = pubDateLong;
     }
 
     public String getTitle() {
