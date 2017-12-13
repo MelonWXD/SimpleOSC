@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.base.fragment.BaseViewPagerFragment;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.ui.news.TabFragment;
 
@@ -18,8 +19,6 @@ import java.util.List;
 import butterknife.BindView;
 
 import static com.dongua.simpleosc.bean.NewsTab.TYPE_ALL;
-import static com.dongua.simpleosc.bean.NewsTab.TYPE_BLOG;
-import static com.dongua.simpleosc.bean.NewsTab.TYPE_DAILY;
 
 /**
  * Created by duoyi on 17-11-18.
@@ -67,22 +66,23 @@ public class NewsFragment extends BaseViewPagerFragment {
 //        tabList.add(tab4);
         mAdapter = new ContentPagerAdapter(getChildFragmentManager(), tabList);
         mViewPager.setAdapter(mAdapter);
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
+//        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
 
         mTabLayout.setupWithViewPager(mViewPager);
 

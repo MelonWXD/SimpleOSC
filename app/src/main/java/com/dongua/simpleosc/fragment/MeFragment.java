@@ -1,14 +1,11 @@
 package com.dongua.simpleosc.fragment;
 
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.dongua.simpleosc.R;
-import com.dongua.simpleosc.fragment.BaseFragment;
+import com.dongua.simpleosc.base.fragment.BaseFragment;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by duoyi on 17-11-18.

@@ -1,4 +1,4 @@
-package com.dongua.simpleosc.fragment;
+package com.dongua.simpleosc.base.fragment;
 
 import android.content.Context;
 import android.os.Bundle;

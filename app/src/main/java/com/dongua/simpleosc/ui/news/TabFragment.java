@@ -2,10 +2,6 @@ package com.dongua.simpleosc.ui.news;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Canvas;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,11 +20,10 @@ import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.bean.News;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.db.NewsDao;
-import com.dongua.simpleosc.fragment.BaseRecyclerFragment;
+import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.ui.LoadMoreView;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.dongua.simpleosc.utils.UIUtil;
-import com.dongua.simpleosc.utils.Util;
 import com.orhanobut.logger.Logger;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
@@ -36,12 +31,9 @@ import com.youth.banner.loader.ImageLoader;
 import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.BindInt;
 import butterknife.BindView;
 
 import static com.dongua.simpleosc.utils.Util.dateFormat;
@@ -167,6 +159,7 @@ public class TabFragment extends BaseRecyclerFragment implements NewsContract.Vi
             mBanner.setImages(imgUrl);
             mBanner.start();
         }
+
         mAdapter = new TabRecyclerAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);

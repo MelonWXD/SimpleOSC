@@ -1,4 +1,4 @@
-package com.dongua.simpleosc.nav;
+package com.dongua.simpleosc.ui.nav;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,8 +10,8 @@ import android.widget.ImageView;
 
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.activity.MainActivity;
-import com.dongua.simpleosc.fragment.BaseFragment;
-import com.dongua.simpleosc.fragment.BaseViewPagerFragment;
+import com.dongua.simpleosc.base.fragment.BaseFragment;
+import com.dongua.simpleosc.base.fragment.BaseViewPagerFragment;
 import com.dongua.simpleosc.fragment.DiscoverFragment;
 import com.dongua.simpleosc.fragment.MeFragment;
 import com.dongua.simpleosc.fragment.NewsFragment;

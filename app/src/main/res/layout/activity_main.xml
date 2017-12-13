@@ -21,7 +21,7 @@
         android:layout_above="@id/fag_nav"/>
     <fragment
         android:id="@+id/fag_nav"
-        android:name="com.dongua.simpleosc.nav.BottomNavFragment"
+        android:name="com.dongua.simpleosc.ui.nav.BottomNavFragment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/lay_48"
         android:layout_alignParentBottom="true">

@@ -1,6 +1,7 @@
 package com.dongua.simpleosc.fragment;
 
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.base.fragment.BaseViewPagerFragment;
 
 /**
  * Created by duoyi on 17-11-18.

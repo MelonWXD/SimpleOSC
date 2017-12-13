@@ -4,17 +4,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.dongua.simpleosc.R;
-import com.dongua.simpleosc.fragment.BaseFragment;
+import com.dongua.simpleosc.base.activity.BaseToolBarActivity;
+import com.dongua.simpleosc.base.fragment.BaseFragment;
 import com.dongua.simpleosc.fragment.DiscoverFragment;
 import com.dongua.simpleosc.fragment.MeFragment;
 import com.dongua.simpleosc.fragment.NewsFragment;
 import com.dongua.simpleosc.fragment.TweetFragment;
-import com.dongua.simpleosc.nav.BottomNavFragment;
+import com.dongua.simpleosc.ui.nav.BottomNavFragment;
 
 import java.util.ArrayList;
 import java.util.List;

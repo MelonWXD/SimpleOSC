@@ -8,6 +8,7 @@ import android.webkit.WebViewClient;
 
 
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.base.activity.BaseActivity;
 import com.orhanobut.logger.Logger;
 
 import java.io.UnsupportedEncodingException;

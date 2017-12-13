@@ -9,10 +9,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.dongua.simpleosc.activity.AuthorizeActivity;
-import com.dongua.simpleosc.activity.BaseActivity;
+import com.dongua.simpleosc.base.activity.BaseActivity;
 import com.dongua.simpleosc.activity.MainActivity;
-import com.dongua.simpleosc.base.BasePresenter;
-import com.dongua.simpleosc.base.BaseView;
 import com.dongua.simpleosc.net.RetrofitClient;
 import com.dongua.simpleosc.utils.ActivitySwitcher;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;

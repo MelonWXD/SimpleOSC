@@ -1,4 +1,4 @@
-package com.dongua.simpleosc.fragment;
+package com.dongua.simpleosc.base.fragment;
 
 /**
  * Created by duoyi on 17-11-20.

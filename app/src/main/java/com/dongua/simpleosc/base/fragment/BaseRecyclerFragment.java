@@ -1,6 +1,4 @@
-package com.dongua.simpleosc.fragment;
-
-import com.dongua.simpleosc.fragment.BaseFragment;
+package com.dongua.simpleosc.base.fragment;
 
 /**
  * Created by duoyi on 17-11-27.

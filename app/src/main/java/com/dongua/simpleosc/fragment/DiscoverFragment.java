@@ -1,7 +1,7 @@
 package com.dongua.simpleosc.fragment;
 
 import com.dongua.simpleosc.R;
-import com.dongua.simpleosc.fragment.BaseFragment;
+import com.dongua.simpleosc.base.fragment.BaseFragment;
 
 /**
  * Created by duoyi on 17-11-18.

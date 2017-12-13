@@ -1,4 +1,4 @@
-package com.dongua.simpleosc.nav;
+package com.dongua.simpleosc.ui.nav;
 
 import android.content.Context;
 import android.os.Build;
@@ -6,7 +6,6 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.RequiresApi;
 import android.support.annotation.StringRes;
 
-import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.FrameLayout;
@@ -14,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dongua.simpleosc.R;
-import com.dongua.simpleosc.fragment.BaseFragment;
+import com.dongua.simpleosc.base.fragment.BaseFragment;
 
 
 public class NavigationItem extends FrameLayout {
