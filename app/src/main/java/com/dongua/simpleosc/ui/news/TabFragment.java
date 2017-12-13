@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.base.fragment.BaseFragment;
 import com.dongua.simpleosc.bean.News;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.db.NewsDao;
@@ -42,7 +43,7 @@ import static com.dongua.simpleosc.utils.Util.dateFormat;
  * Created by duoyi on 17-11-27.
  */
 
-public class TabFragment extends BaseRecyclerFragment implements NewsContract.View {
+public class TabFragment extends BaseFragment implements NewsContract.View {
     public static final String TAB_NAME = "tab_name";
     public static final String TAB_HERF = "tab_herf";
     public static final String TAB_BANNER = "tab_banner";

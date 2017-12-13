@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.youth.banner.Banner
+                android:id="@+id/rv_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+            </com.youth.banner.Banner>
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_content"
+                android:layout_below="@+id/rv_banner"
+                android:layout_above="@+id/cv_loadmore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <com.dongua.simpleosc.ui.LoadMoreView
+                android:id="@+id/cv_loadmore"
+                android:layout_alignParentBottom="true"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="5px" />
+        </RelativeLayout>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>
