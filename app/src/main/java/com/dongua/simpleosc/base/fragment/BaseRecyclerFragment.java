@@ -1,7 +1,6 @@
 package com.dongua.simpleosc.base.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,19 +8,14 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.bean.NewsTab;
-import com.dongua.simpleosc.ui.LoadMoreView;
-import com.dongua.simpleosc.utils.SharedPreferenceUtil;
+import com.dongua.simpleosc.ui.myview.LoadMoreView;
 import com.dongua.simpleosc.utils.UIUtil;
 import com.youth.banner.Banner;
-import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;

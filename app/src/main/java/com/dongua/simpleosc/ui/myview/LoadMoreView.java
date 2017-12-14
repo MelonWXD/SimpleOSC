@@ -1,4 +1,4 @@
-package com.dongua.simpleosc.ui;
+package com.dongua.simpleosc.ui.myview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
