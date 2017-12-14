@@ -3,8 +3,7 @@ package com.dongua.simpleosc.net.convert;
 import android.support.annotation.Nullable;
 
 
-import com.dongua.simpleosc.bean.News;
-import com.orhanobut.logger.Logger;
+import com.dongua.simpleosc.bean.SubBean;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
@@ -39,9 +38,9 @@ public class CustomConverterFactory extends Converter.Factory {
 //        Logger.d(t.getActualTypeArguments());
 
         if (t.getRawType() == List.class) {
-            if (t.getActualTypeArguments()[0] == News.class)
-                return NewsConverter.create();
-
+            if(t.getActualTypeArguments()[0] == SubBean.class){
+                return SubBeanConverter.create();
+            }
 
         }
         return null;

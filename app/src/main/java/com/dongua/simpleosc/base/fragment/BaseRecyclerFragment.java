@@ -1,6 +1,7 @@
 package com.dongua.simpleosc.base.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -8,21 +9,23 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.dongua.simpleosc.R;
-import com.dongua.simpleosc.base.adapter.BaseRecyclerAdapter;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.ui.LoadMoreView;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.dongua.simpleosc.utils.UIUtil;
 import com.youth.banner.Banner;
+import com.youth.banner.loader.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 
-import static com.dongua.simpleosc.ui.news.TabFragment.LAST_UPDATE_NEWS;
 
 /**
  * Created by duoyi on 17-11-27.
@@ -35,21 +38,27 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     private static final int MSG_REQUEST_FAIL = 2;
     private static final int MSG_LOADMORE_SUCCESS = 3;
     private static final int MSG_LOADMORE_FAIL = 4;
+    private static final int MSG_REQUEST_NO_UPDATE = 5;
 
 
     //    protected BaseRecyclerAdapter<T> mAdapter;
     protected RecyclerView.Adapter mAdapter;
-    protected List<T> mDataList;
+    protected List<T> mDataList = new ArrayList<>();
     protected NewsTab mTab;
 
     @BindView(R.id.rv_banner)
-    Banner mBanner;
+    protected Banner mBanner;
     @BindView(R.id.rv_content)
-    RecyclerView mRecyclerView;
+    protected RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh)
-    SwipeRefreshLayout mRefreshLayout;
+    protected SwipeRefreshLayout mRefreshLayout;
     @BindView(R.id.cv_loadmore)
-    LoadMoreView mLoadMore;
+    protected LoadMoreView mLoadMore;
+
+//    //todo 考虑放到父类
+//    protected BasePresenter mPresenter;
+//
+//    protected abstract void initPresenter();
 
 
     @SuppressLint("HandlerLeak")
@@ -60,6 +69,9 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
                 case MSG_REQUEST_SUCCESS:
                     hideProgress();
                     mAdapter.notifyDataSetChanged();
+                    break;
+                case MSG_REQUEST_NO_UPDATE:
+                    hideProgress();
                     break;
                 case MSG_REQUEST_FAIL:
                     hideProgress();
@@ -78,6 +90,33 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
             }
         }
     };
+
+    protected void sendMsgRequestNoUpdate(){
+        Message message = Message.obtain();
+        message.what = MSG_REQUEST_NO_UPDATE;
+        mHandler.sendMessage(message);
+    }
+    protected void sendMsgRequestSuccess(){
+        Message message = Message.obtain();
+        message.what = MSG_REQUEST_SUCCESS;
+        mHandler.sendMessage(message);
+    }
+    protected void sendMsgRequestFail(){
+        Message message = Message.obtain();
+        message.what = MSG_REQUEST_FAIL;
+        mHandler.sendMessage(message);
+    }
+    protected void sendMsgLoadMoreSuccess(){
+        Message message = Message.obtain();
+        message.what = MSG_LOADMORE_SUCCESS;
+        mHandler.sendMessageDelayed(message,1000);
+    }
+    protected void sendMsgLoadMoreFail(){
+        Message message = Message.obtain();
+        message.what = MSG_LOADMORE_FAIL;
+        mHandler.sendMessageDelayed(message,1000);
+
+    }
 
     private void hideProgress() {
         if (mRefreshLayout.isRefreshing())
@@ -105,6 +144,10 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
 
         mLoadMore.setDrawSpeed(LoadMoreView.FAST);
 
+        if (mTab != null && mTab.getShowBanner()) {
+            //show banner
+        }
+
         mAdapter = getRecyclerAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
@@ -122,21 +165,34 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
                 }
             }
         });
+
+        mRefreshLayout.setDistanceToTriggerSync(300);
+//        mRefreshLayout.setSize(SwipeRefreshLayout.LARGE);
+        mRefreshLayout.setColorSchemeResources(R.color.red200, R.color.yellow200,
+                R.color.blue200, R.color.green200);
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestData();
+            }
+        });
     }
 
 
     @Override
     protected void initData() {
         super.initData();
+
         loadFromDB();
-        long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_NEWS, 0L);
-        long nowTime = new Date().getTime();
-//        Logger.d(lastUpdate);
-//        Logger.d(nowTime);
-        if (lastUpdate == 0 || nowTime - lastUpdate > 30 * 1000) {
-            SharedPreferenceUtil.put(LAST_UPDATE_NEWS, nowTime);
-            requestData();
-        }
+        requestData();
+
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
     }
 
     //    protected abstract BaseRecyclerAdapter<T> getRecyclerAdapter();
@@ -144,7 +200,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
 
     protected abstract void requestData();
 
-    protected abstract void loadFromDB();
+    protected abstract void loadFromDB() ;
 
     protected abstract void loadMoreFromDB();
 

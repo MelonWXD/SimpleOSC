@@ -6,6 +6,6 @@ package com.dongua.simpleosc.base;
 
 public interface BaseView {
 
-  ;
+
 
 }

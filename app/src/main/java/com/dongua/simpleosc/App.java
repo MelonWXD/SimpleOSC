@@ -19,7 +19,7 @@ import org.greenrobot.greendao.database.Database;
 
 public class App extends Application {
 
-    public static final String DB_NAME = "socs";
+    public static final String DB_NAME = "osc";
     private static DaoSession mDaoSession;
 
 

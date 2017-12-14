@@ -11,14 +11,15 @@ import android.view.View;
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.base.fragment.BaseViewPagerFragment;
 import com.dongua.simpleosc.bean.NewsTab;
-import com.dongua.simpleosc.ui.news.TabFragment;
+import com.dongua.simpleosc.ui.news.SubFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-import static com.dongua.simpleosc.bean.NewsTab.TYPE_ALL;
+import static com.dongua.simpleosc.bean.NewsTab.TYPE_BLOG;
+import static com.dongua.simpleosc.bean.NewsTab.TYPE_NEWS;
 
 /**
  * Created by duoyi on 17-11-18.
@@ -28,7 +29,7 @@ public class NewsFragment extends BaseViewPagerFragment {
 
     private String[] tabs = new String[]{"开源资讯", "推荐博客", "技术问答", "每日一搏"};
 
-    private List<NewsTab> tabList  ;
+    private List<NewsTab> tabList;
 
     @BindView(R.id.tl_news_tab)
     TabLayout mTabLayout;
@@ -55,13 +56,15 @@ public class NewsFragment extends BaseViewPagerFragment {
         super.initWidget(root);
 
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        NewsTab tab1 = new NewsTab("开源资讯", TYPE_ALL, false, "");
-//        NewsTab tab2 = new NewsTab("推荐博客", TYPE_BLOG, false, "");
+        NewsTab tab1 = new NewsTab("开源资讯", TYPE_NEWS, false, "");
+        NewsTab tab2 = new NewsTab("推荐博客", TYPE_BLOG, false, "");
+//        NewsTab tab3 = new NewsTab("开源资讯", TYPE_NEWS, false, "");
+
 //        NewsTab tab3 = new NewsTab("技术问答", TYPE_ALL, false, "");
 //        NewsTab tab4 = new NewsTab("每日一搏", TYPE_DAILY, false, "");
         tabList = new ArrayList<>();
         tabList.add(tab1);
-//        tabList.add(tab2);
+        tabList.add(tab2);
 //        tabList.add(tab3);
 //        tabList.add(tab4);
         mAdapter = new ContentPagerAdapter(getChildFragmentManager(), tabList);
@@ -106,7 +109,22 @@ public class NewsFragment extends BaseViewPagerFragment {
 
         @Override
         public Fragment getItem(int position) {
-            return TabFragment.newInstance(getContext(), tabList.get(position));
+//            switch (tabList.get(position).getType()) {
+//                case TYPE_NEWS:
+//                    return SubFragment.newInstance(getContext(), tabList.get(position));
+//
+//                case TYPE_BLOG:
+//                    return TabFragment.newInstance(getContext(), tabList.get(position));
+//
+//                default:
+//                    return null;
+//            }
+//            if (position   == 0)
+//                return TabFragment.newInstance(getContext(), tabList.get(position));
+//            else if (position   == 1)
+//                return SubFragment.newInstance(getContext(), tabList.get(position));
+//            else
+                return SubFragment.newInstance(getContext(), tabList.get(position));
         }
 
         @Override

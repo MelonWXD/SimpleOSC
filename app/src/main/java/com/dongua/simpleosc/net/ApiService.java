@@ -1,11 +1,10 @@
 package com.dongua.simpleosc.net;
 
-import com.dongua.simpleosc.bean.News;
+import com.dongua.simpleosc.bean.SubBean;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import retrofit2.http.GET;
@@ -32,9 +31,17 @@ public interface ApiService {
 
 
     @GET("/action/openapi/news_list")
-    Observable<List<News>> getNewsList(
+    Observable<List<SubBean>> getNewsList(
             @Query("access_token") String access_token
             , @Query("catalog") int catalog
+            , @Query("page") int page
+            , @Query("pageSize") int pageSize
+            , @Query("dataType") String dataType);
+
+
+    @GET("/action/openapi/blog_recommend_list")
+    Observable<List<SubBean>> getBlogsList(
+            @Query("access_token") String access_token
             , @Query("page") int page
             , @Query("pageSize") int pageSize
             , @Query("dataType") String dataType);

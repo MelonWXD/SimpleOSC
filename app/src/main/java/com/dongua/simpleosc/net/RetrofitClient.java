@@ -1,12 +1,8 @@
 package com.dongua.simpleosc.net;
 
-import com.dongua.simpleosc.bean.News;
+import com.dongua.simpleosc.bean.SubBean;
 import com.dongua.simpleosc.net.convert.CustomConverterFactory;
 import com.dongua.simpleosc.net.interceptor.LoggingInterceptor;
-import com.dongua.simpleosc.net.interceptor.SaveCookiesInterceptor;
-import com.dongua.simpleosc.net.interceptor.SetCookiesInterceptor;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 
 import java.util.List;
@@ -16,13 +12,10 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import okhttp3.OkHttpClient;
 
-import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import android.support.v4.util.ArrayMap;
-
-import org.reactivestreams.Subscription;
 
 
 /**
@@ -96,15 +89,22 @@ public class RetrofitClient {
     public Observable<ResponseBody> getToken(String code){
         return mApi.getToken(APP_ID,APP_KEY,GRANT_TYPE,REDIRECT_URL,code,DATA_TYPE);
     }
-    public Observable<List<News>> getNewsList(){
+    public Observable<List<SubBean>> getNewsList(){
         if(mAccessToken==null){
             return null;
         }
         return mApi.getNewsList(mAccessToken,DEFAULT_CATALOG,DEFAULT_PAGE,DEFAULT_PAGESIZE,DATA_TYPE);
     }
 
-    public Observable<List<News>>  getNewsList(String access_code){
+    public Observable<List<SubBean>>  getNewsList(String access_code){
         return mApi.getNewsList(access_code,DEFAULT_CATALOG,DEFAULT_PAGE,DEFAULT_PAGESIZE,DATA_TYPE);
+    }
+
+    public Observable<List<SubBean>>  getBlogsList(String access_code){
+        return mApi.getBlogsList(access_code,DEFAULT_PAGE,DEFAULT_PAGESIZE,DATA_TYPE);
+    }
+    public Observable<List<SubBean>> getBlogsList(){
+        return mApi.getBlogsList(mAccessToken,DEFAULT_PAGE,DEFAULT_PAGESIZE,DATA_TYPE);
     }
 
     public void add(String key,Observer request){
