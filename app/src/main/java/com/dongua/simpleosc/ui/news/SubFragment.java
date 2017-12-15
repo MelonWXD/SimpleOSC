@@ -34,7 +34,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
 
     @Override
     protected RecyclerView.Adapter getRecyclerAdapter() {
-        return new SubTabRecyclerAdapter();
+        return new BNRecyclerAdapter();
     }
 
     public static SubFragment newInstance(Context context, NewsTab tab) {
@@ -79,23 +79,12 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
 
         long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_SUBBEAN, 0L);
         long nowTime = new Date().getTime();
-//        Logger.d(lastUpdate);
-//        Logger.d(nowTime);
         if (!isRorate && (lastUpdate == 0 || nowTime - lastUpdate > 30 * 1000)) {
-            Logger.d("request at initData() isRorate="+isRorate);
+            Logger.d("request at initData() ");
             SharedPreferenceUtil.put(LAST_UPDATE_SUBBEAN, nowTime);
             requestData();
         }
     }
-
-//        @Override
-//    protected void initData() {
-//
-//        initPresenter();
-//        loadFromDB();
-//        requestData();
-
-//    }
 
     @Override
     protected void loadFromDB() {
@@ -169,7 +158,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
         mPresenter.cancelRequest();
     }
 
-    class SubTabRecyclerAdapter extends RecyclerView.Adapter<SubTabRecyclerAdapter.SubHolder> {
+    class BNRecyclerAdapter extends RecyclerView.Adapter<BNRecyclerAdapter.SubHolder> {
 
 
         @Override
@@ -213,6 +202,24 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
                 comment = itemView.findViewById(R.id.tv_comment);
                 line = itemView.findViewById(R.id.divider);
             }
+        }
+    }
+
+    class PostRecyclerAdapter extends RecyclerView.Adapter<BNRecyclerAdapter.SubHolder> {
+
+        @Override
+        public BNRecyclerAdapter.SubHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return null;
+        }
+
+        @Override
+        public void onBindViewHolder(BNRecyclerAdapter.SubHolder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
         }
     }
 }
