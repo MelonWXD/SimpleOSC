@@ -1,6 +1,9 @@
 package com.dongua.simpleosc.bean;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -9,7 +12,7 @@ import org.greenrobot.greendao.annotation.Unique;
 import static com.dongua.simpleosc.utils.Util.str2Date;
 
 @Entity
-public class SubBean {
+public class SubBean implements Parcelable{
 
     @Id(autoincrement = true)
     private Long dbID;
@@ -30,6 +33,18 @@ public class SubBean {
         this.author = author;
         this.pubDate = pubDate;
         this.pubDateLong = str2Date(pubDate);
+        this.title = title;
+        this.authorid = authorid;
+        this.commentCount = commentCount;
+        this.type = type;
+    }
+
+    public SubBean(int id, String author, String pubDate, String title,long pubDateLong,
+                   int authorid, int commentCount, int type) {
+        this.id = id;
+        this.author = author;
+        this.pubDate = pubDate;
+        this.pubDateLong = pubDateLong;
         this.title = title;
         this.authorid = authorid;
         this.commentCount = commentCount;
@@ -148,8 +163,54 @@ public class SubBean {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+//    private int id;
+//    private String author;
+//    private String pubDate;
+//    private long pubDateLong;
+//    private String title;
+//    private int authorid;
+//    private int commentCount;
+//    private int type;
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(author);
+        parcel.writeString(pubDate);
+        parcel.writeLong(pubDateLong);
+        parcel.writeString(title);
+        parcel.writeInt(authorid);
+        parcel.writeInt(commentCount);
+        parcel.writeInt(type);
+
+    }
 
 
+    public SubBean(Parcel parcel) {
+        this.id = parcel.readInt();
+        this.author = parcel.readString();
+        this.pubDate = parcel.readString();
+        this.pubDateLong = parcel.readLong();
+        this.title = parcel.readString();
+        this.authorid = parcel.readInt();
+        this.commentCount = parcel.readInt();
+        this.type = parcel.readInt();
+    }
+
+    public static final Creator<SubBean> CREATOR = new Creator<SubBean>() {
+        @Override
+        public SubBean createFromParcel(Parcel parcel) {
+            return new SubBean(parcel);
+        }
+
+        @Override
+        public SubBean[] newArray(int i) {
+            return new SubBean[i];
+        }
+    };
 
 
 }

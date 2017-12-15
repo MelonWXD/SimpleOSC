@@ -41,7 +41,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
 
         SubFragment fragment = new SubFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(TAB_BEAN, tab);
+        bundle.putSerializable(BUNDLE_TAB_BEAN, tab);
         fragment.setArguments(bundle);
         return fragment;
 //
@@ -75,12 +75,14 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
     @Override
     protected void initData() {
         super.initData();
+        loadFromDB();
 
         long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_SUBBEAN, 0L);
         long nowTime = new Date().getTime();
 //        Logger.d(lastUpdate);
 //        Logger.d(nowTime);
-        if (lastUpdate == 0 || nowTime - lastUpdate > 30 * 1000) {
+        if (!isRorate && (lastUpdate == 0 || nowTime - lastUpdate > 30 * 1000)) {
+            Logger.d("request at initData() isRorate="+isRorate);
             SharedPreferenceUtil.put(LAST_UPDATE_SUBBEAN, nowTime);
             requestData();
         }
@@ -97,15 +99,17 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
 
     @Override
     protected void loadFromDB() {
-        List datas = App.getDaoSession().getSubBeanDao().queryBuilder()
-                .where(SubBeanDao.Properties.Type.eq(mTab.getType()))
-                .orderDesc(SubBeanDao.Properties.PubDateLong)
-                .limit(15)
-                .list();
+        if (mDataList.isEmpty()) {
+            List datas = App.getDaoSession().getSubBeanDao().queryBuilder()
+                    .where(SubBeanDao.Properties.Type.eq(mTab.getType()))
+                    .orderDesc(SubBeanDao.Properties.PubDateLong)
+                    .limit(15)
+                    .list();
 
-        if (datas != null && !datas.isEmpty()) {
-            mDataList.clear();
-            mDataList.addAll(datas);
+            if (datas != null && !datas.isEmpty()) {
+                mDataList.clear();
+                mDataList.addAll(datas);
+            }
         }
     }
 

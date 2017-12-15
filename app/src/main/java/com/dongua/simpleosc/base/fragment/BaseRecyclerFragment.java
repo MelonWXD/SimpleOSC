@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,19 +26,22 @@ import butterknife.BindView;
  * Created by duoyi on 17-11-27.
  */
 
-public abstract class BaseRecyclerFragment<T> extends BaseFragment {
+public abstract class BaseRecyclerFragment<T extends Parcelable> extends BaseFragment {
 
-    public static final String TAB_BEAN = "tab";
+    public static final String BUNDLE_TAB_BEAN = "tabbean";
+    public static final String BUNDLE_SUB_BEAN = "subbean";
+    public static final String BUNDLE_RV_POS = "rvpos";
     public static final int MSG_REQUEST_SUCCESS = 1;
     private static final int MSG_REQUEST_FAIL = 2;
     private static final int MSG_LOADMORE_SUCCESS = 3;
     private static final int MSG_LOADMORE_FAIL = 4;
     private static final int MSG_REQUEST_NO_UPDATE = 5;
 
+    protected boolean isRorate = false;
 
     //    protected BaseRecyclerAdapter<T> mAdapter;
     protected RecyclerView.Adapter mAdapter;
-    protected List<T> mDataList = new ArrayList<>();
+    protected List<T> mDataList;
     protected NewsTab mTab;
 
     @BindView(R.id.rv_banner)
@@ -85,30 +89,34 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
         }
     };
 
-    protected void sendMsgRequestNoUpdate(){
+    protected void sendMsgRequestNoUpdate() {
         Message message = Message.obtain();
         message.what = MSG_REQUEST_NO_UPDATE;
         mHandler.sendMessage(message);
     }
-    protected void sendMsgRequestSuccess(){
+
+    protected void sendMsgRequestSuccess() {
         Message message = Message.obtain();
         message.what = MSG_REQUEST_SUCCESS;
         mHandler.sendMessage(message);
     }
-    protected void sendMsgRequestFail(){
+
+    protected void sendMsgRequestFail() {
         Message message = Message.obtain();
         message.what = MSG_REQUEST_FAIL;
         mHandler.sendMessage(message);
     }
-    protected void sendMsgLoadMoreSuccess(){
+
+    protected void sendMsgLoadMoreSuccess() {
         Message message = Message.obtain();
         message.what = MSG_LOADMORE_SUCCESS;
-        mHandler.sendMessageDelayed(message,1000);
+        mHandler.sendMessageDelayed(message, 1000);
     }
-    protected void sendMsgLoadMoreFail(){
+
+    protected void sendMsgLoadMoreFail() {
         Message message = Message.obtain();
         message.what = MSG_LOADMORE_FAIL;
-        mHandler.sendMessageDelayed(message,1000);
+        mHandler.sendMessageDelayed(message, 1000);
 
     }
 
@@ -125,11 +133,33 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     }
 
     @Override
-    protected void initBundle(Bundle bundle) {
-        super.initBundle(bundle);
+    protected void initArguments(Bundle bundle) {
+        super.initArguments(bundle);
         if (bundle != null) {
-            mTab = (NewsTab) bundle.getSerializable(TAB_BEAN);
+            mTab = (NewsTab) bundle.getSerializable(BUNDLE_TAB_BEAN);
         }
+    }
+
+    @Override
+    protected void initBundle(Bundle savedInstanceState) {
+        super.initBundle(savedInstanceState);
+        if (savedInstanceState != null) {
+
+            mDataList = savedInstanceState.getParcelableArrayList(BUNDLE_SUB_BEAN);
+            if (mDataList == null) {
+                mDataList = new ArrayList<>();
+            } else {
+                isRorate = true;
+            }
+        } else {
+            mDataList = new ArrayList<>();
+        }
+    }
+
+    @Override
+    protected void saveBundle(Bundle outState) {
+        super.saveBundle(outState);
+        outState.putParcelableArrayList(BUNDLE_SUB_BEAN, (ArrayList<T>) mDataList);
     }
 
     @Override
@@ -173,15 +203,15 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
     }
 
 
-    @Override
-    protected void initData() {
-        super.initData();
-
-        loadFromDB();
-        requestData();
-
-
-    }
+//    @Override
+//    protected void initData() {
+//        super.initData();
+//
+//        loadFromDB();
+//        if (!isRorate) {
+//            requestData();
+//        }
+//    }
 
     @Override
     public void onDestroy() {
@@ -194,7 +224,7 @@ public abstract class BaseRecyclerFragment<T> extends BaseFragment {
 
     protected abstract void requestData();
 
-    protected abstract void loadFromDB() ;
+    protected abstract void loadFromDB();
 
     protected abstract void loadMoreFromDB();
 

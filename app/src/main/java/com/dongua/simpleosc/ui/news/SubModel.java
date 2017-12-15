@@ -1,5 +1,7 @@
 package com.dongua.simpleosc.ui.news;
 
+import android.database.sqlite.SQLiteConstraintException;
+
 import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.bean.SubBean;
 import com.dongua.simpleosc.db.SubBeanDao;
@@ -32,9 +34,14 @@ public class SubModel implements SubContract.Model {
     @Override
     public void cacheData(List<SubBean> data) {
         SubBeanDao dao = App.getDaoSession().getSubBeanDao();
+
         for (SubBean n : data) {
             n.setPubDateLong(Util.str2Date(n.getPubDate()));
-            dao.save(n);
+            try {
+                dao.save(n);
+            } catch (SQLiteConstraintException exception) {
+                Logger.e(exception.getMessage());
+            }
         }
     }
 
@@ -47,11 +54,9 @@ public class SubModel implements SubContract.Model {
 
     @Override
     public void cancelRequest() {
-        if (!mDisposable.isDisposed())
+        if (mDisposable != null && !mDisposable.isDisposed())
             mDisposable.dispose();
     }
-
-
 
 
     @Override

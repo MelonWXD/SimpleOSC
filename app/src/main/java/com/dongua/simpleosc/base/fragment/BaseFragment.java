@@ -48,12 +48,15 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mBundle = getArguments();
         //mBundle非空判断是否要放在base?
-        initBundle(mBundle);
+        initArguments(mBundle);
+        initBundle(savedInstanceState);
 
 
 
 
     }
+
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -89,11 +92,14 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int getLayoutId();
 
-    protected void initBundle(Bundle bundle) {
+    protected void initArguments(Bundle arguments) {
+    }
+
+    protected void initBundle(Bundle savedInstanceState) {
 
     }
 
-    protected void saveBundle(Bundle bundle) {
+    protected void saveBundle(Bundle outState) {
 
     }
 

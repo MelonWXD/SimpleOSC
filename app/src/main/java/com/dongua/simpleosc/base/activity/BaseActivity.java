@@ -52,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    protected void saveBundle(Bundle savedInstanceState) {
+    protected void saveBundle(Bundle outState) {
 
     }
 
