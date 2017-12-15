@@ -28,7 +28,8 @@
                 android:layout_below="@+id/rv_banner"
                 android:layout_above="@+id/cv_loadmore"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:scrollbars="vertical">
 
             </android.support.v7.widget.RecyclerView>
 
