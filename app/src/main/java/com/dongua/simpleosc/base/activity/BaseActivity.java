@@ -34,7 +34,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         setTranslucentStatus(true);
 
-        init(savedInstanceState);
+        initBundle(savedInstanceState);
 //        initPresenter();
         initView();
         initData();
@@ -48,7 +48,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        return null;
 //    }
 
-    protected void init(Bundle savedInstanceState) {
+    protected void initBundle(Bundle savedInstanceState) {
+
+    }
+
+    protected void saveBundle(Bundle savedInstanceState) {
 
     }
 
@@ -71,6 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        saveBundle(outState);
 //        Logger.d("onSaveInstanceState");
     }
 

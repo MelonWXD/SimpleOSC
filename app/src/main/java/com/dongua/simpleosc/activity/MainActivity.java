@@ -70,7 +70,7 @@ public class MainActivity extends BaseToolBarActivity {
     }
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void initBundle(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
 //            mTabPostion = savedInstanceState.getInt("Pos", 0);
             mBottomNavStateBundle = savedInstanceState.getBundle("BottomNavState");
@@ -78,11 +78,10 @@ public class MainActivity extends BaseToolBarActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-//        outState.putInt("Pos", mBottomNavFragment.getPostion());
+    protected void saveBundle(Bundle outState) {
         outState.putBundle("BottomNavState",mBottomNavFragment.getStateBundle());
     }
+
 
     @Override
     public void onAttachFragment(Fragment fragment) {
