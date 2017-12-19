@@ -17,6 +17,7 @@ public class SharedPreferenceUtil {
     public static final String PREF_COOKIE = "cookies";
     public static final String ACCESS_TOKEN = "a_token";
     public static final String REFRESH_TOKEN = "r_token";
+    public static final String TOKEN_EXPIRE = "token_expire";
 
     public static void put(String key, Object value) {
         Context context = AppManager.getInstance().getAppContext();

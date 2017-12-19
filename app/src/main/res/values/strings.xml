@@ -9,7 +9,9 @@
 
 
 
-    <string name="hint_authorize">没有本地授权信息，请授权登录</string>
+    <string name="no_authorize">没有本地授权信息，请授权登录</string>
+    <string name="refresh_invalid">本地授权过期，请重新授权</string>
+    <string name="authorize_falied">授权失败，请重试</string>
     <string name="request_fail">网络请求失败,请检查网络链接</string>
 
 

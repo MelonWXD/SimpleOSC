@@ -68,6 +68,21 @@ public class Util {
         }
         return false;
     }
+    /**
+     * return true if d1 is later than now + plusSecond
+     * */
+    public static boolean dateCompareNow(String d1,int plusSecond) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            Date date1 = sdf.parse(d1);
+            Date now = new Date();
+            return date1.getTime() > now.getTime()+plusSecond;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
     public static String dateFormat(String d) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
