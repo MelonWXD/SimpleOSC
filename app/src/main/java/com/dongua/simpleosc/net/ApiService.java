@@ -17,16 +17,22 @@ import retrofit2.http.Query;
 public interface ApiService {
 
 
-
-
-
     @GET("/action/openapi/token")
     Observable<ResponseBody> getToken(
-              @Query("client_id") String id
+            @Query("client_id") String id
             , @Query("client_secret") String key
             , @Query("grant_type") String grantType
             , @Query("redirect_uri") String redirect
             , @Query("code") String code
+            , @Query("dataType") String dataType);
+
+    @GET("/action/openapi/token")
+    Observable<ResponseBody> refreshToken(
+            @Query("client_id") String id
+            , @Query("client_secret") String key
+            , @Query("grant_type") String grantType
+            , @Query("redirect_uri") String redirect
+            , @Query("refresh_token") String refreshToken
             , @Query("dataType") String dataType);
 
 
@@ -37,7 +43,6 @@ public interface ApiService {
             , @Query("page") int page
             , @Query("pageSize") int pageSize
             , @Query("dataType") String dataType);
-
 
     @GET("/action/openapi/blog_recommend_list")
     Observable<List<SubBean>> getBlogsList(

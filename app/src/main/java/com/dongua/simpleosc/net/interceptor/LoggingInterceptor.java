@@ -1,14 +1,25 @@
 package com.dongua.simpleosc.net.interceptor;
 
+import com.dongua.simpleosc.net.RetrofitClient;
+import com.dongua.simpleosc.utils.SharedPreferenceUtil;
+import com.dongua.simpleosc.utils.Util;
+import com.google.gson.JsonObject;
 import com.orhanobut.logger.Logger;
 
 import java.io.IOException;
+import java.util.Locale;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+
+import static com.dongua.simpleosc.utils.SharedPreferenceUtil.ACCESS_TOKEN;
+import static com.dongua.simpleosc.utils.SharedPreferenceUtil.REFRESH_TOKEN;
 
 /**
  * Created by duoyi on 17-11-24.
@@ -42,14 +53,60 @@ public class LoggingInterceptor implements Interceptor {
         //这里不能直接使用response.body().string()的方式输出日志
         //因为response.body().string()之后，response中的流会被关闭，程序会报错，我们需要创建出一
         //个新的response给应用层处理
+
+        //todo 未授权处理  会死循环
+        int retry = 3;
+        while (!response.isSuccessful() && retry>0) {
+
+            if(response.code() == 401 && response.message().equals("Unauthorized")){
+                Logger.d("401:Unauthorized");
+//                Logger.d("body"+response.peekBody(1024 * 1024).string());
+//                String new_access = refreshToken();
+//                if(!new_access.isEmpty()){
+//
+//                }
+            }else if(response.code() == 400 && response.peekBody(1024 * 1024).string().contains("Invalid refresh token")){
+                Logger.d("400:Invalid refresh token");
+            }
+
+            retry--;
+        }
         ResponseBody responseBody = response.peekBody(1024 * 1024);
         Logger.d(
-                String.format("接收响应: [%s] %n返回json:[%s] %.1fms %n%s",
+                String.format(Locale.getDefault(),"接收响应: [%s] %n返回json:[%s] %.1fms %n%s",
                         response.request().url(),
                         responseBody.string(),
                         (t2 - t1) / 1e6d,
                         response.headers()
                 ));
         return response;
+    }
+
+    private String refreshToken() {
+
+        final StringBuilder ret = new StringBuilder();
+        RetrofitClient.getInstance().refreshToken()
+                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Consumer<ResponseBody>() {
+                    @Override
+                    public void accept(ResponseBody responseBody) throws Exception {
+                        String resp = responseBody.string();
+                        Logger.d(resp);
+                        JsonObject jo = Util.string2Json(resp);
+                        String a_token = jo.get("access_token").getAsString();
+                        String r_token = jo.get("refresh_token").getAsString();
+                        SharedPreferenceUtil.put(ACCESS_TOKEN, a_token);
+                        SharedPreferenceUtil.put(REFRESH_TOKEN, r_token);
+                        ret.append(a_token);
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Logger.d("无法申请授权");
+                    }
+                });
+        return ret.toString();
     }
 }
