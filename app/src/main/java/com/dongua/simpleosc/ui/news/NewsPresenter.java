@@ -12,7 +12,7 @@ public class NewsPresenter<T> implements NewsContract.Presenter,NewsContract.OnR
 
 
     NewsPresenter() {
-        mModel = new BaseModel<T>();
+        mModel = new NewsModel<T>();
         mModel.setRequestListener(this);
     }
 

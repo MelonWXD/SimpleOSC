@@ -31,7 +31,7 @@ import static com.dongua.simpleosc.bean.NewsTab.TYPE_POST;
  * Created by duoyi on 17-12-20.
  */
 
-public class BaseModel<T> implements NewsContract.Model<T> {
+public class NewsModel<T> implements NewsContract.Model<T> {
 
     private NewsContract.OnRequestListener<T> mListener;
     private Disposable mDisposable;
