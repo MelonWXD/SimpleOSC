@@ -10,7 +10,7 @@ import java.util.List;
  * Created by duoyi on 17-12-8.
  */
 
-public interface SubContract {
+public interface NewsContract {
     interface View<T> extends BaseView{
 //        void updateRecyclerView(News data);
         void requestFinished(List<T> data);

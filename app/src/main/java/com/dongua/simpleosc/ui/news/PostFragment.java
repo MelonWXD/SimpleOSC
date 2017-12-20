@@ -8,28 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.dongua.simpleosc.App;
-
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.bean.PostBean;
-import com.dongua.simpleosc.db.PostBeanDao;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.Date;
 import java.util.List;
 
-import static com.dongua.simpleosc.utils.Util.dateFormat;
-
 /**
  * Created by duoyi on 17-11-27.
  */
 
-public class PostFragment extends BaseRecyclerFragment<PostBean> implements SubContract.View<PostBean> {
+public class PostFragment extends BaseRecyclerFragment<PostBean> implements NewsContract.View<PostBean> {
 
-    private SubContract.Presenter mPresenter;
+    private NewsContract.Presenter mPresenter;
     public static final String LAST_UPDATE_POSTBEAN = "update_post";
 
     @Override
@@ -49,7 +44,7 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements SubC
 
     protected void initPresenter() {
 
-        mPresenter = new BasePresenter<PostBean>();
+        mPresenter = new NewsPresenter<PostBean>();
         mPresenter.attach(this);
     }
 

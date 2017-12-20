@@ -27,9 +27,9 @@ import static com.dongua.simpleosc.utils.Util.dateFormat;
  * Created by duoyi on 17-11-27.
  */
 
-public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubContract.View<SubBean> {
+public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsContract.View<SubBean> {
 
-    private SubContract.Presenter mPresenter;
+    private NewsContract.Presenter mPresenter;
     public static final String LAST_UPDATE_BLOG = "update_blog";
     public static final String LAST_UPDATE_NEWS = "update_news";
 
@@ -63,7 +63,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
     }
 
     protected void initPresenter() {
-        mPresenter = new BasePresenter<SubBean>();
+        mPresenter = new NewsPresenter<SubBean>();
         mPresenter.attach(this);
     }
 

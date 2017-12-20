@@ -31,13 +31,13 @@ import static com.dongua.simpleosc.bean.NewsTab.TYPE_POST;
  * Created by duoyi on 17-12-20.
  */
 
-public class BaseModel<T> implements SubContract.Model<T> {
+public class BaseModel<T> implements NewsContract.Model<T> {
 
-    private SubContract.OnRequestListener<T> mListener;
+    private NewsContract.OnRequestListener<T> mListener;
     private Disposable mDisposable;
 
     @Override
-    public void setRequestListener(SubContract.OnRequestListener<T> listener) {
+    public void setRequestListener(NewsContract.OnRequestListener<T> listener) {
         mListener = listener;
     }
 
