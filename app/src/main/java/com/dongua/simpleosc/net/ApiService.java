@@ -45,8 +45,25 @@ public interface ApiService {
             , @Query("dataType") String dataType);
 
     @GET("/action/openapi/blog_recommend_list")
-    Observable<List<SubBean>> getBlogsList(
+    Observable<List<SubBean>> getBlogList(
             @Query("access_token") String access_token
+            , @Query("page") int page
+            , @Query("pageSize") int pageSize
+            , @Query("dataType") String dataType);
+
+    @GET("/action/openapi/blog_recommend_list")
+    Observable<ResponseBody> getPostList(
+            @Query("access_token") String access_token
+            , @Query("catalog") int catalog
+            , @Query("page") int page
+            , @Query("pageSize") int pageSize
+            , @Query("dataType") String dataType);
+
+    @GET("/action/openapi/blog_recommend_list")
+    Observable<ResponseBody> getPostListByTag(
+            @Query("access_token") String access_token
+            , @Query("catalog") int catalog
+            , @Query("tag") String tag
             , @Query("page") int page
             , @Query("pageSize") int pageSize
             , @Query("dataType") String dataType);

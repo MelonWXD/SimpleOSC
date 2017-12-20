@@ -54,7 +54,7 @@ public class LoggingInterceptor implements Interceptor {
         //因为response.body().string()之后，response中的流会被关闭，程序会报错，我们需要创建出一
         //个新的response给应用层处理
 
-        //todo 未授权处理  会死循环
+
         int retry = 3;
         while (!response.isSuccessful() && retry>0) {
 

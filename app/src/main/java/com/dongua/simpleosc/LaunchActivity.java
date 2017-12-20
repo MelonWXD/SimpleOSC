@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -80,6 +81,7 @@ public class LaunchActivity extends BaseActivity {
 
 
         String accessToken = (String) SharedPreferenceUtil.get(ACCESS_TOKEN, "");
+        Logger.d(accessToken);
         if (accessToken == null || accessToken.isEmpty()) {
             UIUtil.showLongToast(this, getString(R.string.no_authorize));
             requestAuthorize(this);

@@ -14,6 +14,7 @@ public class NewsTab implements Serializable {
     public static final int TYPE_BLOG = 1;
     public static final int TYPE_NEWS = 4;
     public static final int TYPE_DAILY = 3;
+    public static final int TYPE_POST = 2;
 
     private String name;
     private Boolean showBanner;

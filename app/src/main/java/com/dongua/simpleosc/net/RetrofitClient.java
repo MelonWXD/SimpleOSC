@@ -43,6 +43,9 @@ public class RetrofitClient {
     public static final int DEFAULT_PAGE = 1;
     public static final int DEFAULT_PAGESIZE = 20;
 
+    //类别ID 1-问答 2-分享 3-IT杂烩(综合) 4-站务 100-职业生涯 0-所有
+    public static final int DEFAULT_POST_CATALOG = 1;
+
 
     private ArrayMap<String, Observer> requestMap;
 
@@ -113,13 +116,30 @@ public class RetrofitClient {
     }
 
 
-    public Observable<List<SubBean>> getBlogsList(String access_code) {
-        return mApi.getBlogsList(access_code, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
+    public Observable<List<SubBean>> getBlogList(String access_code) {
+        return mApi.getBlogList(access_code, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
     }
 
-    public Observable<List<SubBean>> getBlogsList() {
-        return mApi.getBlogsList(mAccessToken, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
+    public Observable<List<SubBean>> getBlogList() {
+        return mApi.getBlogList(mAccessToken, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
     }
+
+    public Observable<ResponseBody> getPostList() {
+        return mApi.getPostList(mAccessToken, DEFAULT_POST_CATALOG, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
+    }
+
+    public Observable<ResponseBody> getPostList(int catalog) {
+        return mApi.getPostList(mAccessToken, catalog, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
+    }
+
+    public Observable<ResponseBody> getPostListByTag(String tag) {
+        return mApi.getPostListByTag(mAccessToken, DEFAULT_POST_CATALOG, tag, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
+    }
+
+    public Observable<ResponseBody> getPostListByTag(String tag, int catalog) {
+        return mApi.getPostListByTag(mAccessToken, catalog, tag, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
+    }
+
 
     public void add(String key, Observer request) {
         requestMap.put(key, request);

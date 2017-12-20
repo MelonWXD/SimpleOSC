@@ -11,6 +11,7 @@ import android.view.View;
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.base.fragment.BaseViewPagerFragment;
 import com.dongua.simpleosc.bean.NewsTab;
+import com.dongua.simpleosc.ui.news.PostFragment;
 import com.dongua.simpleosc.ui.news.SubFragment;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import butterknife.BindView;
 
 import static com.dongua.simpleosc.bean.NewsTab.TYPE_BLOG;
 import static com.dongua.simpleosc.bean.NewsTab.TYPE_NEWS;
+import static com.dongua.simpleosc.bean.NewsTab.TYPE_POST;
 
 /**
  * Created by duoyi on 17-11-18.
@@ -60,12 +62,12 @@ public class NewsFragment extends BaseViewPagerFragment {
         NewsTab tab2 = new NewsTab("推荐博客", TYPE_BLOG, false, "");
 //        NewsTab tab3 = new NewsTab("开源资讯", TYPE_NEWS, false, "");
 
-//        NewsTab tab3 = new NewsTab("技术问答", TYPE_ALL, false, "");
+        NewsTab tab3 = new NewsTab("技术问答", TYPE_POST, false, "");
 //        NewsTab tab4 = new NewsTab("每日一搏", TYPE_DAILY, false, "");
         tabList = new ArrayList<>();
         tabList.add(tab1);
         tabList.add(tab2);
-//        tabList.add(tab3);
+        tabList.add(tab3);
 //        tabList.add(tab4);
         mAdapter = new ContentPagerAdapter(getChildFragmentManager(), tabList);
         mViewPager.setAdapter(mAdapter);
@@ -124,6 +126,9 @@ public class NewsFragment extends BaseViewPagerFragment {
 //            else if (position   == 1)
 //                return SubFragment.newInstance(getContext(), tabList.get(position));
 //            else
+            if(position == 2){
+                return PostFragment.newInstance(getContext(), tabList.get(position));
+            }
                 return SubFragment.newInstance(getContext(), tabList.get(position));
         }
 
