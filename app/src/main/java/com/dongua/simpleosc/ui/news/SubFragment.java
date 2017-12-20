@@ -27,10 +27,11 @@ import static com.dongua.simpleosc.utils.Util.dateFormat;
  * Created by duoyi on 17-11-27.
  */
 
-public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubContract.View {
+public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubContract.View<SubBean> {
 
     private SubContract.Presenter mPresenter;
-    public static final String LAST_UPDATE_SUBBEAN = "update_sub";
+    public static final String LAST_UPDATE_BLOG = "update_blog";
+    public static final String LAST_UPDATE_NEWS = "update_news";
 
     @Override
     protected RecyclerView.Adapter getRecyclerAdapter() {
@@ -62,7 +63,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
     }
 
     protected void initPresenter() {
-        mPresenter = new SubPresenter();
+        mPresenter = new BasePresenter<SubBean>();
         mPresenter.attach(this);
     }
 
@@ -76,14 +77,24 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
     protected void initData() {
         super.initData();
         loadFromDB();
-
-        long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_SUBBEAN, 0L);
-        long nowTime = new Date().getTime();
-        if (!isRorate && (lastUpdate == 0 || nowTime - lastUpdate > 30 * 1000)) {
-            Logger.d("request at initData() ");
-            SharedPreferenceUtil.put(LAST_UPDATE_SUBBEAN, nowTime);
+        if(mTab.getType() == NewsTab.TYPE_BLOG){
+            long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_BLOG, 0L);
+            long nowTime = new Date().getTime();
+            if (!isRorate && (lastUpdate == 0 || nowTime - lastUpdate > 30 * 1000)) {
+                SharedPreferenceUtil.put(LAST_UPDATE_BLOG, nowTime);
+                requestData();
+            }
+        }else if(mTab.getType() == NewsTab.TYPE_NEWS){
+            long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_NEWS, 0L);
+            long nowTime = new Date().getTime();
+            if (!isRorate && (lastUpdate == 0 || nowTime - lastUpdate > 30 * 1000)) {
+                SharedPreferenceUtil.put(LAST_UPDATE_NEWS, nowTime);
+                requestData();
+            }
+        }else {
             requestData();
         }
+
     }
 
     @Override
@@ -163,7 +174,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
 
         @Override
         public SubHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View root = LayoutInflater.from(getActivity()).inflate(R.layout.layout_recycler_item, parent, false);
+            View root = LayoutInflater.from(getActivity()).inflate(R.layout.layout_recycler_item_sub, parent, false);
             return new SubHolder(root);
         }
 
@@ -198,28 +209,28 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements SubCon
                 super(itemView);
                 title = itemView.findViewById(R.id.tv_title);
                 description = itemView.findViewById(R.id.tv_description);
-                time = itemView.findViewById(R.id.tv_time);
+                time = itemView.findViewById(R.id.tv_author_time);
                 comment = itemView.findViewById(R.id.tv_comment);
                 line = itemView.findViewById(R.id.divider);
             }
         }
     }
 
-    class PostRecyclerAdapter extends RecyclerView.Adapter<BNRecyclerAdapter.SubHolder> {
-
-        @Override
-        public BNRecyclerAdapter.SubHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return null;
-        }
-
-        @Override
-        public void onBindViewHolder(BNRecyclerAdapter.SubHolder holder, int position) {
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return 0;
-        }
-    }
+//    class PostRecyclerAdapter extends RecyclerView.Adapter<BNRecyclerAdapter.SubHolder> {
+//
+//        @Override
+//        public BNRecyclerAdapter.SubHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//            return null;
+//        }
+//
+//        @Override
+//        public void onBindViewHolder(BNRecyclerAdapter.SubHolder holder, int position) {
+//
+//        }
+//
+//        @Override
+//        public int getItemCount() {
+//            return 0;
+//        }
+//    }
 }

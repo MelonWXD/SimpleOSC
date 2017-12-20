@@ -5,22 +5,24 @@ import com.dongua.simpleosc.bean.SubBean;
 import java.util.List;
 
 /**
- * Created by duoyi on 17-12-8.
+ * Created by duoyi on 17-12-20.
  */
 
-public class SubPresenter implements SubContract.Presenter, SubContract.OnRequestListener<SubBean> {
+public class BasePresenter<T> implements SubContract.Presenter,SubContract.OnRequestListener<T> {
     private SubContract.View mView;
     private SubContract.Model mModel;
 
 
-    SubPresenter() {
-        mModel = new SubModel();
+    BasePresenter() {
+        mModel = new BaseModel<T>();
         mModel.setRequestListener(this);
     }
 
+//    protected abstract SubContract.Model getMyModel();
+
 
     @Override
-    public void successed(List<SubBean> bean) {
+    public void successed(List<T> bean) {
         mView.requestFinished(bean);
     }
 
@@ -62,6 +64,4 @@ public class SubPresenter implements SubContract.Presenter, SubContract.OnReques
     public void loadMore() {
 
     }
-
-
 }

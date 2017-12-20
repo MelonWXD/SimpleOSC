@@ -11,9 +11,9 @@ import java.util.List;
  */
 
 public interface SubContract {
-    interface View extends BaseView{
+    interface View<T> extends BaseView{
 //        void updateRecyclerView(News data);
-        void requestFinished(List<SubBean> data);
+        void requestFinished(List<T> data);
 //        void requestFinished2(List<News> data);
 
         void requestFailed();
@@ -29,10 +29,10 @@ public interface SubContract {
 
     }
 
-    interface Model {
+    interface Model<T> {
 
-        void cacheData(List<SubBean> data);
-        void setRequestListener(OnRequestListener listener);
+        void cacheData(List<T> data);
+        void setRequestListener(OnRequestListener<T> listener);
         void cancelRequest();
 
         void getData(int type,String pubDate);
@@ -40,8 +40,8 @@ public interface SubContract {
 //        void getNewsBefore(String pubDate);
     }
 
-    interface OnRequestListener{
-        void successed(List<SubBean> bean);
+    interface OnRequestListener<T>{
+        void successed(List<T> bean);
         void failed();
     }
 }
