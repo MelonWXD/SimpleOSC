@@ -51,7 +51,7 @@ public interface ApiService {
             , @Query("pageSize") int pageSize
             , @Query("dataType") String dataType);
 
-    @GET("/action/openapi/blog_recommend_list")
+    @GET("/action/openapi/post_list")
     Observable<ResponseBody> getPostList(
             @Query("access_token") String access_token
             , @Query("catalog") int catalog
@@ -59,7 +59,7 @@ public interface ApiService {
             , @Query("pageSize") int pageSize
             , @Query("dataType") String dataType);
 
-    @GET("/action/openapi/blog_recommend_list")
+    @GET("/action/openapi/post_list")
     Observable<ResponseBody> getPostListByTag(
             @Query("access_token") String access_token
             , @Query("catalog") int catalog

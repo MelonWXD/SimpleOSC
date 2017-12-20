@@ -90,19 +90,19 @@
                     tools:text="2012-12-01 22:10" />
 
                 <ImageView
-                    android:id="@+id/iv_comment"
+                    android:id="@+id/iv_answer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="centerInside"
-                    android:layout_alignTop="@+id/tv_comment"
-                    android:layout_alignBottom="@+id/tv_comment"
-                    android:layout_toStartOf="@+id/tv_comment"
+                    android:layout_alignTop="@+id/tv_answer"
+                    android:layout_alignBottom="@+id/tv_answer"
+                    android:layout_toStartOf="@+id/tv_answer"
                     android:contentDescription="@string/iv_string_comment"
                     android:layout_marginEnd="@dimen/lay_8"
                     android:src="@mipmap/ic_comment_empty"/>
 
                 <TextView
-                    android:id="@+id/tv_comment"
+                    android:id="@+id/tv_answer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

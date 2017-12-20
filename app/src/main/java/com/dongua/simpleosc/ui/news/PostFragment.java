@@ -6,17 +6,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.bean.PostBean;
+import com.dongua.simpleosc.db.PostBeanDao;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.Date;
 import java.util.List;
+
+import static com.dongua.simpleosc.utils.Util.dateFormat;
 
 /**
  * Created by duoyi on 17-11-27.
@@ -59,6 +65,7 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
         super.initData();
         loadFromDB();
 
+        //todo 把请求时间改为变量
         long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_POSTBEAN, 0L);
         long nowTime = new Date().getTime();
         if (!isRorate && (lastUpdate == 0 || nowTime - lastUpdate > 30 * 1000)) {
@@ -70,17 +77,17 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
     @Override
     protected void loadFromDB() {
 
-//        if (mDataList.isEmpty()) {
-//            List<PostBean> datas = App.getDaoSession().getPostBeanDao().queryBuilder()
-//                    .orderDesc(PostBeanDao.Properties.PubDateLong)
-//                    .limit(15)
-//                    .list();
-//
-//            if (datas != null && !datas.isEmpty()) {
-//                mDataList.clear();
-//                mDataList.addAll(datas);
-//            }
-//        }
+        if (mDataList.isEmpty()) {
+            List<PostBean> datas = App.getDaoSession().getPostBeanDao().queryBuilder()
+                    .orderDesc(PostBeanDao.Properties.PubDateLong)
+                    .limit(15)
+                    .list();
+
+            if (datas != null && !datas.isEmpty()) {
+                mDataList.clear();
+                mDataList.addAll(datas);
+            }
+        }
     }
 
     //todo 没有铺满首屏就调用loadMore
@@ -90,23 +97,17 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
         long minTime = mDataList.get(mDataList.size() - 1).getPubDateLong();
         //todo time相同的要做处理
 
-//        List<SubBean> data = App.getDaoSession().getSubBeanDao().queryBuilder()
-//                .where(SubBeanDao.Properties.PubDateLong.lt(minTime))
-//                .where(SubBeanDao.Properties.Type.eq(mTab.getType()))
-//                .limit(15)
-//                .list();
-//
-//        List<PostBean> data = App.getDaoSession().getPostBeanDao().queryBuilder()
-//                .where(PostBeanDao.Properties.PubDateLong.lt(minTime))
-//                .limit(15)
-//                .list();
-//
-//        if (data != null && !data.isEmpty()) {
-//            mDataList.addAll(data);
-//            sendMsgLoadMoreSuccess();
-//        } else {
-//            sendMsgLoadMoreFail();
-//        }
+        List<PostBean> data = App.getDaoSession().getPostBeanDao().queryBuilder()
+                .where(PostBeanDao.Properties.PubDateLong.lt(minTime))
+                .limit(15)
+                .list();
+
+        if (data != null && !data.isEmpty()) {
+            mDataList.addAll(data);
+            sendMsgLoadMoreSuccess();
+        } else {
+            sendMsgLoadMoreFail();
+        }
 
 
     }
@@ -144,7 +145,20 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
         mPresenter.detach();
         mPresenter.cancelRequest();
     }
-
+//
+//    private int id;
+//    private String author;
+//    private String pubDate;
+//    private long pubDateLong;
+//    private int authorid;
+//    private String portrait;
+//    private String title;
+//    private int viewCount;
+//
+//    private int answerCount;
+//    private String answerName;
+//    private String answerTime;
+//todo viewcount 添加
     class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapter.PostHolder> {
 
 
@@ -159,12 +173,16 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
         public void onBindViewHolder(PostHolder holder, int position) {
             PostBean data = mDataList.get(position);
             holder.title.setText(data.getTitle());
+
+            Glide.with(getContext())
+                    .load(data.getPortrait())
+                    .into(holder.portrait);
 //            holder.description = data.get();
-//            holder.time.setText(String.format(getResources().getString(R.string.pub_info), data.getAuthor(), dateFormat(data.getPubDate())));
+            holder.time.setText(String.format(getResources().getString(R.string.pub_info), data.getAuthor(), dateFormat(data.getPubDate())));
 //            if (data.getCommentCount() > 0) {
 //                holder.comment.setCompoundDrawables(getResources().getDrawable(R.mipmap.ic_comment), null, null, null);
 //            }
-//            holder.comment.setText(String.valueOf(data.getCommentCount()));
+            holder.answer.setText(String.valueOf(data.getAnswerCount()));
 
         }
 
@@ -176,18 +194,20 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
 
         class PostHolder extends RecyclerView.ViewHolder {
 
+            ImageView portrait;
             TextView title;
             TextView description;
             TextView time;
+            TextView answer;
             View line;
 
             PostHolder(View itemView) {
                 super(itemView);
-
+                portrait = itemView.findViewById(R.id.iv_author);
                 title = itemView.findViewById(R.id.tv_question_title);
                 description = itemView.findViewById(R.id.tv_question_content);
                 time = itemView.findViewById(R.id.tv_author_time);
-
+                answer = itemView.findViewById(R.id.tv_answer);
                 line = itemView.findViewById(R.id.divider);
             }
         }

@@ -23,22 +23,16 @@ public class PostBean implements Parcelable {
     private int authorid;
     private String portrait;
     private String title;
-    private long viewCount;
+    private int viewCount;
 
-    private long answerCount;
+    private int answerCount;
     private String answerName;
     private String answerTime;
 
 
-    public PostBean(int id, String author){
-        this.id = id;
-        this.author = author;
-    }
-
     public PostBean(int id, String author, String pubDate,
                     long pubDateLong, int authorid, String portrait, String title,
-                    long viewCount, long answerCount, String answerName,
-                    String answerTime) {
+                    int viewCount, int answerCount, String answerName, String answerTime) {
         this.id = id;
         this.author = author;
         this.pubDate = pubDate;
@@ -51,6 +45,7 @@ public class PostBean implements Parcelable {
         this.answerName = answerName;
         this.answerTime = answerTime;
     }
+
 
 
 
@@ -90,8 +85,8 @@ public class PostBean implements Parcelable {
         parcel.writeInt(authorid);
         parcel.writeString(portrait);
         parcel.writeString(title);
-        parcel.writeLong(viewCount);
-        parcel.writeLong(answerCount);
+        parcel.writeInt(viewCount);
+        parcel.writeInt(answerCount);
         parcel.writeString(answerName);
         parcel.writeString(answerTime);
 
@@ -183,27 +178,6 @@ public class PostBean implements Parcelable {
 
 
 
-    public long getViewCount() {
-        return this.viewCount;
-    }
-
-
-
-    public void setViewCount(long viewCount) {
-        this.viewCount = viewCount;
-    }
-
-
-
-    public long getAnswerCount() {
-        return this.answerCount;
-    }
-
-
-
-    public void setAnswerCount(long answerCount) {
-        this.answerCount = answerCount;
-    }
 
 
 
@@ -230,6 +204,30 @@ public class PostBean implements Parcelable {
     }
 
 
+
+    public int getViewCount() {
+        return this.viewCount;
+    }
+
+
+
+    public void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
+
+
+    public int getAnswerCount() {
+        return this.answerCount;
+    }
+
+
+
+    public void setAnswerCount(int answerCount) {
+        this.answerCount = answerCount;
+    }
+
+
     public PostBean(Parcel parcel) {
         this.id = parcel.readInt();
         this.author = parcel.readString();
@@ -239,8 +237,8 @@ public class PostBean implements Parcelable {
         this.authorid = parcel.readInt();
         this.portrait = parcel.readString();
         this.title = parcel.readString();
-        this.viewCount = parcel.readLong();
-        this.answerCount = parcel.readLong();
+        this.viewCount = parcel.readInt();
+        this.answerCount = parcel.readInt();
         this.answerName = parcel.readString();
         this.answerTime = parcel.readString();
 
@@ -248,11 +246,10 @@ public class PostBean implements Parcelable {
 
 
 
-    @Generated(hash = 627415855)
+    @Generated(hash = 1733791594)
     public PostBean(Long dbID, int id, String author, String pubDate,
             long pubDateLong, int authorid, String portrait, String title,
-            long viewCount, long answerCount, String answerName,
-            String answerTime) {
+            int viewCount, int answerCount, String answerName, String answerTime) {
         this.dbID = dbID;
         this.id = id;
         this.author = author;
@@ -272,6 +269,10 @@ public class PostBean implements Parcelable {
     @Generated(hash = 1985240350)
     public PostBean() {
     }
+
+
+
+
 
     public static final Creator<PostBean> CREATOR = new Creator<PostBean>() {
         @Override

@@ -32,8 +32,8 @@ public class PostBeanDao extends AbstractDao<PostBean, Long> {
         public final static Property Authorid = new Property(5, int.class, "authorid", false, "AUTHORID");
         public final static Property Portrait = new Property(6, String.class, "portrait", false, "PORTRAIT");
         public final static Property Title = new Property(7, String.class, "title", false, "TITLE");
-        public final static Property ViewCount = new Property(8, long.class, "viewCount", false, "VIEW_COUNT");
-        public final static Property AnswerCount = new Property(9, long.class, "answerCount", false, "ANSWER_COUNT");
+        public final static Property ViewCount = new Property(8, int.class, "viewCount", false, "VIEW_COUNT");
+        public final static Property AnswerCount = new Property(9, int.class, "answerCount", false, "ANSWER_COUNT");
         public final static Property AnswerName = new Property(10, String.class, "answerName", false, "ANSWER_NAME");
         public final static Property AnswerTime = new Property(11, String.class, "answerTime", false, "ANSWER_TIME");
     }
@@ -177,8 +177,8 @@ public class PostBeanDao extends AbstractDao<PostBean, Long> {
             cursor.getInt(offset + 5), // authorid
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // portrait
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // title
-            cursor.getLong(offset + 8), // viewCount
-            cursor.getLong(offset + 9), // answerCount
+            cursor.getInt(offset + 8), // viewCount
+            cursor.getInt(offset + 9), // answerCount
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // answerName
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // answerTime
         );
@@ -195,8 +195,8 @@ public class PostBeanDao extends AbstractDao<PostBean, Long> {
         entity.setAuthorid(cursor.getInt(offset + 5));
         entity.setPortrait(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setTitle(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setViewCount(cursor.getLong(offset + 8));
-        entity.setAnswerCount(cursor.getLong(offset + 9));
+        entity.setViewCount(cursor.getInt(offset + 8));
+        entity.setAnswerCount(cursor.getInt(offset + 9));
         entity.setAnswerName(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setAnswerTime(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
      }

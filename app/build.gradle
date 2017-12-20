@@ -22,6 +22,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 //apply plugin: 'android-apt'
 
+greendao {
+    targetGenDir 'src/main/java'
+    daoPackage 'com.dongua.simpleosc.db'
+    schemaVersion 2
+}
+
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
@@ -52,9 +59,4 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     //banner
     compile 'com.youth.banner:banner:1.4.10'
-}
-greendao {
-    targetGenDir 'src/main/java'
-    daoPackage 'com.dongua.simpleosc.db'
-    schemaVersion 1
 }

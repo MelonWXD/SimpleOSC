@@ -25,6 +25,11 @@ public class Util {
         return jsonData;
     }
 
+//    public static JsonArray string2JsonArray(String jsonstr) {
+//        JsonArray jsonArray = new JsonParser().parse(jsonstr).getAsJsonArray();
+//        return jsonArray;
+//    }
+
 
     public static String bean2Json(Object bean) {
         return new Gson().toJson(bean);

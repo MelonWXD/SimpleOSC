@@ -9,12 +9,16 @@ import com.dongua.simpleosc.db.PostBeanDao;
 import com.dongua.simpleosc.db.SubBeanDao;
 import com.dongua.simpleosc.net.RetrofitClient;
 import com.dongua.simpleosc.utils.Util;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.orhanobut.logger.Logger;
 
 import org.greenrobot.greendao.annotation.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -26,6 +30,7 @@ import static com.dongua.simpleosc.bean.NewsTab.TYPE_BLOG;
 import static com.dongua.simpleosc.bean.NewsTab.TYPE_DAILY;
 import static com.dongua.simpleosc.bean.NewsTab.TYPE_NEWS;
 import static com.dongua.simpleosc.bean.NewsTab.TYPE_POST;
+import static com.dongua.simpleosc.utils.Util.str2Date;
 
 /**
  * Created by duoyi on 17-12-20.
@@ -57,7 +62,7 @@ public class NewsModel<T> implements NewsContract.Model<T> {
 
             for (int i = 0; i < data.size(); i++) {
                 SubBean n = (SubBean) data.get(i);
-                n.setPubDateLong(Util.str2Date(n.getPubDate()));
+                n.setPubDateLong(str2Date(n.getPubDate()));
                 try {
                     dao.save(n);
                 } catch (SQLiteConstraintException exception) {
@@ -69,7 +74,7 @@ public class NewsModel<T> implements NewsContract.Model<T> {
 
             for (int i = 0; i < data.size(); i++) {
                 PostBean n = (PostBean) data.get(i);
-                n.setPubDateLong(Util.str2Date(n.getPubDate()));
+                n.setPubDateLong(str2Date(n.getPubDate()));
                 try {
                     dao.save(n);
                 } catch (SQLiteConstraintException exception) {
@@ -105,7 +110,7 @@ public class NewsModel<T> implements NewsContract.Model<T> {
     }
 
 
-    private void requestPost(String pubDate) {
+    private void requestPost(final String pubDate) {
         RetrofitClient.getInstance().getPostList()
                 .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
@@ -118,9 +123,20 @@ public class NewsModel<T> implements NewsContract.Model<T> {
                     @Override
                     public void onNext(ResponseBody responseBody) {
                         try {
-                            List<PostBean> data = parsePostJson(responseBody.string());
-                            mListener.successed((List<T>) data);
 
+                            List<PostBean> data = parsePostJson(responseBody.string());
+
+                            if (pubDate != null && pubDate.isEmpty()) {
+
+                                Iterator<PostBean> iterator = data.iterator();
+                                while (iterator.hasNext()) {
+                                    if (!Util.dateCompare(iterator.next().getPubDate(), pubDate))
+                                        iterator.remove();
+                                }
+                            }
+
+                            cacheData((List<T>) data);
+                            mListener.successed((List<T>) data);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -140,12 +156,34 @@ public class NewsModel<T> implements NewsContract.Model<T> {
 
     }
 
+
     private List<PostBean> parsePostJson(String rep) {
-        PostBean pb = new PostBean(1, "donggua");
-        pb.setTitle("ahahahahah");
-        List<PostBean> ret = new ArrayList();
-        ret.add(pb);
-        return ret;
+        List<PostBean> data = new ArrayList<>();
+        JsonObject joo = Util.string2Json(rep);
+        JsonArray ja = joo.get("post_list").getAsJsonArray();
+//        JsonArray ja = Util.string2JsonArray(rep);
+        for (int i = 0; i < ja.size(); i++) {
+            JsonObject jo = ja.get(i).getAsJsonObject();
+            String author = jo.get("author").getAsString();
+            int id = jo.get("id").getAsInt();
+            int viewCount = jo.get("viewCount").getAsInt();
+            String title = jo.get("title").getAsString();
+            String portrait = jo.get("portrait").getAsString();
+            int authorid = jo.get("authorid").getAsInt();
+            String pubDate = jo.get("pubDate").getAsString();
+
+            int answerCount = jo.get("answerCount").getAsInt();
+            JsonElement answer = jo.get("answer");
+            String answerName = "";
+            String answerTime = "";
+            if (answer instanceof JsonObject) {
+                answerName = answer.getAsJsonObject().get("name").getAsString();
+                answerTime = answer.getAsJsonObject().get("time").getAsString();
+            }
+            data.add(new PostBean(id, author, pubDate, str2Date(pubDate), authorid, portrait, title, viewCount, answerCount, answerName, answerTime));
+        }
+
+        return data;
     }
 
 
@@ -162,23 +200,33 @@ public class NewsModel<T> implements NewsContract.Model<T> {
 
                     @Override
                     public void onNext(List<SubBean> news) {
-                        if (pubDate == null || pubDate.isEmpty()) {
-                            mListener.successed((List<T>) news);
-                            cacheData((List<T>) news);
-                        } else {
-                            List<SubBean> update = new ArrayList<>();
-                            for (SubBean n : news) {
-                                if (Util.dateCompare(n.getPubDate(), pubDate)) {
-                                    update.add(n);
-                                }
+//                        if (pubDate == null || pubDate.isEmpty()) {
+//                            mListener.successed((List<T>) news);
+//                            cacheData((List<T>) news);
+//                        } else {
+//                            List<SubBean> update = new ArrayList<>();
+//                            for (SubBean n : news) {
+//                                if (Util.dateCompare(n.getPubDate(), pubDate)) {
+//                                    update.add(n);
+//                                }
+//                            }
+//
+//                            cacheData((List<T>) update);
+//
+//                            mListener.successed((List<T>) update);
+//
+//                        }
+
+                        if (pubDate != null && !pubDate.isEmpty()) {
+                            Iterator<SubBean> iterator = news.iterator();
+                            while (iterator.hasNext()) {
+                                if (!Util.dateCompare(iterator.next().getPubDate(), pubDate))
+                                    iterator.remove();
                             }
-
-                            cacheData((List<T>) update);
-
-                            mListener.successed((List<T>) update);
-                            Logger.d("新闻数据为空: " + update.isEmpty());
-
                         }
+
+                        mListener.successed((List<T>) news);
+                        cacheData((List<T>) news);
 //                        Logger.d(news);
                     }
 
@@ -208,22 +256,34 @@ public class NewsModel<T> implements NewsContract.Model<T> {
 
                     @Override
                     public void onNext(List<SubBean> blogs) {
-                        if (pubDate == null || pubDate.isEmpty()) {
-                            mListener.successed((List<T>) blogs);
-                            cacheData((List<T>) blogs);
+//                        if (pubDate == null || pubDate.isEmpty()) {
+//                            mListener.successed((List<T>) blogs);
+//                            cacheData((List<T>) blogs);
+//
+//                        } else {
+//                            List<SubBean> update = new ArrayList<>();
+//                            for (SubBean b : blogs) {
+//                                if (Util.dateCompare(b.getPubDate(), pubDate)) {
+//                                    update.add(b);
+//                                }
+//                            }
+//                            mListener.successed((List<T>) update);
+//                            cacheData((List<T>) update);
+//                            Logger.d("数据是否为空: " + update.isEmpty());
+//
+//                        }
 
-                        } else {
-                            List<SubBean> update = new ArrayList<>();
-                            for (SubBean b : blogs) {
-                                if (Util.dateCompare(b.getPubDate(), pubDate)) {
-                                    update.add(b);
-                                }
+
+                        if (pubDate != null && !pubDate.isEmpty()) {
+                            Iterator<SubBean> iterator = blogs.iterator();
+                            while (iterator.hasNext()) {
+                                if (!Util.dateCompare(iterator.next().getPubDate(), pubDate))
+                                    iterator.remove();
                             }
-                            mListener.successed((List<T>) update);
-                            cacheData((List<T>) update);
-                            Logger.d("数据是否为空: " + update.isEmpty());
-
                         }
+
+                        mListener.successed((List<T>) blogs);
+                        cacheData((List<T>) blogs);
                     }
 
                     @Override
