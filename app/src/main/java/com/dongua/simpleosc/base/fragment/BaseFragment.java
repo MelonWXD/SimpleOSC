@@ -22,7 +22,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
 
-    protected LayoutInflater mInflater;
+    private LayoutInflater mInflater;
     protected Context mContext;
     protected View mRoot;
     protected Bundle mBundle;//获取setArguments的值
@@ -30,10 +30,9 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onAttach(Context context) {
-        mContext =context;
+        mContext = context;
         super.onAttach(context);
     }
-
 
 
     @Override
@@ -52,10 +51,7 @@ public abstract class BaseFragment extends Fragment {
         initBundle(savedInstanceState);
 
 
-
-
     }
-
 
 
     @Override
@@ -67,7 +63,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mUnbinder!=null){
+        if (mUnbinder != null) {
             mUnbinder.unbind();
         }
 
@@ -78,16 +74,18 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mInflater = inflater;
-        mRoot = inflater.inflate(getLayoutId(),container,false);
-        mUnbinder = ButterKnife.bind(this,mRoot);
-
+        mRoot = inflater.inflate(getLayoutId(), container, false);
+        mUnbinder = ButterKnife.bind(this, mRoot);
+        mRoot = initRootView(mRoot);
         initWidget(mRoot);
         initData();
 
         return mRoot;
     }
 
-
+    protected View initRootView(View mRoot) {
+        return mRoot;
+    }
 
 
     protected abstract int getLayoutId();

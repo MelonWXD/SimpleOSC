@@ -9,18 +9,8 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/green200">
+        android:layout_height="@dimen/lay_20">
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/font_20"
-            android:textColor="@color/white"
-            android:text="综合"
-            android:paddingTop="@dimen/lay_8"
-            android:layout_gravity="center"/>
 
 
     </android.support.v7.widget.Toolbar>

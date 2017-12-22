@@ -146,14 +146,16 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
         //change tab title
         MainActivity act = (MainActivity) getActivity();
 
-        if (newNavItem.getId() == R.id.nav_item_me) {
-            act.setToolBarVisibility(View.GONE);
-
-        } else {
-            act.setToolBarVisibility(View.VISIBLE);
-
-            act.setToolBarTitle(newNavItem.getTitle());
-        }
+//        if (newNavItem.getId() == R.id.nav_item_me) {
+//            act.getToolBar().setVisibility(View.GONE);
+//        }else {
+//            act.getToolBar().setVisibility(View.VISIBLE);
+//        }
+//        else {
+//            act.setToolBarVisibility(View.VISIBLE);
+//
+//            act.setToolBarTitle(newNavItem.getTitle());
+//        }
     }
 
 

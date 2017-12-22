@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.base.activity.BaseActivity;
 import com.dongua.simpleosc.base.activity.BaseToolBarActivity;
 import com.dongua.simpleosc.base.fragment.BaseFragment;
 import com.dongua.simpleosc.fragment.DiscoverFragment;
@@ -21,7 +22,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class MainActivity extends BaseToolBarActivity {
+public class MainActivity extends BaseActivity {
 //
 //    @BindView(R.id.bnb_main)
 //    BottomNavigationBar mNavigationBar;
@@ -56,7 +57,7 @@ public class MainActivity extends BaseToolBarActivity {
     }
 
 
-    @Override
+//    @Override
     protected void setCustomToolbar(Toolbar toolbar) {
         mToolBar =toolbar;
     }
@@ -156,14 +157,18 @@ public class MainActivity extends BaseToolBarActivity {
 
     }
 
-    public void setToolBarVisibility(int visibility) {
-        mToolBar.setVisibility(visibility);
-    }
+//    public void setToolBarVisibility(int visibility) {
+//        mToolBar.setVisibility(visibility);
+//    }
+//
+//    public void setToolBarTitle(String title){
+//        if(title!=null){
+//           TextView tv = mToolBar.findViewById(R.id.tv_title);
+//           tv.setText(title);
+//        }
+//    }
 
-    public void setToolBarTitle(String title){
-        if(title!=null){
-           TextView tv = mToolBar.findViewById(R.id.tv_title);
-           tv.setText(title);
-        }
+    public Toolbar getToolBar(){
+        return mToolBar;
     }
 }

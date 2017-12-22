@@ -58,11 +58,11 @@ public class NewsFragment extends BaseViewPagerFragment {
         super.initWidget(root);
 
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        NewsTab tab1 = new NewsTab("开源资讯", TYPE_NEWS, false, "");
-        NewsTab tab2 = new NewsTab("推荐博客", TYPE_BLOG, false, "");
+        NewsTab tab1 = new NewsTab("资讯", TYPE_NEWS, false, "");
+        NewsTab tab2 = new NewsTab("博客", TYPE_BLOG, false, "");
 //        NewsTab tab3 = new NewsTab("开源资讯", TYPE_NEWS, false, "");
 
-        NewsTab tab3 = new NewsTab("技术问答", TYPE_POST, false, "");
+        NewsTab tab3 = new NewsTab("问答", TYPE_POST, false, "");
 //        NewsTab tab4 = new NewsTab("每日一搏", TYPE_DAILY, false, "");
         tabList = new ArrayList<>();
         tabList.add(tab1);

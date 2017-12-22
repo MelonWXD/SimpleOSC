@@ -31,5 +31,9 @@
         <item name="android:background">@color/gray</item>
     </style>
 
+    <style name="tl_tab_text" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">@dimen/font_16</item>
+    </style>
+
 
 </resources>
