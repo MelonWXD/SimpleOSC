@@ -98,6 +98,7 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
         //todo time相同的要做处理
 
         List<PostBean> data = App.getDaoSession().getPostBeanDao().queryBuilder()
+                .orderDesc(PostBeanDao.Properties.PubDateLong)
                 .where(PostBeanDao.Properties.PubDateLong.lt(minTime))
                 .limit(15)
                 .list();

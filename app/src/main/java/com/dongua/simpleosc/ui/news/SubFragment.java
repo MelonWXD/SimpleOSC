@@ -13,6 +13,7 @@ import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.bean.SubBean;
 import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
+import com.dongua.simpleosc.db.PostBeanDao;
 import com.dongua.simpleosc.db.SubBeanDao;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
@@ -77,21 +78,21 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
     protected void initData() {
         super.initData();
         loadFromDB();
-        if(mTab.getType() == NewsTab.TYPE_BLOG){
+        if (mTab.getType() == NewsTab.TYPE_BLOG) {
             long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_BLOG, 0L);
             long nowTime = new Date().getTime();
             if (!isRorate && (lastUpdate == 0 || nowTime - lastUpdate > 30 * 1000)) {
                 SharedPreferenceUtil.put(LAST_UPDATE_BLOG, nowTime);
                 requestData();
             }
-        }else if(mTab.getType() == NewsTab.TYPE_NEWS){
+        } else if (mTab.getType() == NewsTab.TYPE_NEWS) {
             long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_NEWS, 0L);
             long nowTime = new Date().getTime();
             if (!isRorate && (lastUpdate == 0 || nowTime - lastUpdate > 30 * 1000)) {
                 SharedPreferenceUtil.put(LAST_UPDATE_NEWS, nowTime);
                 requestData();
             }
-        }else {
+        } else {
             requestData();
         }
 
@@ -120,6 +121,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
         //todo time相同的要做处理
 
         List<SubBean> data = App.getDaoSession().getSubBeanDao().queryBuilder()
+                .orderDesc(SubBeanDao.Properties.PubDateLong)
                 .where(SubBeanDao.Properties.PubDateLong.lt(minTime))
                 .where(SubBeanDao.Properties.Type.eq(mTab.getType()))
                 .limit(15)

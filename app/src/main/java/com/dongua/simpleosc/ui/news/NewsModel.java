@@ -126,7 +126,7 @@ public class NewsModel<T> implements NewsContract.Model<T> {
 
                             List<PostBean> data = parsePostJson(responseBody.string());
 
-                            if (pubDate != null && pubDate.isEmpty()) {
+                            if (pubDate != null && !pubDate.isEmpty()) {
 
                                 Iterator<PostBean> iterator = data.iterator();
                                 while (iterator.hasNext()) {
