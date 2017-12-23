@@ -170,13 +170,13 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
 
         if (state != null) {
             int pos = state.getInt(TAB_POSTION, 0);
-            Logger.d(pos);
+//            Logger.d(pos);
 
             NavItemSelect(mNavItemList.get(pos));
             if (mNavItemList.get(pos).getFragment() instanceof BaseViewPagerFragment) {
                 BaseViewPagerFragment fragment = (BaseViewPagerFragment) mNavItemList.get(pos).getFragment();
                 fragment.setScroll(state.getInt(TAB_SCROLL, 0));
-                Logger.d(state.getInt(TAB_SCROLL, 0));
+//                Logger.d(state.getInt(TAB_SCROLL, 0));
             }
         } else {
             NavItemSelect(mNavItemList.get(0));

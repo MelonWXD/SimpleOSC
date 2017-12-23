@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class NewsTab implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+//0-链接新闻|1-软件推荐|2-讨论区帖子|3-博客|4-普通新闻|7-翻译文章
     public static final int TYPE_ALL = 0;
     public static final int TYPE_BLOG = 1;
     public static final int TYPE_NEWS = 4;

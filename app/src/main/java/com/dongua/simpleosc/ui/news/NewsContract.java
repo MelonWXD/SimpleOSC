@@ -31,7 +31,7 @@ public interface NewsContract {
 
     interface Model<T> {
 
-        void cacheData(List<T> data);
+        void cacheData(List<T> data,int type);
         void setRequestListener(OnRequestListener<T> listener);
         void cancelRequest();
 

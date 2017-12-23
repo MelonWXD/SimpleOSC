@@ -53,7 +53,7 @@ public class NewsModel<T> implements NewsContract.Model<T> {
     }
 
     @Override
-    public void cacheData(@NotNull List<T> data) {
+    public void cacheData(@NotNull List<T> data,int type) {
         if (data == null || data.isEmpty()) {
             return;
         }
@@ -63,6 +63,7 @@ public class NewsModel<T> implements NewsContract.Model<T> {
             for (int i = 0; i < data.size(); i++) {
                 SubBean n = (SubBean) data.get(i);
                 n.setPubDateLong(str2Date(n.getPubDate()));
+                n.setType(type);//修改type
                 try {
                     dao.save(n);
                 } catch (SQLiteConstraintException exception) {
@@ -135,7 +136,7 @@ public class NewsModel<T> implements NewsContract.Model<T> {
                                 }
                             }
 
-                            cacheData((List<T>) data);
+                            cacheData((List<T>) data,TYPE_POST);
                             mListener.successed((List<T>) data);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -226,7 +227,7 @@ public class NewsModel<T> implements NewsContract.Model<T> {
                         }
 
                         mListener.successed((List<T>) news);
-                        cacheData((List<T>) news);
+                        cacheData((List<T>) news,TYPE_NEWS);
 //                        Logger.d(news);
                     }
 
@@ -283,7 +284,7 @@ public class NewsModel<T> implements NewsContract.Model<T> {
                         }
 
                         mListener.successed((List<T>) blogs);
-                        cacheData((List<T>) blogs);
+                        cacheData((List<T>) blogs,TYPE_BLOG);
                     }
 
                     @Override

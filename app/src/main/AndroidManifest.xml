@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".activity.AuthorizeActivity"/>
         <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.DetailActivity"/>
     </application>
 
 </manifest>
