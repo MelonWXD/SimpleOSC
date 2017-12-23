@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dongua.simpleosc.App;
@@ -185,7 +186,17 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
             SubBean data = mDataList.get(position);
             holder.title.setText(data.getTitle());
 //            holder.description = data.get();
-            holder.time.setText(String.format(getResources().getString(R.string.pub_info), data.getAuthor(), dateFormat(data.getPubDate())));
+            String s = dateFormat(data.getPubDate());
+            if(s.contains("小时")){
+                holder.today.setVisibility(View.VISIBLE);
+            }else {
+                holder.today.setVisibility(View.INVISIBLE);
+
+            }
+            if(mTab.getType()==NewsTab.TYPE_BLOG){
+                holder.recommand.setVisibility(View.VISIBLE);
+            }
+            holder.time.setText(String.format(getResources().getString(R.string.pub_info), data.getAuthor(), s));
 //            if (data.getCommentCount() > 0) {
 //                holder.comment.setCompoundDrawables(getResources().getDrawable(R.mipmap.ic_comment), null, null, null);
 //            }
@@ -206,6 +217,8 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
             TextView time;
             TextView comment;
             View line;
+            ImageView today;
+            ImageView recommand;
 
             SubHolder(View itemView) {
                 super(itemView);
@@ -214,6 +227,8 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
                 time = itemView.findViewById(R.id.tv_author_time);
                 comment = itemView.findViewById(R.id.tv_comment);
                 line = itemView.findViewById(R.id.divider);
+                today = itemView.findViewById(R.id.iv_today);
+                recommand = itemView.findViewById(R.id.iv_recommand);
             }
         }
     }
