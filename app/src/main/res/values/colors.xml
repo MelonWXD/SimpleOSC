@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="mainBackground">#FAFAFA</color>
     <!-- 常用颜色值 -->
     <color name="white20">#20FFFFFF</color>
     <color name="white40">#40FFFFFF</color>

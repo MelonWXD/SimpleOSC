@@ -159,7 +159,7 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
 //    private int answerCount;
 //    private String answerName;
 //    private String answerTime;
-//todo viewcount 添加
+//todo viewcount 添加  up:啥意思？
     class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapter.PostHolder> {
 
 
