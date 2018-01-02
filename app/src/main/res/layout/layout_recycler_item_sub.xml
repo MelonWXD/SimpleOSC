@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical">
 
 
@@ -13,8 +15,6 @@
         android:id="@+id/ll_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:background="@drawable/bg_material_white"
         android:orientation="vertical"
         android:paddingBottom="2dp"
         android:paddingLeft="16dp"
