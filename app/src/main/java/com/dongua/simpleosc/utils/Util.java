@@ -67,7 +67,7 @@ public class Util {
 
     /**
      * return true if d1 is later d2
-     * */
+     */
 //    /*2017-12-09 08:24:49*/
     public static boolean dateCompare(String d1, String d2) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -80,15 +80,16 @@ public class Util {
         }
         return false;
     }
+
     /**
      * return true if d1 is later than now + plusSecond
-     * */
-    public static boolean dateCompareNow(String d1,int plusSecond) {
+     */
+    public static boolean dateCompareNow(String d1, int plusSecond) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             Date date1 = sdf.parse(d1);
             Date now = new Date();
-            return date1.getTime() > now.getTime()+plusSecond;
+            return date1.getTime() > now.getTime() + plusSecond;
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -97,21 +98,23 @@ public class Util {
 
 
     public static String dateFormat(String d) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String ret = "";
         try {
             long pubDate = sdf.parse(d).getTime();
             long now = new Date().getTime();
 //            com.orhanobut.logger.Logger.d(now-pubDate);
-            float time = (now - pubDate) / (24*60*60*1000F);
-            if (time < 1) {
-                ret = String.format(Locale.getDefault(),"%d小时前", (int) (time * 24));
-            } else if (time < 2){
+            float time = (now - pubDate) / (24 * 60 * 60 * 1000F);
+            if (time < 1.0 / 24) {
+                ret = String.format(Locale.getDefault(), "%d分钟前", (int) (time * 24 * 60));
+            } else if (time < 1) {
+                ret = String.format(Locale.getDefault(), "%d小时前", (int) (time * 24));
+            } else if (time < 2) {
                 ret = "昨天";
-            }else if(time<3){
-                ret="前天";
-            }else {
-                ret = String.format(Locale.getDefault(),"%d天前", (int) time );
+            } else if (time < 3) {
+                ret = "前天";
+            } else {
+                ret = String.format(Locale.getDefault(), "%d天前", (int) time);
             }
 
         } catch (ParseException e) {
@@ -122,9 +125,9 @@ public class Util {
         return ret;
     }
 
-    public static long str2Date(String d){
+    public static long str2Date(String d) {
 //        Logger.d("str2Date");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         try {
             return sdf.parse(d).getTime();
         } catch (ParseException e) {
@@ -137,6 +140,7 @@ public class Util {
     private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
     private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
     private static final String KEY_MIUI_INTERNAL_STORAGE = "ro.miui.internal.storage";
+
     public static boolean isMIUI() {
         String device = Build.MANUFACTURER;
 

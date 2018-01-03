@@ -187,14 +187,14 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
             holder.title.setText(data.getTitle());
 //            holder.description = data.get();
             String s = dateFormat(data.getPubDate());
-            if(s.contains("小时")){
+            if(s.contains("小时") || s.contains("分钟")){
                 holder.today.setVisibility(View.VISIBLE);
             }else {
                 holder.today.setVisibility(View.INVISIBLE);
 
             }
             if(mTab.getType()==NewsTab.TYPE_BLOG){
-                holder.recommand.setVisibility(View.VISIBLE);
+//                holder.recommand.setVisibility(View.VISIBLE);
             }
             holder.time.setText(String.format(getResources().getString(R.string.pub_info), data.getAuthor(), s));
 //            if (data.getCommentCount() > 0) {
