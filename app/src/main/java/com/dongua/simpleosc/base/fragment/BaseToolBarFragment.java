@@ -35,7 +35,7 @@ public abstract class BaseToolBarFragment extends BaseFragment {
                 ViewGroup.LayoutParams.MATCH_PARENT));
         mRootView.setOrientation(LinearLayout.VERTICAL);
 
-        mToolBarLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.layout_toolbar,mRootView,false);
+        mToolBarLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.layout_toolbar_fragment,mRootView,false);
         mToolBar = mToolBarLayout.findViewById(R.id.toolbar);
         setCustomToolbar(mToolBar);
 

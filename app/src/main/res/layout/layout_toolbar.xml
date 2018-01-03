@@ -9,8 +9,59 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/lay_20">
+        android:layout_height="@dimen/lay_40"
+        app:contentInsetStart="0dp">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+
+            <ImageView
+                android:id="@+id/tb_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_back"
+                android:layout_alignTop="@+id/tv_back"
+                android:padding="@dimen/lay_4"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_svg_back" />
+
+            <TextView
+                android:id="@+id/tv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tb_back"
+                android:text="返回"
+                android:textSize="@dimen/font_20" />
+
+            <ImageView
+                android:id="@+id/iv_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_back"
+                android:layout_alignTop="@+id/tv_back"
+                android:layout_marginRight="@dimen/lay_8"
+                android:layout_toLeftOf="@+id/iv_share"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_svg_comment" />
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/tv_back"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/tv_back"
+                android:layout_marginRight="@dimen/lay_8"
+                android:padding="@dimen/lay_4"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_svg_share" />
+
+
+        </RelativeLayout>
 
 
     </android.support.v7.widget.Toolbar>

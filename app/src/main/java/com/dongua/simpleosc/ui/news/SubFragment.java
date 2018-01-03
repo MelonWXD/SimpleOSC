@@ -11,11 +11,13 @@ import android.widget.TextView;
 
 import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.base.adapter.BaseRecyclerAdapter;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.bean.SubBean;
 import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.db.PostBeanDao;
 import com.dongua.simpleosc.db.SubBeanDao;
+import com.dongua.simpleosc.listener.RecyclerItemListener;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
 
@@ -37,7 +39,20 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
 
     @Override
     protected RecyclerView.Adapter getRecyclerAdapter() {
-        return new BNRecyclerAdapter();
+        BNRecyclerAdapter adapter = new BNRecyclerAdapter(getActivity());
+        adapter.setItemListener(new RecyclerItemListener() {
+            @Override
+            public void onClick(View view, int pos) {
+                Logger.i("onClick");
+            }
+
+            @Override
+            public boolean onLongClick(View view, int pos) {
+                Logger.i("onLongClick");
+                return true;
+            }
+        });
+        return adapter;
     }
 
     public static SubFragment newInstance(Context context, NewsTab tab) {
@@ -172,34 +187,60 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
         mPresenter.cancelRequest();
     }
 
-    class BNRecyclerAdapter extends RecyclerView.Adapter<BNRecyclerAdapter.SubHolder> {
+    class BNRecyclerAdapter extends BaseRecyclerAdapter<BNRecyclerAdapter.SubHolder> {
 
+
+        RecyclerItemListener itemListener;
+
+        public BNRecyclerAdapter(Context mContext) {
+            super(mContext);
+        }
+
+
+        public void setItemListener(RecyclerItemListener itemListener) {
+            this.itemListener = itemListener;
+        }
 
         @Override
-        public SubHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View root = LayoutInflater.from(getActivity()).inflate(R.layout.layout_recycler_item_sub, parent, false);
+        public void onItemClick(View v, int postion) {
+            itemListener.onClick(v, postion);
+        }
+
+        @Override
+        public boolean onItemLongClick(View v, int postion) {
+            return itemListener.onLongClick(v, postion);
+        }
+
+        @Override
+        protected int getItemLayoutID() {
+            return R.layout.layout_recycler_item_sub;
+        }
+
+        @Override
+        protected SubHolder getViewHolder(View root) {
+            root.setOnClickListener(this);
+            root.setOnLongClickListener(this);
             return new SubHolder(root);
         }
 
         @Override
         public void onBindViewHolder(SubHolder holder, int position) {
+            holder.itemView.setTag(position);
+
             SubBean data = mDataList.get(position);
             holder.title.setText(data.getTitle());
 //            holder.description = data.get();
             String s = dateFormat(data.getPubDate());
-            if(s.contains("小时") || s.contains("分钟")){
+            if (s.contains("小时") || s.contains("分钟")) {
                 holder.today.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 holder.today.setVisibility(View.INVISIBLE);
 
             }
-            if(mTab.getType()==NewsTab.TYPE_BLOG){
+//            if(mTab.getType()==NewsTab.TYPE_BLOG){
 //                holder.recommand.setVisibility(View.VISIBLE);
-            }
-            holder.time.setText(String.format(getResources().getString(R.string.pub_info), data.getAuthor(), s));
-//            if (data.getCommentCount() > 0) {
-//                holder.comment.setCompoundDrawables(getResources().getDrawable(R.mipmap.ic_comment), null, null, null);
 //            }
+            holder.time.setText(String.format(getResources().getString(R.string.pub_info), data.getAuthor(), s));
             holder.comment.setText(String.valueOf(data.getCommentCount()));
 
         }
@@ -233,21 +274,4 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
         }
     }
 
-//    class PostRecyclerAdapter extends RecyclerView.Adapter<BNRecyclerAdapter.SubHolder> {
-//
-//        @Override
-//        public BNRecyclerAdapter.SubHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//            return null;
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(BNRecyclerAdapter.SubHolder holder, int position) {
-//
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            return 0;
-//        }
-//    }
 }

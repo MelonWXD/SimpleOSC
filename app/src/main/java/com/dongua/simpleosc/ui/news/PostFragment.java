@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.base.adapter.BaseRecyclerAdapter;
 import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.bean.PostBean;
 import com.dongua.simpleosc.db.PostBeanDao;
+import com.dongua.simpleosc.listener.RecyclerItemListener;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
 
@@ -35,7 +37,20 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
 
     @Override
     protected RecyclerView.Adapter getRecyclerAdapter() {
-        return new PostRecyclerAdapter();
+        PostRecyclerAdapter adapter = new PostRecyclerAdapter(getActivity());
+        adapter.setItemListener(new RecyclerItemListener() {
+            @Override
+            public void onClick(View view, int pos) {
+                Logger.i("onClick");
+            }
+
+            @Override
+            public boolean onLongClick(View view, int pos) {
+                Logger.i("onLongClick");
+                return true;
+            }
+        });
+        return adapter;
     }
 
     public static PostFragment newInstance(Context context, NewsTab tab) {
@@ -146,7 +161,8 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
         mPresenter.detach();
         mPresenter.cancelRequest();
     }
-//
+
+    //
 //    private int id;
 //    private String author;
 //    private String pubDate;
@@ -159,19 +175,48 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
 //    private int answerCount;
 //    private String answerName;
 //    private String answerTime;
-//todo viewcount 添加  up:啥意思？
-    class PostRecyclerAdapter extends RecyclerView.Adapter<PostRecyclerAdapter.PostHolder> {
+//todo viewcount 阅读数 添加
+    class PostRecyclerAdapter extends BaseRecyclerAdapter<PostRecyclerAdapter.PostHolder> {
 
 
-        //todo 布局尚需调整  include复用
-        @Override
-        public PostHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View root = LayoutInflater.from(getActivity()).inflate(R.layout.layout_recycler_item_post, parent, false);
-            return new PostHolder(root);
+        RecyclerItemListener itemListener;
+
+        public PostRecyclerAdapter(Context mContext) {
+            super(mContext);
+        }
+
+        public void setItemListener(RecyclerItemListener itemListener) {
+            this.itemListener = itemListener;
         }
 
         @Override
+        public void onItemClick(View v, int postion) {
+            itemListener.onClick(v, postion);
+        }
+
+        @Override
+        public boolean onItemLongClick(View v, int postion) {
+            return itemListener.onLongClick(v, postion);
+        }
+
+
+        @Override
+        protected int getItemLayoutID() {
+            return R.layout.layout_recycler_item_post;
+        }
+
+        @Override
+        protected PostRecyclerAdapter.PostHolder getViewHolder(View root) {
+            root.setOnClickListener(this);
+            root.setOnLongClickListener(this);
+            return new PostRecyclerAdapter.PostHolder(root);
+        }
+
+
+        @Override
         public void onBindViewHolder(PostHolder holder, int position) {
+            holder.itemView.setTag(position);
+
             PostBean data = mDataList.get(position);
             holder.title.setText(data.getTitle());
 
