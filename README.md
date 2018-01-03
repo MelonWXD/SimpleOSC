@@ -4,4 +4,4 @@ a simple android app
 
 
 # todo
-after merge
+deatil Act
