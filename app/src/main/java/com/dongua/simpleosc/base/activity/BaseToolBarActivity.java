@@ -18,8 +18,8 @@ import com.dongua.simpleosc.R;
 public abstract class BaseToolBarActivity extends BaseActivity {
 
 
-    private RelativeLayout mToolBarLayout;
-    private Toolbar mToolBar;
+    private LinearLayout mToolBarLayout;
+    private RelativeLayout mToolBar;
     //根布局
     private LinearLayout mRootView = null;
     //子Activity原布局
@@ -56,7 +56,7 @@ public abstract class BaseToolBarActivity extends BaseActivity {
      * 初始化ToolBar
      */
     private void initToolBar() {
-        mToolBarLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.layout_toolbar,mRootView,false);
+        mToolBarLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.layout_toolbar,mRootView,false);
         mToolBar = mToolBarLayout.findViewById(R.id.toolbar);
         setCustomToolbar(mToolBar);
     }
@@ -65,12 +65,12 @@ public abstract class BaseToolBarActivity extends BaseActivity {
      * 子类自行扩展设置属性
      * @param toolbar
      */
-    protected abstract void setCustomToolbar(Toolbar toolbar);
+    protected abstract void setCustomToolbar(View toolbar);
 
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+//
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//    }
 
 }

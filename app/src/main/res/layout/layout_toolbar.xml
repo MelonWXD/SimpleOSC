@@ -1,68 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lay_20" />
 
 
-    <android.support.v7.widget.Toolbar
+    <RelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/lay_40"
-        app:contentInsetStart="0dp">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true">
+        <ImageView
+            android:id="@+id/iv_back_tb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_back_tb"
+            android:layout_alignTop="@+id/tv_back_tb"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="@dimen/lay_4"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_svg_back" />
 
-            <ImageView
-                android:id="@+id/tb_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_back"
-                android:layout_alignTop="@+id/tv_back"
-                android:padding="@dimen/lay_4"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_svg_back" />
+        <TextView
+            android:id="@+id/tv_back_tb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_back_tb"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="返回"
+            android:textSize="@dimen/font_20" />
 
-            <TextView
-                android:id="@+id/tv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/tb_back"
-                android:text="返回"
-                android:textSize="@dimen/font_20" />
+        <ImageView
+            android:id="@+id/iv_comment_tb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_back_tb"
+            android:layout_alignTop="@+id/tv_back_tb"
+            android:layout_marginRight="@dimen/lay_8"
+            android:layout_toLeftOf="@+id/iv_share_tb"
+            android:background="?android:attr/selectableItemBackground"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_svg_comment" />
 
-            <ImageView
-                android:id="@+id/iv_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_back"
-                android:layout_alignTop="@+id/tv_back"
-                android:layout_marginRight="@dimen/lay_8"
-                android:layout_toLeftOf="@+id/iv_share"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_svg_comment" />
-
-            <ImageView
-                android:id="@+id/iv_share"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/tv_back"
-                android:layout_alignParentEnd="true"
-                android:layout_alignTop="@+id/tv_back"
-                android:layout_marginRight="@dimen/lay_8"
-                android:padding="@dimen/lay_4"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_svg_share" />
-
-
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_share_tb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_back_tb"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/tv_back_tb"
+            android:layout_marginRight="@dimen/lay_8"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="@dimen/lay_4"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_svg_share" />
 
 
-    </android.support.v7.widget.Toolbar>
-</RelativeLayout>
+    </RelativeLayout>
+
+
+</LinearLayout>

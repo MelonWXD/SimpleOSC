@@ -16,10 +16,6 @@ import android.content.Intent;
 public class ActivitySwitcher {
 
 
-
-
-
-
     public static void switchTo(Activity activity,
                                 Class<? extends Activity> cls) {
         Intent intent = new Intent(activity, cls);
@@ -28,9 +24,9 @@ public class ActivitySwitcher {
     }
 
     @SuppressWarnings("unchecked")
-    public static void switchTo(Activity activity,
-                                Class<? extends Activity> cls,
-                                HashMap<String, Object> hashMap) {
+    public static void switchTo(Activity activity
+            , Class<? extends Activity> cls
+            , HashMap<String, Object> hashMap) {
         Intent intent = new Intent(activity, cls);
         for (Object o : hashMap.entrySet()) {
             Entry<String, Object> entry = (Entry<String, Object>) o;

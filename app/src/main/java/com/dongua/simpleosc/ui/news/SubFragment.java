@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.activity.DetailActivity;
 import com.dongua.simpleosc.base.adapter.BaseRecyclerAdapter;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.bean.SubBean;
@@ -18,11 +19,14 @@ import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.db.PostBeanDao;
 import com.dongua.simpleosc.db.SubBeanDao;
 import com.dongua.simpleosc.listener.RecyclerItemListener;
+import com.dongua.simpleosc.utils.ActivitySwitcher;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 import static com.dongua.simpleosc.utils.Util.dateFormat;
@@ -37,18 +41,23 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
     public static final String LAST_UPDATE_BLOG = "update_blog";
     public static final String LAST_UPDATE_NEWS = "update_news";
 
+    public static final String HREF = "href";
+
     @Override
     protected RecyclerView.Adapter getRecyclerAdapter() {
         BNRecyclerAdapter adapter = new BNRecyclerAdapter(getActivity());
         adapter.setItemListener(new RecyclerItemListener() {
             @Override
             public void onClick(View view, int pos) {
-                Logger.i("onClick");
+
+                HashMap<String,Object> argMap = new HashMap<>();
+                argMap.put(HREF,mDataList.get(pos).getId());
+                ActivitySwitcher.switchTo(getActivity(), DetailActivity.class,argMap);
             }
 
             @Override
             public boolean onLongClick(View view, int pos) {
-                Logger.i("onLongClick");
+
                 return true;
             }
         });
