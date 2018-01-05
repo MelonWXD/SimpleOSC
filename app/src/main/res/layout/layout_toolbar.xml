@@ -16,35 +16,44 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/lay_40"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical">
 
-        <ImageView
-            android:id="@+id/iv_back_tb"
+        <LinearLayout
+            android:id="@+id/ll_back_tb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_back_tb"
-            android:layout_alignTop="@+id/tv_back_tb"
-            android:background="?android:attr/selectableItemBackground"
-            android:padding="@dimen/lay_4"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_svg_back" />
+            android:background="?android:attr/selectableItemBackground">
 
-        <TextView
-            android:id="@+id/tv_back_tb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/iv_back_tb"
-            android:background="?android:attr/selectableItemBackground"
-            android:text="返回"
-            android:textSize="@dimen/font_20" />
+            <ImageView
+                android:id="@+id/iv_back_tb"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/tv_back_tb"
+                android:layout_alignTop="@+id/tv_back_tb"
+                android:padding="@dimen/lay_2"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_svg_back" />
+
+            <TextView
+                android:id="@+id/tv_back_tb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/iv_back_tb"
+                android:text="返回"
+                android:textSize="@dimen/font_18" />
+
+
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/iv_comment_tb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_back_tb"
-            android:layout_alignTop="@+id/tv_back_tb"
+            android:layout_alignBottom="@+id/ll_back_tb"
+            android:layout_alignTop="@+id/ll_back_tb"
             android:layout_marginRight="@dimen/lay_8"
             android:layout_toLeftOf="@+id/iv_share_tb"
             android:background="?android:attr/selectableItemBackground"
@@ -55,9 +64,9 @@
             android:id="@+id/iv_share_tb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/tv_back_tb"
+            android:layout_alignBottom="@+id/ll_back_tb"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/tv_back_tb"
+            android:layout_alignTop="@+id/ll_back_tb"
             android:layout_marginRight="@dimen/lay_8"
             android:background="?android:attr/selectableItemBackground"
             android:padding="@dimen/lay_4"

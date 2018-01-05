@@ -44,12 +44,26 @@ public interface ApiService {
             , @Query("pageSize") int pageSize
             , @Query("dataType") String dataType);
 
+    @GET("/action/openapi/news_detail")
+    Observable<ResponseBody> getNewsDetail(
+            @Query("id") int id
+            , @Query("access_token") String mAccessToken
+            , @Query("dataType") String dataType);
+
+
     @GET("/action/openapi/blog_recommend_list")
     Observable<List<SubBean>> getBlogList(
             @Query("access_token") String access_token
             , @Query("page") int page
             , @Query("pageSize") int pageSize
             , @Query("dataType") String dataType);
+
+    @GET("/action/openapi/blog_detail")
+    Observable<ResponseBody> getBlogDetail(
+            @Query("id") int id
+            , @Query("access_token") String mAccessToken
+            , @Query("dataType") String dataType);
+
 
     @GET("/action/openapi/post_list")
     Observable<ResponseBody> getPostList(
@@ -66,5 +80,11 @@ public interface ApiService {
             , @Query("tag") String tag
             , @Query("page") int page
             , @Query("pageSize") int pageSize
+            , @Query("dataType") String dataType);
+
+    @GET("/action/openapi/post_detail")
+    Observable<ResponseBody> getPostDetail(
+            @Query("id") int id
+            , @Query("access_token") String mAccessToken
             , @Query("dataType") String dataType);
 }

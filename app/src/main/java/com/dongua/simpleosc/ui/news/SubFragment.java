@@ -42,6 +42,8 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
     public static final String LAST_UPDATE_NEWS = "update_news";
 
     public static final String HREF = "href";
+    public static final String TYPE = "type";
+    private int mDataType ;
 
     @Override
     protected RecyclerView.Adapter getRecyclerAdapter() {
@@ -52,6 +54,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
 
                 HashMap<String,Object> argMap = new HashMap<>();
                 argMap.put(HREF,mDataList.get(pos).getId());
+                argMap.put(TYPE,mDataType);
                 ActivitySwitcher.switchTo(getActivity(), DetailActivity.class,argMap);
             }
 
@@ -102,6 +105,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
     @Override
     protected void initData() {
         super.initData();
+        mDataType = mTab.getType();
         loadFromDB();
         if (mTab.getType() == NewsTab.TYPE_BLOG) {
             long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_BLOG, 0L);
