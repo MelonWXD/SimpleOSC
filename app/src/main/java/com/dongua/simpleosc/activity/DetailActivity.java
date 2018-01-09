@@ -1,9 +1,13 @@
 package com.dongua.simpleosc.activity;
 
+import android.annotation.SuppressLint;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -32,8 +36,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
-import static com.dongua.simpleosc.ui.news.SubFragment.HREF;
-import static com.dongua.simpleosc.ui.news.SubFragment.TYPE;
 
 /**
  * Created by duoyi on 17-12-23.
@@ -41,7 +43,8 @@ import static com.dongua.simpleosc.ui.news.SubFragment.TYPE;
 
 public class DetailActivity extends BaseToolBarActivity implements View.OnClickListener {
 
-
+    public static final String HREF = "href";
+    public static final String TYPE = "type";
     String mUrl = "http://www.oschina.net/news/92172/eolinker-3-2-1";
     //    long newsID = 0L;
     //shoud be long type
@@ -49,6 +52,7 @@ public class DetailActivity extends BaseToolBarActivity implements View.OnClickL
     @BindView(R.id.wv_content)
     WebView mWebContent;
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void initView() {
         super.initView();
@@ -56,34 +60,25 @@ public class DetailActivity extends BaseToolBarActivity implements View.OnClickL
         WebSettings webSettings = mWebContent.getSettings();
 
         mWebContent.setWebChromeClient(new WebChromeClient());
-        mWebContent.setWebViewClient(new WebViewClient());
+        mWebContent.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onReceivedSslError(WebView view,
+                                           SslErrorHandler handler, SslError error) {
+                // handler.cancel();// Android默认的处理方式
+                handler.proceed();// 接受所有网站的证书
+            }
+        });
         mWebContent.getSettings().setJavaScriptEnabled(true);
-//如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
-//        webSettings.setJavaScriptEnabled(true);
-// 若加载的 html 里有JS 在执行动画等操作，会造成资源浪费（CPU、电量）
-// 在 onStop 和 onResume 里分别把 setJavaScriptEnabled() 给设置成 false 和 true 即可
-
-//支持插件
-
-//
-////设置自适应屏幕，两者合用
-//        webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
-//        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
-//
-////缩放操作
-//        webSettings.setSupportZoom(true); //支持缩放，默认为true。是下面那个的前提。
-//        webSettings.setBuiltInZoomControls(true); //设置内置的缩放控件。若为false，则该WebView不可缩放
-//        webSettings.setDisplayZoomControls(false); //隐藏原生的缩放控件
-//
-////其他细节操作
-//        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK); //关闭webview中缓存
-//        webSettings.setAllowFileAccess(true); //设置可以访问文件
-//        webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
-//        webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
-//        webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mWebContent.getSettings().setMixedContentMode(
+                    WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+        }
 
 
-//        mWebContent.setWebViewClient(new AuthorizeActivity.MyWebClient());
+//设置自适应屏幕，两者合用
+        webSettings.setUseWideViewPort(true); //将图片调整到适合webview的大小
+        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+
     }
 
     @Override
@@ -123,10 +118,13 @@ public class DetailActivity extends BaseToolBarActivity implements View.OnClickL
                         String rep = null;
                         try {
                             rep = responseBody.string();
-                            mUrl = parseUrl(rep).replace("https", "http");
+                            mUrl = parseUrl(rep);
+                            if (mUrl.contains("https"))
+                                mUrl = mUrl.replace("https", "http");
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    Logger.i(mUrl);
                                     mWebContent.loadUrl(mUrl);
 
                                 }
@@ -146,7 +144,6 @@ public class DetailActivity extends BaseToolBarActivity implements View.OnClickL
 
     private String parseUrl(String rep) {
         JsonObject jo = Util.string2Json(rep);
-//        String url =
         return jo.get("url").getAsString();
     }
 

@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 
+import static com.dongua.simpleosc.activity.DetailActivity.HREF;
+import static com.dongua.simpleosc.activity.DetailActivity.TYPE;
 import static com.dongua.simpleosc.utils.Util.dateFormat;
 
 /**
@@ -41,8 +43,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
     public static final String LAST_UPDATE_BLOG = "update_blog";
     public static final String LAST_UPDATE_NEWS = "update_news";
 
-    public static final String HREF = "href";
-    public static final String TYPE = "type";
+
     private int mDataType ;
 
     @Override
@@ -105,7 +106,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
     @Override
     protected void initData() {
         super.initData();
-        mDataType = mTab.getType();
+        mDataType = mTab.getType();//和postfragment一起放到父类去
         loadFromDB();
         if (mTab.getType() == NewsTab.TYPE_BLOG) {
             long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_BLOG, 0L);
