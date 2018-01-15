@@ -33,7 +33,7 @@ public abstract class BaseToolBarActivity extends BaseActivity {
     @Override
     public void setContentView(int layoutResID) {
         mContentView = LayoutInflater.from(this).inflate(layoutResID,null);
-        initDectorView();
+        initDecorView();
         super.setContentView(mRootView);
     }
 
@@ -41,7 +41,7 @@ public abstract class BaseToolBarActivity extends BaseActivity {
     /**
      * 初始化根布局
      */
-    private void initDectorView() {
+    private void initDecorView() {
         mRootView = new LinearLayout(this);
         mRootView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
