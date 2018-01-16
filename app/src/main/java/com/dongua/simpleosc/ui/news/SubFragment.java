@@ -204,26 +204,26 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
     class BNRecyclerAdapter extends BaseRecyclerAdapter<BNRecyclerAdapter.SubHolder> {
 
 
-        RecyclerItemListener itemListener;
+//        RecyclerItemListener itemListener;
 
         public BNRecyclerAdapter(Context mContext) {
             super(mContext);
         }
 
-
-        public void setItemListener(RecyclerItemListener itemListener) {
-            this.itemListener = itemListener;
-        }
-
-        @Override
-        public void onItemClick(View v, int postion) {
-            itemListener.onClick(v, postion);
-        }
-
-        @Override
-        public boolean onItemLongClick(View v, int postion) {
-            return itemListener.onLongClick(v, postion);
-        }
+//
+//        public void setItemListener(RecyclerItemListener itemListener) {
+//            this.itemListener = itemListener;
+//        }
+//
+//        @Override
+//        public void onItemClick(View v, int postion) {
+//            itemListener.onClick(v, postion);
+//        }
+//
+//        @Override
+//        public boolean onItemLongClick(View v, int postion) {
+//            return itemListener.onLongClick(v, postion);
+//        }
 
         @Override
         protected int getItemLayoutID() {

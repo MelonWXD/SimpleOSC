@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.listener.RecyclerItemListener;
 import com.dongua.simpleosc.ui.news.SubFragment;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public abstract class BaseRecyclerAdapter<T extends RecyclerView.ViewHolder> ext
 
     protected Context mContext;
     protected List<T> mItem;
+    protected RecyclerItemListener itemListener;
 
     public BaseRecyclerAdapter(Context mContext) {
         this.mContext = mContext;
@@ -47,19 +49,26 @@ public abstract class BaseRecyclerAdapter<T extends RecyclerView.ViewHolder> ext
 
     protected abstract T getViewHolder(View root);
 
+    public void setItemListener(RecyclerItemListener itemListener){
+        this.itemListener = itemListener;
+    }
+
 
     @Override
     public void onClick(View v) {
-        onItemClick(v,(int)v.getTag());
+//        onItemClick(v,(int)v.getTag());
+        itemListener.onClick(v, (int)v.getTag());
     }
 
     @Override
     public boolean onLongClick(View v) {
-       return onItemLongClick(v,(int)v.getTag());
+//       return onItemLongClick(v,(int)v.getTag());
+        return itemListener.onLongClick(v, (int)v.getTag());
+
 
     }
 
-    protected abstract void onItemClick(View v, int tag);
-    protected abstract boolean onItemLongClick(View v, int tag);
+//    protected abstract void onItemClick(View v, int tag);
+//    protected abstract boolean onItemLongClick(View v, int tag);
 
 }

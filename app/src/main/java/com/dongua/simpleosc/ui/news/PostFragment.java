@@ -188,25 +188,25 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
     class PostRecyclerAdapter extends BaseRecyclerAdapter<PostRecyclerAdapter.PostHolder> {
 
 
-        RecyclerItemListener itemListener;
+//        RecyclerItemListener itemListener;
 
         public PostRecyclerAdapter(Context mContext) {
             super(mContext);
         }
 
-        public void setItemListener(RecyclerItemListener itemListener) {
-            this.itemListener = itemListener;
-        }
-
-        @Override
-        public void onItemClick(View v, int postion) {
-            itemListener.onClick(v, postion);
-        }
-
-        @Override
-        public boolean onItemLongClick(View v, int postion) {
-            return itemListener.onLongClick(v, postion);
-        }
+//        public void setItemListener(RecyclerItemListener itemListener) {
+//            this.itemListener = itemListener;
+//        }
+//
+//        @Override
+//        public void onItemClick(View v, int postion) {
+//            itemListener.onClick(v, postion);
+//        }
+//
+//        @Override
+//        public boolean onItemLongClick(View v, int postion) {
+//            return itemListener.onLongClick(v, postion);
+//        }
 
 
         @Override
