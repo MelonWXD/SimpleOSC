@@ -29,7 +29,7 @@
             android:padding="@dimen/lay_8"
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_svg_search"/>
+            android:src="@drawable/svg_search"/>
 
 
     </LinearLayout>

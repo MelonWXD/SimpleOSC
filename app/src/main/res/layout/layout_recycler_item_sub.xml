@@ -75,7 +75,7 @@
                 android:layout_width="@dimen/lay_28"
                 android:layout_height="@dimen/lay_28"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_svg_recommand"
+                android:src="@drawable/svg_recommand"
                 android:layout_toRightOf="@id/tv_author_time"
                 android:layout_marginLeft="@dimen/lay_12"
                 android:visibility="gone"/>
@@ -110,7 +110,7 @@
         android:layout_width="@dimen/lay_24"
         android:layout_height="@dimen/lay_24"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_svg_today"
+        android:src="@drawable/svg_today"
         android:visibility="gone"/>
     <View
         android:id="@+id/divider"

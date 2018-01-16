@@ -3,17 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="start|bottom"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <TextView
-        android:text="3"
-        android:textSize="@dimen/font_20"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/lay_32"
+        android:layout_marginBottom="@dimen/lay_2"
         android:gravity="center"
-        android:background="@color/green200"
-        android:layout_width="100dp"
-        android:layout_height="100dp"/>
+        android:padding="@dimen/lay_4"
+        android:text="@string/nav_string_discover"
+        android:textSize="@dimen/font_20" />
 
+    <View style="@style/h_line"
+        android:layout_marginBottom="@dimen/lay_12"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_discover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </android.support.v7.widget.RecyclerView>
 
 
 </LinearLayout>

@@ -33,7 +33,7 @@
                 android:layout_alignTop="@+id/tv_back_tb"
                 android:padding="@dimen/lay_2"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_svg_back" />
+                android:src="@drawable/svg_back" />
 
             <TextView
                 android:id="@+id/tv_back_tb"
@@ -58,7 +58,7 @@
             android:layout_toLeftOf="@+id/iv_share_tb"
             android:background="?android:attr/selectableItemBackground"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_svg_comment" />
+            android:src="@drawable/svg_comment" />
 
         <ImageView
             android:id="@+id/iv_share_tb"
@@ -71,7 +71,7 @@
             android:background="?android:attr/selectableItemBackground"
             android:padding="@dimen/lay_4"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_svg_share" />
+            android:src="@drawable/svg_share" />
 
 
     </RelativeLayout>

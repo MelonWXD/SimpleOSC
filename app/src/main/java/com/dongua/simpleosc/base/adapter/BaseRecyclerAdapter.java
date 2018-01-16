@@ -40,9 +40,8 @@ public abstract class BaseRecyclerAdapter<T extends RecyclerView.ViewHolder> ext
 //    }
 
     @Override
-    public int getItemCount() {
-        return 0;
-    }
+    public abstract int getItemCount();
+
 
 
     protected abstract int getItemLayoutID();
