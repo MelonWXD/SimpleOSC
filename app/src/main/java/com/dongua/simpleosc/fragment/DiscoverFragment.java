@@ -76,8 +76,6 @@ public class DiscoverFragment extends BaseToolBarFragment {
 
         @Override
         protected ItemHolder getViewHolder(View root) {
-            root.setOnClickListener(this);
-            root.setOnLongClickListener(this);
             return new ItemHolder(root);
         }
 

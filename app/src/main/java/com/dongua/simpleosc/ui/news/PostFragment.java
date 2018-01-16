@@ -216,8 +216,6 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
 
         @Override
         protected PostRecyclerAdapter.PostHolder getViewHolder(View root) {
-            root.setOnClickListener(this);
-            root.setOnLongClickListener(this);
             return new PostRecyclerAdapter.PostHolder(root);
         }
 

@@ -30,6 +30,8 @@ public abstract class BaseRecyclerAdapter<T extends RecyclerView.ViewHolder> ext
     @Override
     public T onCreateViewHolder(ViewGroup parent, int viewType) {
         View root = LayoutInflater.from(mContext).inflate(getItemLayoutID(), parent, false);
+        root.setOnClickListener(this);
+        root.setOnLongClickListener(this);
         return getViewHolder(root);
     }
 

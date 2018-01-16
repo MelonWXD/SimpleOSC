@@ -232,8 +232,6 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
 
         @Override
         protected SubHolder getViewHolder(View root) {
-            root.setOnClickListener(this);
-            root.setOnLongClickListener(this);
             return new SubHolder(root);
         }
 
