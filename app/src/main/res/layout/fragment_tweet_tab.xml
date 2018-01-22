@@ -1,19 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="end|top"
     android:orientation="vertical">
 
-    <TextView
-        android:text="2"
-        android:textSize="@dimen/font_20"
-        android:gravity="center"
-        android:background="@color/blue200"
-        android:layout_width="100dp"
-        android:layout_height="100dp"  />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tl_tweet_tab"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/lay_40"
+            android:layout_weight="5"
+            android:padding="@dimen/lay_8"
+            app:tabBackground="@drawable/tl_tab_selector"
+            app:tabIndicatorColor="@color/green200"
+            app:tabIndicatorHeight="0dp"
+            app:tabSelectedTextColor="@color/green200"
+            app:tabTextAppearance="@style/tl_tab_text" />
+
+
+    </LinearLayout>
+
+    <View style="@style/h_line" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    </android.support.v4.view.ViewPager>
 
 
 </LinearLayout>

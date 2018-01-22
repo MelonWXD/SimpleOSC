@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:descendantFocusability="afterDescendants"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_material_white"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/lay_12"
+        android:paddingLeft="@dimen/lay_16"
+        android:paddingTop="@dimen/lay_16">
+
+        <ImageView
+            android:id="@+id/iv_tweet_face"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:clickable="true"
+            android:src="@mipmap/ic_default_portrait" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="RtlHardcoded">
+
+
+            <TextView
+                android:id="@+id/tv_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:lines="1"
+                android:textColor="@color/text_title_color"
+                android:textSize="@dimen/font_16"
+                tools:text="Large Text" />
+
+
+            <TextView
+                android:id="@+id/tv_tweet_body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="@dimen/lay_8"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="@dimen/font_4"
+                android:textSize="14sp"
+                tools:text="最近研究了这个项目，学习rx系列,修复了楼主的bug 主要原因在mainActivity里面资讯fragment的构建" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/lay_24"
+                android:layout_marginLeft="@dimen/lay_8"
+                android:layout_marginRight="@dimen/lay_8"
+                android:layout_marginTop="@dimen/lay_8">
+
+                <TextView
+                    android:id="@+id/tv_tweet_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/text_secondary_color"
+                    android:textSize="@dimen/font_12"
+                    tools:text="6分钟" />
+
+
+                <ImageView
+                    android:id="@+id/iv_comment"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="@dimen/lay_8"
+                    android:layout_toLeftOf="@+id/tv_tweet_comment_count"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/lay_4"
+                    android:src="@mipmap/ic_comment" />
+
+                <TextView
+                    android:id="@+id/tv_tweet_comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/iv_dispatch"
+                    android:gravity="center"
+                    android:textColor="#9d9d9d"
+                    android:textSize="@dimen/font_10"
+                    tools:text="12" />
+
+                <ImageView
+                    android:id="@+id/iv_dispatch"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginLeft="@dimen/lay_8"
+                    android:layout_toLeftOf="@+id/tv_dispatch_count"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/lay_4"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/ic_forward" />
+
+                <TextView
+                    android:id="@+id/tv_dispatch_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:gravity="center"
+                    android:textColor="#9d9d9d"
+                    android:textSize="@dimen/font_10"
+                    tools:text="12" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View android:id="@+id/h_line" style="@style/h_line" />
+</LinearLayout>
