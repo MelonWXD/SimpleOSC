@@ -10,6 +10,7 @@ import android.view.View;
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.base.fragment.BaseViewPagerFragment;
 import com.dongua.simpleosc.bean.NewsTab;
+import com.dongua.simpleosc.ui.tweet.VpTweetFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ import butterknife.BindView;
 
 public class TweetFragment extends BaseViewPagerFragment {
 
+    private String[] tabs = new String[]{"最新", "最热", "我的"};
 
     @BindView(R.id.tl_tweet_tab)
     TabLayout mTabLayout;
@@ -40,32 +42,45 @@ public class TweetFragment extends BaseViewPagerFragment {
     protected void initWidget(View root) {
         super.initWidget(root);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        dataList = new ArrayList<>();
-        dataList.add(0);
-        dataList.add(-1);
-        dataList.add(123);
-        mViewPager.setAdapter(new TweetPagerAdapter(getChildFragmentManager(), dataList));
+//        dataList = new ArrayList<>();
+//        dataList.add(0);
+//        dataList.add(-1);
+//        dataList.add(123);//userID
+        mViewPager.setAdapter(new TweetPagerAdapter(getChildFragmentManager()));
         mTabLayout.setupWithViewPager(mViewPager);
 
     }
 
     class TweetPagerAdapter extends FragmentPagerAdapter {
 
-        private List<Integer> dataList;
-
-        TweetPagerAdapter(FragmentManager fm, List<Integer> data) {
+        TweetPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.dataList = data;
         }
 
         @Override
         public Fragment getItem(int position) {
-            return null;
+            switch (position) {
+                case 0:
+                    return VpTweetFragment.newInstance(getContext(), VpTweetFragment.TYPE_LATEST);
+                case 1:
+                    return VpTweetFragment.newInstance(getContext(), VpTweetFragment.TYPE_HOT);
+                case 2:
+                    return VpTweetFragment.newInstance(getContext(), VpTweetFragment.TYPE_MINE);
+                default:
+                    return null;
+
+            }
         }
 
         @Override
         public int getCount() {
-            return 0;
+            return tabs.length;
+        }
+
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabs[position];
         }
     }
 }

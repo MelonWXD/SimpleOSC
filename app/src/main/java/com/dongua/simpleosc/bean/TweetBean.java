@@ -27,9 +27,11 @@ public class TweetBean implements Parcelable{
     private int commentCount;
     private String imgSmall;
     private String imgBig;
+    private int type;
+
 
     public TweetBean(Long dbID, int id, String author, String pubDate, int authorid, String portrait, String body,
-                     int commentCount) {
+                     int commentCount, String imgSmall, String imgBig, int type) {
         this.dbID = dbID;
         this.id = id;
         this.author = author;
@@ -38,11 +40,29 @@ public class TweetBean implements Parcelable{
         this.portrait = portrait;
         this.body = body;
         this.commentCount = commentCount;
+        this.imgSmall = imgSmall;
+        this.imgBig = imgBig;
+        this.type = type;
     }
 
-    @Generated(hash = 1173507237)
+    public TweetBean( int id, String author, String pubDate, long pubDateLong, int authorid, String portrait, String body,
+                     int commentCount, String imgSmall, String imgBig, int type) {
+        this.id = id;
+        this.author = author;
+        this.pubDate = pubDate;
+        this.pubDateLong = pubDateLong;
+        this.authorid = authorid;
+        this.portrait = portrait;
+        this.body = body;
+        this.commentCount = commentCount;
+        this.imgSmall = imgSmall;
+        this.imgBig = imgBig;
+        this.type = type;
+    }
+
+    @Generated(hash = 1304586158)
     public TweetBean(Long dbID, int id, String author, String pubDate, long pubDateLong, int authorid, String portrait, String body,
-            int commentCount, String imgSmall, String imgBig) {
+            int commentCount, String imgSmall, String imgBig, int type) {
         this.dbID = dbID;
         this.id = id;
         this.author = author;
@@ -54,6 +74,7 @@ public class TweetBean implements Parcelable{
         this.commentCount = commentCount;
         this.imgSmall = imgSmall;
         this.imgBig = imgBig;
+        this.type = type;
     }
 
     @Generated(hash = 407799815)
@@ -167,6 +188,14 @@ public class TweetBean implements Parcelable{
         dest.writeString(imgSmall);
         dest.writeString(imgBig);
 
+    }
+
+    public int getType() {
+        return this.type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
 

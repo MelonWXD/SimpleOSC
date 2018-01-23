@@ -91,7 +91,7 @@ public interface ApiService {
     @GET("/action/openapi/tweet_list")
     Observable<ResponseBody> getTweetList(
             @Query("access_token") String access_token
-            , @Query("user") int userID
+            , @Query("user") long userID
             , @Query("page") int page
             , @Query("pageSize") int pageSize
             , @Query("dataType") String dataType);

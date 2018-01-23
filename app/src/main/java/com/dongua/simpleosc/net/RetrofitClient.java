@@ -152,7 +152,7 @@ public class RetrofitClient {
     }
 
 
-    public Observable<ResponseBody> getTweetList(int userID) {
+    public Observable<ResponseBody> getTweetList(long userID) {
         return mApi.getTweetList(mAccessToken, userID, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
     }
 

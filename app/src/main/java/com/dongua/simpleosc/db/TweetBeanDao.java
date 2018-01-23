@@ -35,6 +35,7 @@ public class TweetBeanDao extends AbstractDao<TweetBean, Long> {
         public final static Property CommentCount = new Property(8, int.class, "commentCount", false, "COMMENT_COUNT");
         public final static Property ImgSmall = new Property(9, String.class, "imgSmall", false, "IMG_SMALL");
         public final static Property ImgBig = new Property(10, String.class, "imgBig", false, "IMG_BIG");
+        public final static Property Type = new Property(11, int.class, "type", false, "TYPE");
     }
 
 
@@ -60,7 +61,8 @@ public class TweetBeanDao extends AbstractDao<TweetBean, Long> {
                 "\"BODY\" TEXT," + // 7: body
                 "\"COMMENT_COUNT\" INTEGER NOT NULL ," + // 8: commentCount
                 "\"IMG_SMALL\" TEXT," + // 9: imgSmall
-                "\"IMG_BIG\" TEXT);"); // 10: imgBig
+                "\"IMG_BIG\" TEXT," + // 10: imgBig
+                "\"TYPE\" INTEGER NOT NULL );"); // 11: type
     }
 
     /** Drops the underlying database table. */
@@ -111,6 +113,7 @@ public class TweetBeanDao extends AbstractDao<TweetBean, Long> {
         if (imgBig != null) {
             stmt.bindString(11, imgBig);
         }
+        stmt.bindLong(12, entity.getType());
     }
 
     @Override
@@ -155,6 +158,7 @@ public class TweetBeanDao extends AbstractDao<TweetBean, Long> {
         if (imgBig != null) {
             stmt.bindString(11, imgBig);
         }
+        stmt.bindLong(12, entity.getType());
     }
 
     @Override
@@ -175,7 +179,8 @@ public class TweetBeanDao extends AbstractDao<TweetBean, Long> {
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // body
             cursor.getInt(offset + 8), // commentCount
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // imgSmall
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10) // imgBig
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // imgBig
+            cursor.getInt(offset + 11) // type
         );
         return entity;
     }
@@ -193,6 +198,7 @@ public class TweetBeanDao extends AbstractDao<TweetBean, Long> {
         entity.setCommentCount(cursor.getInt(offset + 8));
         entity.setImgSmall(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setImgBig(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setType(cursor.getInt(offset + 11));
      }
     
     @Override

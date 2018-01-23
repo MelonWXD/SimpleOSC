@@ -39,7 +39,7 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
 
     private NewsContract.Presenter mPresenter;
     public static final String LAST_UPDATE_POSTBEAN = "update_post";
-    private int mDataType ;
+    private int mDataType;
     private NewsTab mTab;
 
     @Override
@@ -48,10 +48,10 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
         adapter.setItemListener(new RecyclerItemListener() {
             @Override
             public void onClick(View view, int pos) {
-                HashMap<String,Object> argMap = new HashMap<>();
-                argMap.put(HREF,mDataList.get(pos).getId());
-                argMap.put(TYPE,mDataType);
-                ActivitySwitcher.switchTo(getActivity(), DetailActivity.class,argMap);
+                HashMap<String, Object> argMap = new HashMap<>();
+                argMap.put(HREF, mDataList.get(pos).getId());
+                argMap.put(TYPE, mDataType);
+                ActivitySwitcher.switchTo(getActivity(), DetailActivity.class, argMap);
             }
 
             @Override
@@ -94,7 +94,7 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
     @Override
     protected void initData() {
         super.initData();
-        mDataType =  mTab.getType();
+        mDataType = mTab.getType();
         loadFromDB();
 
         //todo 把请求时间改为变量
@@ -175,7 +175,7 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.detach();
+        mPresenter.detach();//mvp 抽取到基类实现??
         mPresenter.cancelRequest();
     }
 

@@ -57,7 +57,12 @@
                 android:textSize="14sp"
                 tools:text="最近研究了这个项目，学习rx系列,修复了楼主的bug 主要原因在mainActivity里面资讯fragment的构建" />
 
-
+             <ImageView
+                 android:id="@+id/iv_img_small"
+                 android:layout_width="@dimen/lay_64"
+                 android:layout_height="@dimen/lay_64"
+                 android:scaleType="fitCenter"
+                 android:visibility="gone"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/lay_24"

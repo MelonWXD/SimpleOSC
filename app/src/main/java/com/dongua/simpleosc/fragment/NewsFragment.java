@@ -60,8 +60,6 @@ public class NewsFragment extends BaseViewPagerFragment {
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         NewsTab tab1 = new NewsTab("资讯", TYPE_NEWS, false, "");
         NewsTab tab2 = new NewsTab("博客", TYPE_BLOG, false, "");
-//        NewsTab tab3 = new NewsTab("开源资讯", TYPE_NEWS, false, "");
-
         NewsTab tab3 = new NewsTab("问答", TYPE_POST, false, "");
 //        NewsTab tab4 = new NewsTab("每日一搏", TYPE_DAILY, false, "");
         tabList = new ArrayList<>();
