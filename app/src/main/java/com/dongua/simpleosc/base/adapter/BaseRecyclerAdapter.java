@@ -17,7 +17,7 @@ import java.util.List;
  * Created by duoyi on 17-12-13.
  */
 
-public abstract class BaseRecyclerAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T>  implements View.OnClickListener,View.OnLongClickListener{
+public abstract class BaseRecyclerAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T> implements View.OnClickListener, View.OnLongClickListener {
 
     protected Context mContext;
     protected List<T> mItem;
@@ -45,12 +45,11 @@ public abstract class BaseRecyclerAdapter<T extends RecyclerView.ViewHolder> ext
     public abstract int getItemCount();
 
 
-
     protected abstract int getItemLayoutID();
 
     protected abstract T getViewHolder(View root);
 
-    public void setItemListener(RecyclerItemListener itemListener){
+    public void setItemListener(RecyclerItemListener itemListener) {
         this.itemListener = itemListener;
     }
 
@@ -58,13 +57,14 @@ public abstract class BaseRecyclerAdapter<T extends RecyclerView.ViewHolder> ext
     @Override
     public void onClick(View v) {
 //        onItemClick(v,(int)v.getTag());
-        itemListener.onClick(v, (int)v.getTag());
+        if (itemListener != null)
+            itemListener.onClick(v, (int) v.getTag());
     }
 
     @Override
     public boolean onLongClick(View v) {
 //       return onItemLongClick(v,(int)v.getTag());
-        return itemListener.onLongClick(v, (int)v.getTag());
+        return itemListener != null && itemListener.onLongClick(v, (int) v.getTag());
 
 
     }
