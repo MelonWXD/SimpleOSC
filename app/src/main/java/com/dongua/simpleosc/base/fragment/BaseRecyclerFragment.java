@@ -42,7 +42,6 @@ public abstract class BaseRecyclerFragment<T extends Parcelable> extends BaseFra
     //    protected BaseRecyclerAdapter<T> mAdapter;
     protected RecyclerView.Adapter mAdapter;
     protected List<T> mDataList;
-    protected NewsTab mTab;
 
     @BindView(R.id.rv_banner)
     protected Banner mBanner;
@@ -135,9 +134,7 @@ public abstract class BaseRecyclerFragment<T extends Parcelable> extends BaseFra
     @Override
     protected void initArguments(Bundle bundle) {
         super.initArguments(bundle);
-        if (bundle != null) {
-            mTab = (NewsTab) bundle.getSerializable(BUNDLE_TAB_BEAN);
-        }
+
     }
 
     @Override
@@ -168,9 +165,9 @@ public abstract class BaseRecyclerFragment<T extends Parcelable> extends BaseFra
 
         mLoadMore.setDrawSpeed(LoadMoreView.FAST);
 
-        if (mTab != null && mTab.getShowBanner()) {
-            //show banner
-        }
+//        if (mTab != null && mTab.getShowBanner()) {
+//            //show banner
+//        }
 
         mAdapter = getRecyclerAdapter();
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

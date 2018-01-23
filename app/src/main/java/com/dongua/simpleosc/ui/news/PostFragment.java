@@ -40,6 +40,8 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
     private NewsContract.Presenter mPresenter;
     public static final String LAST_UPDATE_POSTBEAN = "update_post";
     private int mDataType ;
+    private NewsTab mTab;
+
     @Override
     protected RecyclerView.Adapter getRecyclerAdapter() {
         PostRecyclerAdapter adapter = new PostRecyclerAdapter(getActivity());
@@ -68,6 +70,12 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
         bundle.putSerializable(BUNDLE_TAB_BEAN, tab);
         fragment.setArguments(bundle);
         return fragment;
+
+    }
+
+    @Override
+    protected void initArguments(Bundle bundle) {
+        mTab = (NewsTab) bundle.getSerializable(BUNDLE_TAB_BEAN);
 
     }
 

@@ -43,6 +43,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
     public static final String LAST_UPDATE_BLOG = "update_blog";
     public static final String LAST_UPDATE_NEWS = "update_news";
 
+    private NewsTab mTab;
 
     private int mDataType ;
 
@@ -90,6 +91,12 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
 //            fragment.setArguments(bundle);
 //            return fragment;
 //        }
+    }
+
+    @Override
+    protected void initArguments(Bundle bundle) {
+        mTab = (NewsTab) bundle.getSerializable(BUNDLE_TAB_BEAN);
+
     }
 
     protected void initPresenter() {

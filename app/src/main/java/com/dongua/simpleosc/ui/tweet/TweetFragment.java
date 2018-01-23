@@ -1,6 +1,7 @@
 package com.dongua.simpleosc.ui.tweet;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,8 +10,10 @@ import android.widget.TextView;
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.base.adapter.BaseRecyclerAdapter;
 import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
+import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.bean.SubBean;
 import com.dongua.simpleosc.bean.TweetBean;
+import com.dongua.simpleosc.ui.news.PostFragment;
 import com.dongua.simpleosc.ui.news.SubFragment;
 
 import static com.dongua.simpleosc.utils.Util.dateFormat;
@@ -21,9 +24,34 @@ import static com.dongua.simpleosc.utils.Util.dateFormat;
  */
 
 public class TweetFragment extends BaseRecyclerFragment<TweetBean> {
+
+    public static final String BUNDLE_TWEET_FLAG = "tweet_flag";
+    public static final int TYPE_LATEST = 1;
+    public static final int TYPE_HOT = 2;
+    public static final int TYPE_MINE = 3;
+    private int tweetType;
+
     @Override
     protected RecyclerView.Adapter getRecyclerAdapter() {
         return new TweetRecyclerAdapter(getContext());
+    }
+
+
+    public static TweetFragment newInstance(Context context, int type) {
+
+        TweetFragment fragment = new TweetFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(BUNDLE_TWEET_FLAG, type);
+        fragment.setArguments(bundle);
+        return fragment;
+
+    }
+
+
+    @Override
+    protected void initArguments(Bundle bundle) {
+        super.initArguments(bundle);
+        tweetType = bundle.getInt(BUNDLE_TWEET_FLAG, TYPE_LATEST);
     }
 
     @Override

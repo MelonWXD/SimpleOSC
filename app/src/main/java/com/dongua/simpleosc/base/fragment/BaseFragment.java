@@ -13,6 +13,8 @@ import com.bumptech.glide.RequestManager;
 import com.dongua.simpleosc.utils.LogUtil;
 import com.orhanobut.logger.Logger;
 
+import org.greenrobot.greendao.annotation.NotNull;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -47,7 +49,8 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mBundle = getArguments();
         //mBundle非空判断是否要放在base?
-        initArguments(mBundle);
+        if (mBundle != null)
+            initArguments(mBundle);
         initBundle(savedInstanceState);
 
 
@@ -90,7 +93,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int getLayoutId();
 
-    protected void initArguments(Bundle arguments) {
+    protected void initArguments(@NotNull Bundle arguments) {
     }
 
     protected void initBundle(Bundle savedInstanceState) {
