@@ -5,6 +5,10 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="mainBackground">#FAFAFA</color>
+
+    <color name="user_info_option_pressed">#1EB050</color>
+    <color name="transparent">#00000000</color>
+
     <!-- 常用颜色值 -->
     <color name="white20">#20FFFFFF</color>
     <color name="white40">#40FFFFFF</color>

@@ -8,6 +8,11 @@
     <string name="nav_string_pub">发布</string>
 
 
+    <string name="user_info_tweet">动弹</string>
+    <string name="user_info_favorite">收藏</string>
+    <string name="user_info_following">关注</string>
+    <string name="user_info_follower">粉丝</string>
+
 
     <string name="no_authorize">没有本地授权信息，请授权登录</string>
     <string name="refresh_invalid">本地授权过期，请重新授权</string>
@@ -18,5 +23,6 @@
 
     <string name="pub_info">\@%s \u0020 %s</string>
     <string name="iv_string_comment">评论图片</string>
+    <string name="zero">0</string>
 
 </resources>

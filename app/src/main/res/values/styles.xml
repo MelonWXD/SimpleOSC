@@ -9,7 +9,6 @@
     </style>
 
 
-
     <style name="BottomNavItem">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">match_parent</item>
@@ -17,12 +16,10 @@
         <item name="android:paddingLeft">@dimen/lay_12</item>
         <item name="android:paddingRight">@dimen/lay_12</item>
     </style>
-    
+
     <style name="NewsTabText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
 
     </style>
-
-
 
 
     <style name="h_line">
@@ -35,5 +32,30 @@
         <item name="android:textSize">@dimen/font_18</item>
     </style>
 
+
+    <style name="user_info_count">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@drawable/selector_user_info_tab_item</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="user_formation_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:text">@string/zero</item>
+        <item name="android:textSize">@dimen/font_24</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="user_formation_text_small" parent="user_formation_text">
+        <item name="android:textSize">@dimen/font_12</item>
+
+    </style>
 
 </resources>

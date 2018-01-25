@@ -19,8 +19,8 @@ public class MeFragment extends BaseFragment {
 
 //    @BindView(R.id.btn_test)
 //    Button btn_test;
-    @BindView(R.id.tv_test)
-    TextView tv_test;
+//    @BindView(R.id.tv_test)
+//    TextView tv_test;
 
 
 //    @OnClick(R.id.btn_test)

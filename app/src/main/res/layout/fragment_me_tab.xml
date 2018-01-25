@@ -6,16 +6,127 @@
     android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/tv_test"
-        android:text="4"
-        android:textSize="@dimen/font_20"
-        android:gravity="center"
-        android:background="@color/red200"
-        android:layout_width="100dp"
-        android:layout_height="100dp"  />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:background="@color/green300"
+        android:paddingTop="@dimen/lay_20">
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="@dimen/lay_44"
+            android:layout_height="@dimen/lay_44"
+            android:padding="12dp"
+            android:scaleType="centerInside"
+            android:src="@mipmap/ic_setting" />
+
+        <LinearLayout
+            android:id="@+id/ll_portrait"
+            android:layout_width="@dimen/lay_84"
+            android:layout_height="@dimen/lay_84"
+            android:layout_below="@+id/iv_setting"
+            android:layout_centerHorizontal="true">
+
+            <com.dongua.simpleosc.ui.myview.NameImageView
+                android:id="@+id/niv_portrait"
+                android:layout_width="@dimen/lay_84"
+                android:layout_height="@dimen/lay_84"/>
+
+        </LinearLayout>
 
 
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lay_36"
+            android:layout_below="@+id/ll_portrait"
+            android:layout_marginTop="@dimen/lay_16"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/lay_about_info"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lay_56"
+            android:layout_alignParentBottom="true"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ly_tweet"
+                style="@style/user_info_count"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_tweet"
+                    style="@style/user_formation_text"
+                    android:text="@string/zero" />
+
+                <TextView
+                    style="@style/user_formation_text_small"
+                    android:text="@string/user_info_tweet"
+                    android:textSize="@dimen/font_12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_favorite"
+                style="@style/user_info_count"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_favorite"
+                    style="@style/user_formation_text"
+                    android:text="@string/zero" />
+
+                <TextView
+                    style="@style/user_formation_text_small"
+                    android:text="@string/user_info_favorite" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_following"
+                style="@style/user_info_count"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_following"
+                    style="@style/user_formation_text" />
+
+                <TextView
+                    style="@style/user_formation_text_small"
+                    android:layout_marginBottom="0dp"
+                    android:padding="0dp"
+                    android:text="@string/user_info_following" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ly_follower"
+                style="@style/user_info_count"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_follower"
+                    style="@style/user_formation_text" />
+
+                <TextView
+                    style="@style/user_formation_text_small"
+                    android:layout_marginBottom="0dp"
+                    android:padding="0dp"
+                    android:text="@string/user_info_follower" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!--
+        <ScrollView
+            android:id="@+id/"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ScrollView>
+    -->
 
 
 </LinearLayout>
