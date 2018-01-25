@@ -113,8 +113,8 @@ public class NewsModel<T> implements NewsContract.Model<T> {
 
     private void requestPost(final String pubDate) {
         RetrofitClient.getInstance().getPostList()
-                .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -190,8 +190,8 @@ public class NewsModel<T> implements NewsContract.Model<T> {
 
     private void requestNews(final String pubDate) {
         RetrofitClient.getInstance().getNewsList()
-                .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .subscribe(new Observer<List<SubBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -247,8 +247,8 @@ public class NewsModel<T> implements NewsContract.Model<T> {
     private void requestBlog(final String pubDate) {
 
         RetrofitClient.getInstance().getBlogList()
-                .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .subscribe(new Observer<List<SubBean>>() {
                     @Override
                     public void onSubscribe(Disposable d) {

@@ -61,8 +61,8 @@ public class TweetModel implements TweetContract.Model {
     @Override
     public void getData(final int type, final String pubDate) {
         RetrofitClient.getInstance().getTweetList(type)
-                .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
