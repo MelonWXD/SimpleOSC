@@ -24,6 +24,7 @@ import okhttp3.ResponseBody;
 import static com.dongua.simpleosc.ui.tweet.VpTweetFragment.TYPE_HOT;
 import static com.dongua.simpleosc.ui.tweet.VpTweetFragment.TYPE_LATEST;
 import static com.dongua.simpleosc.ui.tweet.VpTweetFragment.TYPE_MINE;
+import static com.dongua.simpleosc.utils.Util.formatTweetContent;
 import static com.dongua.simpleosc.utils.Util.str2Date;
 
 /**
@@ -112,6 +113,10 @@ public class TweetModel implements TweetContract.Model {
             int id = jo.get("id").getAsInt();
             String pubDate = jo.get("pubDate").getAsString();
             String body = jo.get("body").getAsString();
+            Logger.i("===========Format before"+body);
+            body = formatTweetContent(body);
+            Logger.i("===========Format after"+body);
+
             String author = jo.get("author").getAsString();
             int authorid = jo.get("authorid").getAsInt();
             int commentCount = jo.get("commentCount").getAsInt();

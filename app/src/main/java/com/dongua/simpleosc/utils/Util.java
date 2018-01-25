@@ -136,6 +136,14 @@ public class Util {
         return 0L;
     }
 
+
+    public static String formatTweetContent(String src){
+//        String regex = "(?<=<li>)[\\\\s\\\\S]+?(?=</li>)";
+        String regex = "<[^>]*>";
+
+        return src.replaceAll(regex,"");
+    }
+
     //检测MIUI
     private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
     private static final String KEY_MIUI_VERSION_NAME = "ro.miui.ui.version.name";
