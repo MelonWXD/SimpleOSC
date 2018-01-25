@@ -112,10 +112,10 @@ public class TweetModel implements TweetContract.Model {
             JsonObject jo = ja.get(i).getAsJsonObject();
             int id = jo.get("id").getAsInt();
             String pubDate = jo.get("pubDate").getAsString();
-            String body = jo.get("body").getAsString();
-            Logger.i("===========Format before"+body);
-            body = formatTweetContent(body);
-            Logger.i("===========Format after"+body);
+            String body = formatTweetContent(jo.get("body").getAsString());
+//            Logger.i("===========Format before"+body);
+//            body = formatTweetContent(body);
+//            Logger.i("===========Format after"+body);
 
             String author = jo.get("author").getAsString();
             int authorid = jo.get("authorid").getAsInt();
