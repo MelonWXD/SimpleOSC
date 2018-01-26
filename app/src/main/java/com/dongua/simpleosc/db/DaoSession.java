@@ -9,10 +9,12 @@ import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
 import com.dongua.simpleosc.bean.PostBean;
+import com.dongua.simpleosc.bean.UserBean;
 import com.dongua.simpleosc.bean.SubBean;
 import com.dongua.simpleosc.bean.TweetBean;
 
 import com.dongua.simpleosc.db.PostBeanDao;
+import com.dongua.simpleosc.db.UserBeanDao;
 import com.dongua.simpleosc.db.SubBeanDao;
 import com.dongua.simpleosc.db.TweetBeanDao;
 
@@ -26,10 +28,12 @@ import com.dongua.simpleosc.db.TweetBeanDao;
 public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig postBeanDaoConfig;
+    private final DaoConfig userBeanDaoConfig;
     private final DaoConfig subBeanDaoConfig;
     private final DaoConfig tweetBeanDaoConfig;
 
     private final PostBeanDao postBeanDao;
+    private final UserBeanDao userBeanDao;
     private final SubBeanDao subBeanDao;
     private final TweetBeanDao tweetBeanDao;
 
@@ -40,6 +44,9 @@ public class DaoSession extends AbstractDaoSession {
         postBeanDaoConfig = daoConfigMap.get(PostBeanDao.class).clone();
         postBeanDaoConfig.initIdentityScope(type);
 
+        userBeanDaoConfig = daoConfigMap.get(UserBeanDao.class).clone();
+        userBeanDaoConfig.initIdentityScope(type);
+
         subBeanDaoConfig = daoConfigMap.get(SubBeanDao.class).clone();
         subBeanDaoConfig.initIdentityScope(type);
 
@@ -47,22 +54,29 @@ public class DaoSession extends AbstractDaoSession {
         tweetBeanDaoConfig.initIdentityScope(type);
 
         postBeanDao = new PostBeanDao(postBeanDaoConfig, this);
+        userBeanDao = new UserBeanDao(userBeanDaoConfig, this);
         subBeanDao = new SubBeanDao(subBeanDaoConfig, this);
         tweetBeanDao = new TweetBeanDao(tweetBeanDaoConfig, this);
 
         registerDao(PostBean.class, postBeanDao);
+        registerDao(UserBean.class, userBeanDao);
         registerDao(SubBean.class, subBeanDao);
         registerDao(TweetBean.class, tweetBeanDao);
     }
     
     public void clear() {
         postBeanDaoConfig.clearIdentityScope();
+        userBeanDaoConfig.clearIdentityScope();
         subBeanDaoConfig.clearIdentityScope();
         tweetBeanDaoConfig.clearIdentityScope();
     }
 
     public PostBeanDao getPostBeanDao() {
         return postBeanDao;
+    }
+
+    public UserBeanDao getUserBeanDao() {
+        return userBeanDao;
     }
 
     public SubBeanDao getSubBeanDao() {

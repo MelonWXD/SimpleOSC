@@ -43,6 +43,7 @@
             android:layout_below="@+id/ll_portrait"
             android:layout_marginTop="@dimen/lay_16"
             android:gravity="center_horizontal"
+            android:textSize="@dimen/font_24"
             android:textColor="@color/white" />
 
         <LinearLayout

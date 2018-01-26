@@ -123,6 +123,7 @@ public class RetrofitClient {
     public Observable<List<SubBean>> getBlogList(String access_code) {
         return mApi.getBlogList(access_code, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
     }
+
     public Observable<ResponseBody> getBlogDetail(int id) {
         return mApi.getBlogDetail(id, mAccessToken, DATA_TYPE);
     }
@@ -147,6 +148,7 @@ public class RetrofitClient {
     public Observable<ResponseBody> getPostListByTag(String tag, int catalog) {
         return mApi.getPostListByTag(mAccessToken, catalog, tag, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
     }
+
     public Observable<ResponseBody> getPostDetail(int id) {
         return mApi.getPostDetail(id, mAccessToken, DATA_TYPE);
     }
@@ -156,6 +158,9 @@ public class RetrofitClient {
         return mApi.getTweetList(mAccessToken, userID, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
     }
 
+    public Observable<ResponseBody> getUserInfo() {
+        return mApi.getUserInfo(mAccessToken, DATA_TYPE);
+    }
 
 
     public void add(String key, Observer request) {

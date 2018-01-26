@@ -69,6 +69,9 @@ public class NameImageView extends AppCompatImageView {
         mTextPaint.setColor(ContextCompat.getColor(context, R.color.colorAccent));
     }
 
+    public void setmName(String mName) {
+        this.mName = mName;
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -83,7 +86,7 @@ public class NameImageView extends AppCompatImageView {
 
         mWidth = getMeasuredWidth();
         mHeight = getMeasuredHeight();
-        Logger.i("qqwxd:"+mWidth+","+mHeight);
+//        Logger.i("qqwxd:"+mWidth+","+mHeight);
         mWidth = Math.min(getMeasuredWidth(), getMeasuredHeight());
         mRadius = mWidth / 2;
         mTextSize = mRadius;

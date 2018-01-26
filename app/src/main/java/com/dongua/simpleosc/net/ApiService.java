@@ -97,4 +97,11 @@ public interface ApiService {
             , @Query("dataType") String dataType);
 
 
+
+
+    @GET("/action/openapi/user")
+    Observable<ResponseBody> getUserInfo(
+            @Query("access_token") String access_token
+            , @Query("dataType") String dataType);
+
 }
