@@ -27,7 +27,7 @@ public class NameImageView extends AppCompatImageView {
 
     private Context mContext;
     //默认显示的text
-    private String mName = "你";
+    private String mName ;
     //位图编辑器
     private BitmapShader mBitmapShader;
 
@@ -98,7 +98,7 @@ public class NameImageView extends AppCompatImageView {
         mTextPaint.setAntiAlias(true);
     }
 
-    public void setmName(String mName) {
+    public void setName(String mName) {
         this.mName = mName;
     }
 
