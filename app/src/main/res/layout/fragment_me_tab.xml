@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,10 +31,13 @@
             <com.dongua.simpleosc.ui.myview.NameImageView
                 android:id="@+id/niv_portrait"
                 android:layout_width="@dimen/lay_84"
-                android:layout_height="@dimen/lay_84"/>
+                android:layout_height="@dimen/lay_84"
+                app:background_color="@color/blue900"
+                app:border_color="@color/white"
+                app:border_width="@dimen/lay_4"
+                app:text_color="@color/white" />
 
         </LinearLayout>
-
 
 
         <TextView
@@ -43,8 +47,8 @@
             android:layout_below="@+id/ll_portrait"
             android:layout_marginTop="@dimen/lay_16"
             android:gravity="center_horizontal"
-            android:textSize="@dimen/font_24"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_24" />
 
         <LinearLayout
             android:id="@+id/lay_about_info"

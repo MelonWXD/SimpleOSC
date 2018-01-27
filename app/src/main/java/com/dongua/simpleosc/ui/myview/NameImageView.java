@@ -1,21 +1,21 @@
 package com.dongua.simpleosc.ui.myview;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 import com.dongua.simpleosc.R;
-import com.orhanobut.logger.Logger;
+
+import java.util.Random;
 
 
 /**
@@ -26,16 +26,35 @@ import com.orhanobut.logger.Logger;
 public class NameImageView extends AppCompatImageView {
 
     private Context mContext;
+    //默认显示的text
     private String mName = "你";
+    //位图编辑器
     private BitmapShader mBitmapShader;
+
     private Paint mTextPaint;
     private Paint mBitmapPaint;
-    private Matrix mScaleMatrix;
+    //宽 高
     private int mWidth;
     private int mHeight;
+    //圆形图片半径
     private int mRadius;
-
+    //边缘宽度
+    private int mBorderWidth;
+    private final int DEFAULT_BORDER_WIDTH = 8;
+    //边缘颜色
+    private int mBorderColor;
+    //文字大小
     private int mTextSize;
+    //文字颜色
+    private int mTextColor;
+    //圆圈背景颜色
+    private int mBackgroundColor;
+
+    //随机颜色数组
+    //pink900 purple900 indigo900 red900
+    private int[] mDark = new int[]{0xFF880e4f, 0xFF4a148c, 0xFF1a237e, 0xFFb0120a};
+    //white cyan300 lightgreen300 bluegrey300
+    private int[] mTint = new int[]{0xFFFFFFFF, 0xFF4dd0e1, 0xFFaed581, 0xFF90a4ae};
 
     public NameImageView(Context context) {
         super(context);
@@ -44,29 +63,39 @@ public class NameImageView extends AppCompatImageView {
     }
 
     public NameImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init(context);
+        this(context, attrs, 0);
 
     }
 
     public NameImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NameImageView, defStyleAttr, 0);
+        mBorderWidth = ta.getDimensionPixelSize(R.styleable.NameImageView_border_width, DEFAULT_BORDER_WIDTH);
+//        mBorderColor = ta.getColor(R.styleable.NameImageView_border_color, mTint[getRandom()]);
+//        mTextColor = ta.getColor(R.styleable.NameImageView_text_color, mTint[getRandom()]);
+//        mBackgroundColor = ta.getColor(R.styleable.NameImageView_background_color, mDark[getRandom()]);
+        mBorderColor = ta.getColor(R.styleable.NameImageView_border_color, mTint[0]);
+        mTextColor = ta.getColor(R.styleable.NameImageView_text_color, mTint[0]);
+        mBackgroundColor = ta.getColor(R.styleable.NameImageView_background_color, mDark[0]);
+        ta.recycle();
+
         init(context);
+    }
+
+    private int getRandom() {
+        return new Random().nextInt(4);
     }
 
     private void init(Context context) {
 
         mContext = context;
 
-        mScaleMatrix = new Matrix();
-
         mBitmapPaint = new Paint();
         mBitmapPaint.setAntiAlias(true);
-        mBitmapPaint.setColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
 
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
-        mTextPaint.setColor(ContextCompat.getColor(context, R.color.colorAccent));
     }
 
     public void setmName(String mName) {
@@ -76,18 +105,11 @@ public class NameImageView extends AppCompatImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-/*
-        mWidth = getMeasuredWidth();
-        mHeight = getMeasuredHeight();
-        mRadius = Math.min(mWidth, mHeight)/ 2;
-
-//        setMeasuredDimension(mWidth, mWidth);
-*/
 
         mWidth = getMeasuredWidth();
         mHeight = getMeasuredHeight();
-//        Logger.i("qqwxd:"+mWidth+","+mHeight);
-        mWidth = Math.min(getMeasuredWidth(), getMeasuredHeight());
+
+        mWidth = Math.min(mWidth, mHeight);
         mRadius = mWidth / 2;
         mTextSize = mRadius;
         setMeasuredDimension(mWidth, mWidth);
@@ -95,52 +117,48 @@ public class NameImageView extends AppCompatImageView {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        //getBackground()
         if (getDrawable() == null) {
-//            mTextPaint.setTextSize();
-
-            mTextPaint.setColor(ContextCompat.getColor(mContext,R.color.pink900));
-            canvas.drawCircle(mWidth / 2, mWidth / 2, mRadius, mTextPaint);
-            mTextPaint.setColor(ContextCompat.getColor(mContext,R.color.white));
+            //画字
+            mTextPaint.setColor(mBackgroundColor);
+            canvas.drawCircle(mRadius, mRadius, mRadius - mBorderWidth, mTextPaint);
+            mTextPaint.setColor(mTextColor);
             mTextPaint.setTextSize(mTextSize);
-            canvas.drawText(mName, mWidth / 2 - mTextSize / 2, mWidth / 2 + mTextSize / 3, mTextPaint);
+            canvas.drawText(mName, mRadius - mTextSize / 2, mRadius + mTextSize / 3, mTextPaint);
 
         } else {
+            //画背景图
             setUpShader();
-            canvas.drawCircle(mWidth / 2, mWidth / 2, mRadius, mBitmapPaint);
-            // drawSomeThing(canvas);
+            canvas.drawCircle(mRadius, mRadius, mRadius, mBitmapPaint);
 
         }
 
-
+        //画外部的边缘
         mBitmapPaint.setStyle(Paint.Style.STROKE);
-        mBitmapPaint.setStrokeWidth(6f);
-        mBitmapPaint.setColor(ContextCompat.getColor(mContext,R.color.white));
-        canvas.drawCircle(mWidth / 2, mWidth / 2, mRadius-3, mBitmapPaint);
+        mBitmapPaint.setStrokeWidth(mBorderWidth);
+        mBitmapPaint.setColor(mBorderColor);
+        canvas.drawCircle(mRadius, mRadius, mRadius - mBorderWidth / 2, mBitmapPaint);
 
     }
 
 
     /**
-     * 初始化BitmapShader
+     * 设置BitmapShader
      */
     private void setUpShader() {
         Drawable drawable = getDrawable();
-        if (drawable == null) {
-            return;
-        }
-
         Bitmap bmp = drawableToBitamp(drawable);
-        // 将bmp作为着色器，就是在指定区域内绘制bmp
         mBitmapShader = new BitmapShader(bmp, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-        float scale = 1.0f;
-        // 拿到bitmap宽或高的小值
-        int bSize = Math.min(bmp.getWidth(), bmp.getHeight());
-        scale = mWidth * 1.0f / bSize;
 
-        // shader的变换矩阵，我们这里主要用于放大或者缩小
-        mScaleMatrix.setScale(scale, scale);
-        // 设置变换矩阵
-        mBitmapShader.setLocalMatrix(mScaleMatrix);
+        //计算放缩比例
+        int bSize = Math.min(bmp.getWidth(), bmp.getHeight());
+        float scale = mWidth * 1.0f / bSize;
+
+        //设置放缩矩阵
+        Matrix matrix = new Matrix();
+        matrix.setScale(scale, scale);
+        mBitmapShader.setLocalMatrix(matrix);
+
         // 设置shader
         mBitmapPaint.setShader(mBitmapShader);
     }
