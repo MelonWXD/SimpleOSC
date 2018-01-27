@@ -27,7 +27,7 @@ public class NameImageView extends AppCompatImageView {
 
     private Context mContext;
     //默认显示的text
-    private String mName ;
+    private String mName = "Null" ;
     //位图编辑器
     private BitmapShader mBitmapShader;
 

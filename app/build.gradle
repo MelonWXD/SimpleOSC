@@ -26,7 +26,7 @@ apply plugin: 'org.greenrobot.greendao' // apply plugin
 greendao {
     targetGenDir 'src/main/java'
     daoPackage 'com.dongua.simpleosc.db'
-    schemaVersion 3
+    schemaVersion 4
 }
 
 

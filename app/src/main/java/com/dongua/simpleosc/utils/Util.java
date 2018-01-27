@@ -54,6 +54,11 @@ public class Util {
     }
 
 
+    public static List jsonArray2BeanList(JsonArray jsonarray, Type type) {
+//        type = new TypeToken<beanClass>().getType()
+        return gson.fromJson(jsonArray2String(jsonarray), type);
+
+    }
     public static List jsonArray2BeanList(String jsonarray, Type type) {
 //        type = new TypeToken<beanClass>().getType()
         return gson.fromJson(jsonarray, type);

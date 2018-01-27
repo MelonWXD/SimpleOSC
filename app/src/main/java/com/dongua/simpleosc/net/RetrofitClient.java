@@ -158,8 +158,8 @@ public class RetrofitClient {
         return mApi.getTweetList(mAccessToken, userID, DEFAULT_PAGE, DEFAULT_PAGESIZE, DATA_TYPE);
     }
 
-    public Observable<ResponseBody> getUserInfo() {
-        return mApi.getUserInfo(mAccessToken, DATA_TYPE);
+    public Observable<ResponseBody> getMyDetailInfo() {
+        return mApi.getMyDetailInfo(mAccessToken, DATA_TYPE);
     }
 
 
