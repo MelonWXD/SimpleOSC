@@ -14,6 +14,7 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 import com.dongua.simpleosc.R;
+import com.orhanobut.logger.Logger;
 
 import java.util.Random;
 
@@ -27,7 +28,7 @@ public class NameImageView extends AppCompatImageView {
 
     private Context mContext;
     //默认显示的text
-    private String mName = "Null" ;
+    private String mName = "N";
     //位图编辑器
     private BitmapShader mBitmapShader;
 
@@ -98,8 +99,14 @@ public class NameImageView extends AppCompatImageView {
         mTextPaint.setAntiAlias(true);
     }
 
-    public void setName(String mName) {
-        this.mName = mName;
+    public void setName(String name) {
+        Logger.i("name:"+name);
+        if (name.length() > 1)
+            this.mName = name.substring(0, 1);
+        else
+            this.mName = name;
+        Logger.i("mName:"+mName);
+
     }
 
     @Override

@@ -14,6 +14,7 @@
     <dimen name="font_56">56sp</dimen>
     <dimen name="font_6">6sp</dimen>
     <dimen name="font_8">8sp</dimen>
+    <dimen name="lay_0">0dp</dimen>
     <dimen name="lay_12">12dp</dimen>
     <dimen name="lay_14">14dp</dimen>
     <dimen name="lay_16">16dp</dimen>
