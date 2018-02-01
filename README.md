@@ -4,6 +4,7 @@ a simple android app
 
 
 # todo
-NameImageView边缘参数添加
-glide重复加载
-retrofit gson 手动解析
+NameImageView 英文字母居中问题  
+九宫格图片显示  
+glide重复加载  
+retrofit gson 手动解析  
