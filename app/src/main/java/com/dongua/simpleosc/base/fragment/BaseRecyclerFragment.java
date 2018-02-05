@@ -8,12 +8,14 @@ import android.os.Parcelable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.ui.myview.LoadMoreView;
 import com.dongua.simpleosc.utils.UIUtil;
+import com.orhanobut.logger.Logger;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
@@ -177,8 +179,16 @@ public abstract class BaseRecyclerFragment<T extends Parcelable> extends BaseFra
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (!recyclerView.canScrollVertically(1)) {
-                    com.orhanobut.logger.Logger.d("滑动到底部");
+                LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+//                Logger.d("qq"+layoutManager.findLastVisibleItemPosition());
+//                Logger.d("qq"+layoutManager.getChildCount());
+//                Logger.d("qq"+layoutManager.getItemCount());
+                if (!recyclerView.canScrollVertically(1)
+                        ) {
+                    //&& layoutManager.getChildCount()!=layoutManager.getItemCount()
+
+                    //todo item很少的情况下会触发
+
                     mLoadMore.setVisibility(View.VISIBLE);
                     loadMoreFromDB();
 //                    mPresenter.loadMore();

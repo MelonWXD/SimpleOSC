@@ -78,7 +78,8 @@ public class TweetModel implements TweetContract.Model {
 
                                 Iterator<TweetBean> iterator = data.iterator();
                                 while (iterator.hasNext()) {
-                                    if (!Util.dateCompare(iterator.next().getPubDate(), pubDate))
+                                    TweetBean tmp = iterator.next();
+                                    if (!Util.dateCompare(tmp.getPubDate(), pubDate))
                                         iterator.remove();
                                 }
                             }

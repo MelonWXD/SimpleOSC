@@ -32,9 +32,9 @@
                 android:id="@+id/niv_portrait"
                 android:layout_width="@dimen/lay_84"
                 android:layout_height="@dimen/lay_84"
-                app:background_color="@color/blue900"
+                app:background_color="@color/red800"
                 app:border_color="@color/white"
-                app:border_width="@dimen/lay_4"
+                app:border_width="@dimen/lay_2"
                 app:text_color="@color/white" />
 
         </LinearLayout>

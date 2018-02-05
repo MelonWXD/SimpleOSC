@@ -7,15 +7,22 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.base.fragment.BaseViewPagerFragment;
 import com.dongua.simpleosc.bean.NewsTab;
+import com.dongua.simpleosc.net.RetrofitClient;
 import com.dongua.simpleosc.ui.tweet.VpTweetFragment;
+import com.dongua.simpleosc.utils.Util;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 
 /**
  * Created by duoyi on 17-11-18.
@@ -65,7 +72,7 @@ public class TweetFragment extends BaseViewPagerFragment {
                 case 1:
                     return VpTweetFragment.newInstance(getContext(), VpTweetFragment.TYPE_HOT);
                 case 2:
-                    return VpTweetFragment.newInstance(getContext(), VpTweetFragment.TYPE_MINE);
+                    return VpTweetFragment.newInstance(getContext(), App.getCurUid());
                 default:
                     return null;
 

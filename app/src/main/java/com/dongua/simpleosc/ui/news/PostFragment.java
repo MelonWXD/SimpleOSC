@@ -175,8 +175,10 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.detach();//mvp 抽取到基类实现??
-        mPresenter.cancelRequest();
+        if (mPresenter != null) {
+            mPresenter.detach();//mvp 抽取到基类实现??
+            mPresenter.cancelRequest();
+        }
     }
 
     //
@@ -244,7 +246,7 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
 //                holder.comment.setCompoundDrawables(getResources().getDrawable(R.mipmap.ic_comment), null, null, null);
 //            }
             holder.answer.setText(String.valueOf(data.getAnswerCount()));
-
+            holder.description.setVisibility(View.GONE);
         }
 
         @Override

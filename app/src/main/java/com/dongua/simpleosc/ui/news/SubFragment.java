@@ -45,7 +45,7 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
 
     private NewsTab mTab;
 
-    private int mDataType ;
+    private int mDataType;
 
     @Override
     protected RecyclerView.Adapter getRecyclerAdapter() {
@@ -54,10 +54,10 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
             @Override
             public void onClick(View view, int pos) {
 
-                HashMap<String,Object> argMap = new HashMap<>();
-                argMap.put(HREF,mDataList.get(pos).getId());
-                argMap.put(TYPE,mDataType);
-                ActivitySwitcher.switchTo(getActivity(), DetailActivity.class,argMap);
+                HashMap<String, Object> argMap = new HashMap<>();
+                argMap.put(HREF, mDataList.get(pos).getId());
+                argMap.put(TYPE, mDataType);
+                ActivitySwitcher.switchTo(getActivity(), DetailActivity.class, argMap);
             }
 
             @Override
@@ -204,8 +204,10 @@ public class SubFragment extends BaseRecyclerFragment<SubBean> implements NewsCo
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.detach();
-        mPresenter.cancelRequest();
+        if (mPresenter != null) {
+            mPresenter.detach();
+            mPresenter.cancelRequest();
+        }
     }
 
     class BNRecyclerAdapter extends BaseRecyclerAdapter<BNRecyclerAdapter.SubHolder> {
