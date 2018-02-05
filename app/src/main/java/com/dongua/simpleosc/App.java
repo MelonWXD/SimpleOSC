@@ -21,7 +21,7 @@ public class App extends Application {
 
     public static final String DB_NAME = "osc";
     private static DaoSession mDaoSession;
-
+    private static int curUid = 0;
 
     private Context mContext;
 
@@ -64,5 +64,11 @@ public class App extends Application {
         return mDaoSession;
     }
 
+    public static int getCurUid() {
+        return curUid;
+    }
 
+    public static void setCurUid(int curUid) {
+        App.curUid = curUid;
+    }
 }

@@ -87,28 +87,41 @@ public class LaunchActivity extends BaseActivity {
             requestAuthorize(this);
 
         } else if (RetrofitClient.getInstance().isAccessExpire()) {
-
-            accessToken = refreshToken();
-            if (accessToken.isEmpty()) {
-                UIUtil.showLongToast(this, getString(R.string.no_authorize));
-                requestAuthorize(this);
-                return;
-            }
+            Logger.d(getString(R.string.refresh_invalid));
+            refreshToken();
+//            accessToken = refreshToken();
+//            if (accessToken.isEmpty()) {
+//                UIUtil.showLongToast(this, getString(R.string.refresh_invalid));
+//                requestAuthorize(this);
+//                return;
+//            }
+        } else {
+            RetrofitClient.getInstance().setAccessToken(accessToken);
+            initLoginInfo(this);
         }
-
-        RetrofitClient.getInstance().setAccessToken(accessToken);
-        initLoginInfo(this);
 
 
     }
 
 
     private void initLoginInfo(final Activity act) {
+
+        RetrofitClient.getInstance().initCurUser()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new Consumer<ResponseBody>() {
+                    @Override
+                    public void accept(ResponseBody responseBody) throws Exception {
+                        App.setCurUid(Util.string2Json(responseBody.string()).get("id").getAsInt());
+                        Logger.d("user ID :" + App.getCurUid());
+                    }
+                });
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(800);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -158,14 +171,17 @@ public class LaunchActivity extends BaseActivity {
 
         final StringBuilder ret = new StringBuilder();
         RetrofitClient.getInstance().refreshToken()
-                .observeOn(Schedulers.io())
                 .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .subscribe(new Consumer<ResponseBody>() {
                     @Override
                     public void accept(ResponseBody responseBody) throws Exception {
                         String resp = responseBody.string();
                         Logger.d(resp);
                         ret.append(parseRespons(resp));
+                        RetrofitClient.getInstance().setAccessToken(ret.toString());
+                        initLoginInfo(LaunchActivity.this);
+                        Logger.d("成功获取新的刷新码");
 
                     }
                 }, new Consumer<Throwable>() {
