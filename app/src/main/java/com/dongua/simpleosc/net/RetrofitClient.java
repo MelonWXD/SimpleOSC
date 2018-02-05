@@ -161,6 +161,10 @@ public class RetrofitClient {
     public Observable<ResponseBody> getMyDetailInfo() {
         return mApi.getMyDetailInfo(mAccessToken, DATA_TYPE);
     }
+    public Observable<ResponseBody> initCurUser() {
+        return mApi.getMyInfo(mAccessToken, DATA_TYPE);
+    }
+
 
 
     public void add(String key, Observer request) {
@@ -180,6 +184,8 @@ public class RetrofitClient {
         long now = new Date().getTime();
         return timeStamp < now;
     }
+
+
 
 
 //    public boolean isRefreshInvalid(String refreshToken) {
