@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Shader;
@@ -12,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import com.dongua.simpleosc.R;
 import com.orhanobut.logger.Logger;
@@ -100,12 +102,12 @@ public class NameImageView extends AppCompatImageView {
     }
 
     public void setName(String name) {
-        Logger.i("name:"+name);
+        Logger.i("name:" + name);
         if (name.length() > 1)
             this.mName = name.substring(0, 1);
         else
             this.mName = name;
-        Logger.i("mName:"+mName);
+        Logger.i("mName:" + mName);
 
     }
 
@@ -131,7 +133,18 @@ public class NameImageView extends AppCompatImageView {
             canvas.drawCircle(mRadius, mRadius, mRadius - mBorderWidth, mTextPaint);
             mTextPaint.setColor(mTextColor);
             mTextPaint.setTextSize(mTextSize);
-            canvas.drawText(mName, mRadius - mTextSize / 2, mRadius + mTextSize / 3, mTextPaint);
+
+
+            float textWidth = mTextPaint.measureText(mName);
+            canvas.drawText(mName, mRadius - textWidth/2, mRadius + mTextSize / 3, mTextPaint);
+
+            //debug
+//            mTextPaint.setStrokeWidth(4);
+//            mTextPaint.setColor(Color.BLUE);
+//            canvas.drawLine(0, mRadius + mTextSize / 3, mRadius - mTextSize / 2, mRadius + mTextSize / 3, mTextPaint);
+//            canvas.drawLine(mRadius - mTextSize / 2,0, mRadius - mTextSize / 2,mRadius + mTextSize / 3, mTextPaint);
+//            mTextPaint.setColor(Color.YELLOW);
+//            canvas.drawLine(0, mRadius, mRadius, mRadius, mTextPaint);
 
         } else {
             //画背景图
