@@ -15,10 +15,17 @@ import com.dongua.simpleosc.base.adapter.BaseRecyclerAdapter;
 import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.bean.TweetBean;
 import com.dongua.simpleosc.db.TweetBeanDao;
+import com.dongua.simpleosc.ui.myview.MultiImageView;
+import com.dongua.simpleosc.ui.myview.SudokuLayout;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
+import com.dongua.simpleosc.utils.Util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static com.dongua.simpleosc.utils.Util.dateFormat;
 
@@ -79,10 +86,10 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
         loadFromDB();
 
         //todo 把请求时间改为变量
-        long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_TWEET+mTweetType, 0L);
+        long lastUpdate = (long) SharedPreferenceUtil.get(LAST_UPDATE_TWEET + mTweetType, 0L);
         long nowTime = new Date().getTime();
         if (!isRorate && (lastUpdate == 0 || nowTime - lastUpdate > 30 * 1000)) {
-            SharedPreferenceUtil.put(LAST_UPDATE_TWEET+mTweetType, nowTime);
+            SharedPreferenceUtil.put(LAST_UPDATE_TWEET + mTweetType, nowTime);
             requestData();
         }
     }
@@ -155,7 +162,8 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.detach();
+        if (mPresenter != null)
+            mPresenter.detach();
     }
 
 
@@ -191,10 +199,25 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
                     .into(holder.portrait);
 
             if (tb.getImgSmall() != null && !tb.getImgSmall().isEmpty()) {
-                holder.smallImg.setVisibility(View.VISIBLE);
-                Glide.with(getContext())
-                        .load(tb.getImgSmall())
-                        .into(holder.smallImg);
+                holder.sudokuLayout.setVisibility(View.VISIBLE);
+
+//                List<String> urlList = new ArrayList<>();
+                if (tb.getImgSmall().contains(",")) {
+                    String[] urls = Util.splitImgUrls(tb.getImgSmall());
+//                    urlList.addAll(Arrays.asList(urls));
+                    holder.sudokuLayout.setUrls(urls);
+                } else {
+//                    urlList.add(tb.getImgSmall());
+                    holder.sudokuLayout.setUrl(tb.getImgSmall());
+                }
+//                holder.sudokuLayout.setList(urlList);
+
+
+//                Glide.with(getContext())
+//                        .load(tb.getImgSmall())
+//                        .into(holder.smallImg);
+            }else {
+                holder.sudokuLayout.setVisibility(View.GONE);
             }
 
 
@@ -214,7 +237,8 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
             TextView comment;
             View line;
             ImageView portrait;
-            ImageView smallImg;
+            SudokuLayout sudokuLayout;
+//            MultiImageView sudokuLayout;
 
             TweetHolder(View itemView) {
                 super(itemView);
@@ -224,7 +248,7 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
                 time = itemView.findViewById(R.id.tv_tweet_time);
                 comment = itemView.findViewById(R.id.tv_tweet_comment_count);
                 line = itemView.findViewById(R.id.h_line);
-                smallImg = itemView.findViewById(R.id.iv_img_small);
+                sudokuLayout = itemView.findViewById(R.id.iv_img_small);
             }
         }
     }
