@@ -25,4 +25,7 @@
     <string name="iv_string_comment">评论图片</string>
     <string name="zero">0</string>
 
+    <string name="gallery_index">%d/%d</string>
+
+
 </resources>

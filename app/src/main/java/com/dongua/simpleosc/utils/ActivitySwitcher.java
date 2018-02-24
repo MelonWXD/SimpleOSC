@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 
 public class ActivitySwitcher {
 
@@ -21,6 +22,15 @@ public class ActivitySwitcher {
         Intent intent = new Intent(activity, cls);
         activity.startActivity(intent);
         activity.finish();
+    }
+
+    public static void switchTo(Activity activity,
+                                Class<? extends Activity> cls, Bundle bundle, boolean isFinish) {
+        Intent intent = new Intent(activity, cls);
+        intent.putExtras(bundle);
+        activity.startActivity(intent);
+        if (isFinish)
+            activity.finish();
     }
 
     @SuppressWarnings("unchecked")

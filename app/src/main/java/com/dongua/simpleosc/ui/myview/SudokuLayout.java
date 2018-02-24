@@ -3,6 +3,8 @@ package com.dongua.simpleosc.ui.myview;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,8 +13,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.dongua.simpleosc.R;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +49,10 @@ public class SudokuLayout extends ViewGroup implements View.OnClickListener {
     private int hDivider;
 
     private String[] urls;
-    private List<Size> sizeList = new ArrayList<>();
+    private Size singleImgSize = new Size(400, 400);
+
+    private OnSudokuItemClickListener itemClickListener;
+
 
 
     public SudokuLayout(Context context) {
@@ -86,9 +96,25 @@ public class SudokuLayout extends ViewGroup implements View.OnClickListener {
 
     }
 
-    public void setSize(int size) {
+    public void setUrl(String url) {
+        Logger.d("sudoku loading url = " + url);
+        removeAllViews();
+
+        View frameImg = LayoutInflater.from(getContext()).inflate(R.layout.layout_sudoku_image, null);
+        frameImg.setTag(0);//for click
+        frameImg.setOnClickListener(this);
+
+        addView(frameImg);
+
+        loadSingleImage((ImageView) frameImg.findViewById(R.id.iv_picture), url);
+        reLayout();
+
+    }
+
+    public void setUrls(String[] urls) {
+        int size = urls.length;
 //        this.urls = urls;
-        sizeList.clear();
+//        sizeList.clear();
         removeAllViews();
 
         for (int i = 0; i < size; i++) {
@@ -97,20 +123,24 @@ public class SudokuLayout extends ViewGroup implements View.OnClickListener {
             frameImg.setOnClickListener(this);
 
             addView(frameImg);
-
-            sizeList.add(loadIntoImage((ImageView) frameImg.findViewById(R.id.iv_picture), i));
+            Logger.d("sudoku loading url = " + urls[i]);
+            loadIntoImage((ImageView) frameImg.findViewById(R.id.iv_picture), urls[i]);
             if (isGif(i)) {
                 frameImg.findViewById(R.id.iv_is_gif).setVisibility(VISIBLE);
             }
 
         }
+        reLayout();
 
+
+    }
+
+    private void reLayout() {
         if (getVisibility() == VISIBLE) {
             requestLayout();
         } else {
             setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
@@ -140,8 +170,8 @@ public class SudokuLayout extends ViewGroup implements View.OnClickListener {
 //            int imageW = sizeList.get(0).w;
 //            int imageH = sizeList.get(0).h;
 
-            int childW = sizeList.get(0).w;
-            int childH = sizeList.get(0).h;
+            int childW = singleImgSize.w;
+            int childH = singleImgSize.h;
 
             float density = getResources().getDisplayMetrics().density;
             float maxContentW = Math.min(selfWidth - paddingRight - paddingLeft, density * SINGLE_MAX_W);
@@ -187,10 +217,10 @@ public class SudokuLayout extends ViewGroup implements View.OnClickListener {
 
             for (int i = 0; i < childCount; i++) {
                 View child = getChildAt(i);
-                child.measure(MeasureSpec.makeMeasureSpec((int) (density*FOUR_PIC_SIZE), MeasureSpec.EXACTLY)
-                        , MeasureSpec.makeMeasureSpec((int) (density*FOUR_PIC_SIZE), MeasureSpec.EXACTLY));
+                child.measure(MeasureSpec.makeMeasureSpec((int) (density * FOUR_PIC_SIZE), MeasureSpec.EXACTLY)
+                        , MeasureSpec.makeMeasureSpec((int) (density * FOUR_PIC_SIZE), MeasureSpec.EXACTLY));
             }
-            selfHeight += density*FOUR_PIC_SIZE * 2 + vDivider;
+            selfHeight += density * FOUR_PIC_SIZE * 2 + vDivider;
 
         } else {
             float maxContentW = selfWidth - paddingRight - paddingLeft - hDivider * (column - 1);
@@ -240,9 +270,9 @@ public class SudokuLayout extends ViewGroup implements View.OnClickListener {
 
 
                 child.layout(childL, childT, childL + width, childT + height);
-                childL += width+hDivider;
+                childL += width + hDivider;
 
-                if ((i+1) % 2 == 0) {
+                if ((i + 1) % 2 == 0) {
                     childL = paddingLeft;
                     childT += height + vDivider;
                 }
@@ -262,9 +292,9 @@ public class SudokuLayout extends ViewGroup implements View.OnClickListener {
 
 
                 child.layout(childL, childT, childL + width, childT + height);
-                childL += width+hDivider;
+                childL += width + hDivider;
 
-                if ((i+1) % column == 0) {
+                if ((i + 1) % column == 0) {
                     childL = paddingLeft;
                     childT += height + vDivider;
                 }
@@ -283,40 +313,53 @@ public class SudokuLayout extends ViewGroup implements View.OnClickListener {
         }
     }
 
+    public void setItemClickListener(OnSudokuItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
     @Override
     public void onClick(View v) {
-        onImageClick((int) v.getTag());
+        itemClickListener.onClick((Integer) v.getTag());
     }
 
-    /**
-     * @param postion 被点击的ImageView的位置
-     */
-    public void onImageClick(int postion) {
-    }
 
+    public void loadSingleImage(ImageView imageView, String url) {
+
+        Glide.with(this)
+                .asBitmap()//强制Glide返回一个Bitmap对象
+                .load(url)
+                .listener(new RequestListener<Bitmap>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Bitmap> target, boolean isFirstResource) {
+                        Log.d(TAG, "width2 " + e.getMessage()); //400px
+
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
+                        int width = resource.getWidth();
+                        int height = resource.getHeight();
+                        singleImgSize.w = width;
+                        singleImgSize.h = height;
+                        Log.d(TAG, "width2 " + width); //400px
+                        Log.d(TAG, "height2 " + height); //400px
+                        return false;
+                    }
+
+
+                }).into(imageView);
+
+    }
 
     /**
      * @param imageView 显示图片的ImageView
-     * @param pos       ImageView位置
+     * @param url       图片的url
      */
-    public Size loadIntoImage(ImageView imageView, int pos) {
-        String url = "https://www.easyicon.net/api/resizeApi.php?id=1185357&size=128";
-        String url2 = "https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1517473777&di=0ea0eb3a1089b008eda43b8bade14a76&src=http://pic29.photophoto.cn/20131204/0034034499213463_b.jpg";
-        String url3 = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1517486139990&di=40602e9baa4f41be77734ae5938983d7&imgtype=0&src=http%3A%2F%2Fwww.aiimg.com%2Fuploads%2Fuserup%2F0904%2F230523213404.jpg";
-
-        List<String> urls = new ArrayList<>();
-        urls.add(url);
-        urls.add(url2);
-        urls.add(url3);
-        urls.add(url);
-        urls.add(url);
-        urls.add(url3);
-        Glide.with(getContext())
-                .load(urls.get(pos))
-                .apply(new RequestOptions().override(400, 400))
+    public void loadIntoImage(ImageView imageView, String url) {
+        Glide.with(this)
+                .load(url)
                 .into(imageView);
-        return new Size(400, 400);
     }
 
 

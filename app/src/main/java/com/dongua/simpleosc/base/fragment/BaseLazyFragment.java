@@ -49,7 +49,10 @@ public abstract class BaseLazyFragment extends BaseFragment {
 
 
     protected void lazyLoad(){
-        if(!isPrepared || !isVisible || !isFirst){
+//        if(!isPrepared || !isVisible || !isFirst){
+//            return;
+//        }
+        if(!isPrepared || !isVisible){
             return;
         }
         initWidget(mRoot);

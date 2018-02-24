@@ -57,12 +57,13 @@
                 android:textSize="14sp"
                 tools:text="最近研究了这个项目，学习rx系列,修复了楼主的bug 主要原因在mainActivity里面资讯fragment的构建" />
 
-             <ImageView
-                 android:id="@+id/iv_img_small"
-                 android:layout_width="@dimen/lay_84"
-                 android:layout_height="@dimen/lay_84"
-                 android:scaleType="fitXY"
-                 android:visibility="gone"/>
+            <com.dongua.simpleosc.ui.myview.SudokuLayout
+                android:id="@+id/iv_img_small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/lay_8"
+                android:scaleType="fitXY"
+                android:visibility="gone" />
 
 
             <RelativeLayout
@@ -132,5 +133,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <View android:id="@+id/h_line" style="@style/h_line" />
+    <View
+        android:id="@+id/h_line"
+        style="@style/h_line" />
 </LinearLayout>
