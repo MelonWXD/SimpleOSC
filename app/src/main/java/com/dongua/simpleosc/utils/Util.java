@@ -1,7 +1,11 @@
 package com.dongua.simpleosc.utils;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Build;
 import android.os.Environment;
+import android.util.TypedValue;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -12,8 +16,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.security.PublicKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -59,6 +66,7 @@ public class Util {
         return gson.fromJson(jsonArray2String(jsonarray), type);
 
     }
+
     public static List jsonArray2BeanList(String jsonarray, Type type) {
 //        type = new TypeToken<beanClass>().getType()
         return gson.fromJson(jsonarray, type);
@@ -142,11 +150,11 @@ public class Util {
     }
 
 
-    public static String formatTweetContent(String src){
+    public static String formatTweetContent(String src) {
 //        String regex = "(?<=<li>)[\\\\s\\\\S]+?(?=</li>)";
         String regex = "<[^>]*>";
 
-        return src.replaceAll(regex,"");
+        return src.replaceAll(regex, "");
     }
 
     //检测MIUI
@@ -171,5 +179,63 @@ public class Util {
         } else {
             return false;
         }
+    }
+
+    public static final String prefix = "https://static.oschina.net/uploads/space/";
+    public static String[] splitImgUrls(String url) {
+        String[] ret = url.split(",");
+//        String prefix = getPrefix(ret[0]);
+        for (int i = 1; i < ret.length; i++) {
+            ret[i] = prefix + ret[i];
+        }
+        return ret;
+    }
+
+
+
+
+    protected static int dp2px(Context context, int dp){
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,context.getResources().getDisplayMetrics());
+    }
+
+
+    protected static int sp2px(Context context, int sp){
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp,context.getResources().getDisplayMetrics());
+    }
+
+
+
+    public static int px2dp(Context context, float pxValue) {
+        final float scale =  context.getResources().getDisplayMetrics().density;
+        return (int) (pxValue / scale + 0.5f);
+    }
+
+
+
+    public static int dp2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
+
+
+
+    public static int px2sp(Context context, float pxValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (pxValue / fontScale + 0.5f);
+    }
+
+
+
+    public static int sp2px(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
+
+    public static Bitmap bitmapResize(Bitmap src, float pxX, float pxY){
+        //压缩图片
+        Matrix matrix = new Matrix();
+        matrix.postScale(pxX / src.getWidth(), pxY / src.getHeight());
+        Bitmap ret = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+        return ret;
     }
 }

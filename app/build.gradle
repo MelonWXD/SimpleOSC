@@ -65,5 +65,7 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-compiler:2.4'
     //java注解
     compile 'org.glassfish:javax.annotation:10.0-b28'
+    //scaleimageview
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.9.0'
 
 }

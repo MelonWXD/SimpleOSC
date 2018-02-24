@@ -26,6 +26,8 @@
         <activity android:name=".activity.AuthorizeActivity"/>
         <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.DetailActivity"/>
+        <activity android:name=".activity.GalleryActivity"
+            android:configChanges="orientation"/>
     </application>
 
 </manifest>

@@ -3,7 +3,6 @@ package com.dongua.simpleosc.ui.tweet;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,21 +10,20 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.R;
+import com.dongua.simpleosc.activity.GalleryActivity;
 import com.dongua.simpleosc.base.adapter.BaseRecyclerAdapter;
 import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.bean.TweetBean;
 import com.dongua.simpleosc.db.TweetBeanDao;
-import com.dongua.simpleosc.ui.myview.MultiImageView;
+import com.dongua.simpleosc.ui.myview.OnSudokuItemClickListener;
 import com.dongua.simpleosc.ui.myview.SudokuLayout;
+import com.dongua.simpleosc.utils.ActivitySwitcher;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.dongua.simpleosc.utils.Util;
+import com.orhanobut.logger.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static com.dongua.simpleosc.utils.Util.dateFormat;
 
@@ -35,6 +33,10 @@ import static com.dongua.simpleosc.utils.Util.dateFormat;
  */
 
 public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements TweetContract.View {
+
+    public static final String SUDOKU_POSTION = "pos";
+    public static final String SUDOKU_NUMS = "nums";
+    public static final String SUDOKU_URLS = "urls";
 
     public static final String BUNDLE_TWEET_FLAG = "tweet_flag";
     public static final String LAST_UPDATE_TWEET = "update_tweet";
@@ -187,6 +189,7 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
 
         @Override
         public void onBindViewHolder(TweetRecyclerAdapter.TweetHolder holder, int position) {
+            final int curPos = position;
             holder.itemView.setTag(position);
 
             TweetBean tb = mDataList.get(position);
@@ -198,26 +201,31 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
                     .load(tb.getPortrait())
                     .into(holder.portrait);
 
+            holder.sudokuLayout.setItemClickListener(new OnSudokuItemClickListener() {
+                @Override
+                public void onClick(int pos) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(SUDOKU_POSTION,pos);
+                    bundle.putString(SUDOKU_URLS, mDataList.get(curPos).getImgBig());
+                    ActivitySwitcher.switchTo(getActivity(), GalleryActivity.class, bundle, false);
+                }
+            });
+
             if (tb.getImgSmall() != null && !tb.getImgSmall().isEmpty()) {
                 holder.sudokuLayout.setVisibility(View.VISIBLE);
 
-//                List<String> urlList = new ArrayList<>();
                 if (tb.getImgSmall().contains(",")) {
+
                     String[] urls = Util.splitImgUrls(tb.getImgSmall());
-//                    urlList.addAll(Arrays.asList(urls));
                     holder.sudokuLayout.setUrls(urls);
                 } else {
-//                    urlList.add(tb.getImgSmall());
+
                     holder.sudokuLayout.setUrl(tb.getImgSmall());
                 }
-//                holder.sudokuLayout.setList(urlList);
 
-
-//                Glide.with(getContext())
-//                        .load(tb.getImgSmall())
-//                        .into(holder.smallImg);
-            }else {
+            } else {
                 holder.sudokuLayout.setVisibility(View.GONE);
+
             }
 
 
@@ -238,7 +246,6 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
             View line;
             ImageView portrait;
             SudokuLayout sudokuLayout;
-//            MultiImageView sudokuLayout;
 
             TweetHolder(View itemView) {
                 super(itemView);
