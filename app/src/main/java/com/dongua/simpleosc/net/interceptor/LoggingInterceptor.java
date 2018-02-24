@@ -22,7 +22,8 @@ import static com.dongua.simpleosc.utils.SharedPreferenceUtil.ACCESS_TOKEN;
 import static com.dongua.simpleosc.utils.SharedPreferenceUtil.REFRESH_TOKEN;
 
 /**
- * Created by duoyi on 17-11-24.
+ * author: Lewis
+ * data: On 17-11-24.
  */
 
 public class LoggingInterceptor implements Interceptor {
@@ -55,22 +56,22 @@ public class LoggingInterceptor implements Interceptor {
         //个新的response给应用层处理
 
 
-        int retry = 3;
-        while (!response.isSuccessful() && retry>0) {
-
-            if(response.code() == 401 && response.message().equals("Unauthorized")){
-                Logger.d("401:Unauthorized");
-//                Logger.d("body"+response.peekBody(1024 * 1024).string());
-//                String new_access = refreshToken();
-//                if(!new_access.isEmpty()){
+//        int retry = 3;
+//        while (!response.isSuccessful() && retry>0) {
 //
-//                }
-            }else if(response.code() == 400 && response.peekBody(1024 * 1024).string().contains("Invalid refresh token")){
-                Logger.d("400:Invalid refresh token");
-            }
-
-            retry--;
-        }
+//            if(response.code() == 401 && response.message().equals("Unauthorized")){
+//                Logger.d("401:Unauthorized");
+////                Logger.d("body"+response.peekBody(1024 * 1024).string());
+////                String new_access = refreshToken();
+////                if(!new_access.isEmpty()){
+////
+////                }
+//            }else if(response.code() == 400 && response.peekBody(1024 * 1024).string().contains("Invalid refresh token")){
+//                Logger.d("400:Invalid refresh token");
+//            }
+//
+//            retry--;
+//        }
         ResponseBody responseBody = response.peekBody(1024 * 1024);
         Logger.d(
                 String.format(Locale.getDefault(),"接收响应: [%s] %n返回json:[%s] %.1fms %n%s",
@@ -82,31 +83,5 @@ public class LoggingInterceptor implements Interceptor {
         return response;
     }
 
-    private String refreshToken() {
 
-        final StringBuilder ret = new StringBuilder();
-        RetrofitClient.getInstance().refreshToken()
-                .observeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<ResponseBody>() {
-                    @Override
-                    public void accept(ResponseBody responseBody) throws Exception {
-                        String resp = responseBody.string();
-                        Logger.d(resp);
-                        JsonObject jo = Util.string2Json(resp);
-                        String a_token = jo.get("access_token").getAsString();
-                        String r_token = jo.get("refresh_token").getAsString();
-                        SharedPreferenceUtil.put(ACCESS_TOKEN, a_token);
-                        SharedPreferenceUtil.put(REFRESH_TOKEN, r_token);
-                        ret.append(a_token);
-
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Logger.d("无法申请授权");
-                    }
-                });
-        return ret.toString();
-    }
 }
