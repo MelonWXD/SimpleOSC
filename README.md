@@ -3,10 +3,10 @@
 
 
 # 效果图
-![](http://owu391pls.bkt.clouddn.com/s1.png)
-![](http://owu391pls.bkt.clouddn.com/s2.png)
-![](http://owu391pls.bkt.clouddn.com/s3.png)
-![](http://owu391pls.bkt.clouddn.com/s4.png)
+|                                          |                                          |
+| ---------------------------------------- | ---------------------------------------- |
+| ![](http://owu391pls.bkt.clouddn.com/s1.png) | ![](http://owu391pls.bkt.clouddn.com/s2.png) |
+| ![](http://owu391pls.bkt.clouddn.com/s3.png) | ![](http://owu391pls.bkt.clouddn.com/s4.png) |
 
 
 
