@@ -23,7 +23,10 @@ public class ActivitySwitcher {
         activity.startActivity(intent);
         activity.finish();
     }
-
+    public static void switchTo(Activity activity,
+                                Class<? extends Activity> cls, Bundle bundle ) {
+        switchTo(activity,cls,bundle,false);
+    }
     public static void switchTo(Activity activity,
                                 Class<? extends Activity> cls, Bundle bundle, boolean isFinish) {
         Intent intent = new Intent(activity, cls);

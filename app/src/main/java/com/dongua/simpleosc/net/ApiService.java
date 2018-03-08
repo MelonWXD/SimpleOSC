@@ -96,6 +96,11 @@ public interface ApiService {
             , @Query("pageSize") int pageSize
             , @Query("dataType") String dataType);
 
+    @GET("/action/openapi/post_detail")
+    Observable<ResponseBody> getTweetDetail(
+            @Query("id") int id
+            , @Query("access_token") String mAccessToken
+            , @Query("dataType") String dataType);
 
     @GET("/action/openapi/user")
     Observable<ResponseBody> getMyInfo(

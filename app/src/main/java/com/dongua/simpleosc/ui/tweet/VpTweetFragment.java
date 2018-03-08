@@ -11,14 +11,17 @@ import com.bumptech.glide.Glide;
 import com.dongua.simpleosc.App;
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.activity.GalleryActivity;
+import com.dongua.simpleosc.activity.TweetDetailActivity;
 import com.dongua.simpleosc.base.adapter.BaseRecyclerAdapter;
 import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.bean.TweetBean;
 import com.dongua.simpleosc.db.TweetBeanDao;
+import com.dongua.simpleosc.listener.RecyclerItemListener;
 import com.dongua.simpleosc.ui.myview.OnSudokuItemClickListener;
 import com.dongua.simpleosc.ui.myview.SudokuLayout;
 import com.dongua.simpleosc.utils.ActivitySwitcher;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
+import com.dongua.simpleosc.utils.UIUtil;
 import com.dongua.simpleosc.utils.Util;
 import com.orhanobut.logger.Logger;
 
@@ -38,6 +41,8 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
     public static final String SUDOKU_NUMS = "nums";
     public static final String SUDOKU_URLS = "urls";
 
+    public static final String TWEET_ACT_ID = "tweetid";
+    public static final String TWEET_USR_ID = "authorid";
     public static final String BUNDLE_TWEET_FLAG = "tweet_flag";
     public static final String LAST_UPDATE_TWEET = "update_tweet";
     public static final int TYPE_LATEST = 0;
@@ -49,7 +54,23 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
 
     @Override
     protected RecyclerView.Adapter getRecyclerAdapter() {
-        return new TweetRecyclerAdapter(getContext());
+        TweetRecyclerAdapter adapter = new TweetRecyclerAdapter(getContext());
+        adapter.setItemListener(new RecyclerItemListener() {
+            @Override
+            public void onClick(View view, int pos) {
+//                UIUtil.showShortToast(mDataList.get(pos).getId()+"");
+                Bundle bundle = new Bundle();
+                bundle.putInt(TWEET_ACT_ID, mDataList.get(pos).getId());
+                bundle.putInt(TWEET_USR_ID, mDataList.get(pos).getAuthorid());
+                ActivitySwitcher.switchTo(getActivity(), TweetDetailActivity.class, bundle);
+            }
+
+            @Override
+            public boolean onLongClick(View view, int pos) {
+                return false;
+            }
+        });
+        return adapter;
     }
 
 
@@ -205,7 +226,7 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
                 @Override
                 public void onClick(int pos) {
                     Bundle bundle = new Bundle();
-                    bundle.putInt(SUDOKU_POSTION,pos);
+                    bundle.putInt(SUDOKU_POSTION, pos);
                     bundle.putString(SUDOKU_URLS, mDataList.get(curPos).getImgBig());
                     ActivitySwitcher.switchTo(getActivity(), GalleryActivity.class, bundle, false);
                 }

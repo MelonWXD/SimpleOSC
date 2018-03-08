@@ -28,6 +28,7 @@
         <activity android:name=".activity.DetailActivity"/>
         <activity android:name=".activity.GalleryActivity"
             android:configChanges="orientation"/>
+        <activity android:name=".activity.TweetDetailActivity"/>
     </application>
 
 </manifest>
