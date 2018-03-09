@@ -23,7 +23,8 @@ import java.util.List;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity {
-//
+    public static final String BOTTOM_NAV_STATE = "BottomNavState";
+    //
 //    @BindView(R.id.bnb_main)
 //    BottomNavigationBar mNavigationBar;
 //    BottomNavigationItem mNavNews;
@@ -70,17 +71,21 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void initBundle(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-//            mTabPostion = savedInstanceState.getInt("Pos", 0);
-            mBottomNavStateBundle = savedInstanceState.getBundle("BottomNavState");
-        }
-    }
+//    @Override
+//    protected void initBundle(Bundle savedInstanceState) {
+//        if (savedInstanceState != null) {
+////            mTabPostion = savedInstanceState.getInt("Pos", 0);
+//            mBottomNavStateBundle = savedInstanceState.getBundle(BOTTOM_NAV_STATE);
+//        }
+//    }
 
     @Override
-    protected void saveBundle(Bundle outState) {
-        outState.putBundle("BottomNavState",mBottomNavFragment.getStateBundle());
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (outState != null) {
+//            mTabPostion = savedInstanceState.getInt("Pos", 0);
+            mBottomNavStateBundle = outState.getBundle(BOTTOM_NAV_STATE);
+        }
     }
 
 
