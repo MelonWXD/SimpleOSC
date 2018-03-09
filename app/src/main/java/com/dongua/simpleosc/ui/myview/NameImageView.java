@@ -34,6 +34,7 @@ public class NameImageView extends AppCompatImageView {
     //位图编辑器
     private BitmapShader mBitmapShader;
 
+    private Paint mOutlinePaint;
     private Paint mTextPaint;
     private Paint mBitmapPaint;
     //宽 高
@@ -99,15 +100,18 @@ public class NameImageView extends AppCompatImageView {
 
         mTextPaint = new Paint();
         mTextPaint.setAntiAlias(true);
+
+        mOutlinePaint = new Paint();
+        mOutlinePaint.setAntiAlias(true);
+
     }
 
     public void setName(String name) {
-        Logger.i("name:" + name);
         if (name.length() > 1)
             this.mName = name.substring(0, 1);
         else
             this.mName = name;
-        Logger.i("mName:" + mName);
+
 
     }
 
@@ -150,14 +154,14 @@ public class NameImageView extends AppCompatImageView {
             //画背景图
             setUpShader();
             canvas.drawCircle(mRadius, mRadius, mRadius, mBitmapPaint);
-
+//            getDrawable().draw(canvas);//画图
         }
 
         //画外部的边缘
-        mBitmapPaint.setStyle(Paint.Style.STROKE);
-        mBitmapPaint.setStrokeWidth(mBorderWidth);
-        mBitmapPaint.setColor(mBorderColor);
-        canvas.drawCircle(mRadius, mRadius, mRadius - mBorderWidth / 2, mBitmapPaint);
+        mOutlinePaint.setStyle(Paint.Style.STROKE);
+        mOutlinePaint.setStrokeWidth(mBorderWidth);
+        mOutlinePaint.setColor(mBorderColor);
+        canvas.drawCircle(mRadius, mRadius, mRadius - mBorderWidth / 2, mOutlinePaint);
 
     }
 

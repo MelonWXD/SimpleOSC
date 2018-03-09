@@ -18,7 +18,7 @@
         android:paddingLeft="@dimen/lay_16"
         android:paddingTop="@dimen/lay_16">
 
-        <ImageView
+        <com.dongua.simpleosc.ui.myview.NameImageView
             android:id="@+id/iv_tweet_face"
             android:layout_width="48dp"
             android:layout_height="48dp"

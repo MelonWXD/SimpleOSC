@@ -3,6 +3,7 @@ package com.dongua.simpleosc.ui.news;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.dongua.simpleosc.bean.NewsTab;
 import com.dongua.simpleosc.bean.PostBean;
 import com.dongua.simpleosc.db.PostBeanDao;
 import com.dongua.simpleosc.listener.RecyclerItemListener;
+import com.dongua.simpleosc.ui.myview.NameImageView;
 import com.dongua.simpleosc.utils.ActivitySwitcher;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.orhanobut.logger.Logger;
@@ -29,6 +31,7 @@ import java.util.List;
 
 import static com.dongua.simpleosc.activity.DetailActivity.HREF;
 import static com.dongua.simpleosc.activity.DetailActivity.TYPE;
+import static com.dongua.simpleosc.fragment.MeFragment.DEFAULT_AVATAR;
 import static com.dongua.simpleosc.utils.Util.dateFormat;
 
 /**
@@ -237,9 +240,15 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
             PostBean data = mDataList.get(position);
             holder.title.setText(data.getTitle());
 
-            Glide.with(getContext())
-                    .load(data.getPortrait())
-                    .into(holder.portrait);
+            String potraitUrl = data.getPortrait();
+            if (potraitUrl.equals(DEFAULT_AVATAR)) {
+                holder.portrait.setName(data.getAuthor().substring(0, 1));
+
+            } else {
+                Glide.with(getContext())
+                        .load(data.getPortrait())
+                        .into(holder.portrait);
+            }
 //            holder.description = data.get();
             holder.time.setText(String.format(getResources().getString(R.string.pub_info), data.getAuthor(), dateFormat(data.getPubDate())));
 //            if (data.getCommentCount() > 0) {
@@ -250,6 +259,15 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
         }
 
         @Override
+        public void onViewRecycled(PostHolder holder) {
+            if (holder != null)
+            {
+                Glide.with(getContext()).clear(holder.portrait);
+            }
+            super.onViewRecycled(holder);
+        }
+
+        @Override
         public int getItemCount() {
             return mDataList.size();
         }
@@ -257,7 +275,7 @@ public class PostFragment extends BaseRecyclerFragment<PostBean> implements News
 
         class PostHolder extends RecyclerView.ViewHolder {
 
-            ImageView portrait;
+            NameImageView portrait;
             TextView title;
             TextView description;
             TextView time;

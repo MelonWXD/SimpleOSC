@@ -90,6 +90,15 @@ public class TweetDetailActivity extends BaseToolBarActivity {
 
     @Override
     protected void setCustomToolbar(View toolbar) {
+        toolbar.findViewById(R.id.iv_comment_tb).setVisibility(View.GONE);
+        toolbar.findViewById(R.id.iv_share_tb).setVisibility(View.GONE);
+        toolbar.findViewById(R.id.ll_back_tb).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
     }
 }

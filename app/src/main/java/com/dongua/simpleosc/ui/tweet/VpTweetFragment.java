@@ -17,8 +17,10 @@ import com.dongua.simpleosc.base.fragment.BaseRecyclerFragment;
 import com.dongua.simpleosc.bean.TweetBean;
 import com.dongua.simpleosc.db.TweetBeanDao;
 import com.dongua.simpleosc.listener.RecyclerItemListener;
+import com.dongua.simpleosc.ui.myview.NameImageView;
 import com.dongua.simpleosc.ui.myview.OnSudokuItemClickListener;
 import com.dongua.simpleosc.ui.myview.SudokuLayout;
+import com.dongua.simpleosc.ui.news.PostFragment;
 import com.dongua.simpleosc.utils.ActivitySwitcher;
 import com.dongua.simpleosc.utils.SharedPreferenceUtil;
 import com.dongua.simpleosc.utils.UIUtil;
@@ -28,6 +30,7 @@ import com.orhanobut.logger.Logger;
 import java.util.Date;
 import java.util.List;
 
+import static com.dongua.simpleosc.fragment.MeFragment.DEFAULT_AVATAR;
 import static com.dongua.simpleosc.utils.Util.dateFormat;
 
 /**
@@ -218,9 +221,18 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
             holder.body.setText(tb.getBody());
             holder.time.setText(dateFormat(tb.getPubDate()));
             holder.comment.setText(String.valueOf(tb.getCommentCount()));
-            Glide.with(getContext())
-                    .load(tb.getPortrait())
-                    .into(holder.portrait);
+//            Glide.with(getContext())
+//                    .load(tb.getPortrait())
+//                    .into(holder.portrait);
+            String potraitUrl = tb.getPortrait();
+            if (potraitUrl.equals(DEFAULT_AVATAR)) {
+                holder.portrait.setName(tb.getAuthor().substring(0, 1));
+
+            } else {
+                Glide.with(getContext())
+                        .load(tb.getPortrait())
+                        .into(holder.portrait);
+            }
 
             holder.sudokuLayout.setItemClickListener(new OnSudokuItemClickListener() {
                 @Override
@@ -253,6 +265,15 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
         }
 
         @Override
+        public void onViewRecycled(TweetHolder holder) {
+            if (holder != null) {
+                Glide.with(getContext()).clear(holder.portrait);
+            }
+            super.onViewRecycled(holder);
+        }
+
+
+        @Override
         public int getItemCount() {
             return mDataList.size();
         }
@@ -265,7 +286,7 @@ public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements 
             TextView time;
             TextView comment;
             View line;
-            ImageView portrait;
+            NameImageView portrait;
             SudokuLayout sudokuLayout;
 
             TweetHolder(View itemView) {
