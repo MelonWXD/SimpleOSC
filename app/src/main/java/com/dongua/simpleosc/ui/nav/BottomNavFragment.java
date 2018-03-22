@@ -1,24 +1,33 @@
 package com.dongua.simpleosc.ui.nav;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.dongua.simpleosc.R;
 import com.dongua.simpleosc.activity.MainActivity;
+import com.dongua.simpleosc.activity.PubActivity;
 import com.dongua.simpleosc.base.fragment.BaseFragment;
 import com.dongua.simpleosc.base.fragment.BaseViewPagerFragment;
 import com.dongua.simpleosc.fragment.DiscoverFragment;
 import com.dongua.simpleosc.fragment.MeFragment;
 import com.dongua.simpleosc.fragment.NewsFragment;
 import com.dongua.simpleosc.fragment.TweetFragment;
+import com.dongua.simpleosc.utils.ActivitySwitcher;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,7 +37,7 @@ import butterknife.OnClick;
  * Created by duoyi on 17-11-18.
  */
 
-public class BottomNavFragment extends BaseFragment implements View.OnClickListener {
+public class BottomNavFragment extends BaseFragment {
 
     public static final String TAB_POSTION = "pos";
     public static final String TAB_SCROLL = "scroll";
@@ -94,7 +103,6 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
 
     @OnClick({R.id.nav_item_pub, R.id.nav_item_news, R.id.nav_item_tweet,
             R.id.nav_item_discover, R.id.nav_item_me})
-    @Override
     public void onClick(View view) {
         if (view instanceof NavigationItem) {
             NavItemSelect((NavigationItem) view);
@@ -160,12 +168,16 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
 
 
     private void PubItemClick() {
+        ActivitySwitcher.switchTo(getActivity(), PubActivity.class);
+        getActivity().overridePendingTransition(0, 0);
     }
 
-    public void setup(Context context, FragmentManager manager, int main_container_id, Bundle state) {
+
+
+    public void setup(Context context, FragmentManager manager, int content_id, Bundle state) {
         mContext = context;
         mFragmentManager = manager;
-        mContainerId = main_container_id;
+        mContainerId = content_id;
 
 
         if (state != null) {
@@ -188,14 +200,6 @@ public class BottomNavFragment extends BaseFragment implements View.OnClickListe
 //        }
     }
 
-
-    public void setup(Context context, FragmentManager manager, int main_container_id) {
-        mContext = context;
-        mFragmentManager = manager;
-        mContainerId = main_container_id;
-
-        NavItemSelect(mNavItemList.get(0));
-    }
 
     public int getPostion() {
         return mNavItemList.indexOf(mCurrentNavItem);

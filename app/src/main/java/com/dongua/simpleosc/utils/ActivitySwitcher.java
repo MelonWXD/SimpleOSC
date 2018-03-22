@@ -17,16 +17,22 @@ import android.os.Bundle;
 public class ActivitySwitcher {
 
 
-    public static void switchTo(Activity activity,
-                                Class<? extends Activity> cls) {
+    public static void switchTo(Activity activity, Class<? extends Activity> cls) {
+        switchTo(activity, cls, false);
+    }
+
+    public static void switchTo(Activity activity, Class<? extends Activity> cls, boolean isFinish) {
         Intent intent = new Intent(activity, cls);
         activity.startActivity(intent);
-        activity.finish();
+        if (isFinish)
+            activity.finish();
     }
+
     public static void switchTo(Activity activity,
-                                Class<? extends Activity> cls, Bundle bundle ) {
-        switchTo(activity,cls,bundle,false);
+                                Class<? extends Activity> cls, Bundle bundle) {
+        switchTo(activity, cls, bundle, false);
     }
+
     public static void switchTo(Activity activity,
                                 Class<? extends Activity> cls, Bundle bundle, boolean isFinish) {
         Intent intent = new Intent(activity, cls);

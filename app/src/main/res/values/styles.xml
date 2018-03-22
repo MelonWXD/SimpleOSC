@@ -8,6 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Transparent.NoActionBar" parent="Theme.Design.Light.NoActionBar">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!--<item name="windowEnterAnimation">@null</item>-->
+        <!--<item name="windowExitAnimation">@null</item>-->
+        <!--<item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>-->
+
+    </style>
 
     <style name="BottomNavItem">
         <item name="android:layout_width">0dp</item>
@@ -57,5 +65,12 @@
         <item name="android:textSize">@dimen/font_12</item>
 
     </style>
+
+
+    <style name="popup_window_anim" parent="@android:style/Animation">
+        <!--<item name="android:windowEnterAnimation">@anim/push_scale_left_in</item>-->
+        <!--<item name="android:windowExitAnimation">@anim/push_scale_left_out</item>-->
+    </style>
+
 
 </resources>

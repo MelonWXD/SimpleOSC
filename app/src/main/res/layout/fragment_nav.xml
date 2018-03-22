@@ -16,7 +16,7 @@
         style="@style/BottomNavItem"
         android:padding="2dp"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_nav_add_actived" />
+        android:src="@drawable/ic_nav_add_selector" />
 
     <com.dongua.simpleosc.ui.nav.NavigationItem
         android:id="@+id/nav_item_discover"

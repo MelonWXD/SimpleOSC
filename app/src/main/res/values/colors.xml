@@ -24,7 +24,21 @@
     <color name="text_desc_color">#6a6a6a</color>
     <color name="text_secondary_color">#9d9d9d</color>
 
-
+    <color name="black_alpha_112">#70000000</color>
+    <color name="black_alpha_128">#80000000</color>
+    <color name="black_alpha_144">#90000000</color>
+    <color name="black_alpha_16">#10000000</color>
+    <color name="black_alpha_160">#a0000000</color>
+    <color name="black_alpha_176">#b0000000</color>
+    <color name="black_alpha_192">#c0000000</color>
+    <color name="black_alpha_208">#d0000000</color>
+    <color name="black_alpha_224">#e0000000</color>
+    <color name="black_alpha_240">#f0000000</color>
+    <color name="black_alpha_32">#20000000</color>
+    <color name="black_alpha_48">#30000000</color>
+    <color name="black_alpha_64">#40000000</color>
+    <color name="black_alpha_80">#50000000</color>
+    <color name="black_alpha_96">#60000000</color>
 
     <color name="red50">#fde0dc</color>
     <color name="red100">#f9bdbb</color>

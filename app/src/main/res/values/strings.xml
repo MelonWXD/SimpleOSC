@@ -26,6 +26,9 @@
     <string name="zero">0</string>
 
     <string name="gallery_index">%d/%d</string>
+    <string name="pub_tweet">发动弹</string>
+    <string name="pub_article">投递文章</string>
+    <string name="pub_blog">写博客</string>
 
 
 </resources>

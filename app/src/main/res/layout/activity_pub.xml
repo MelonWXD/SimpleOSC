@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_main"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/black_alpha_176"
+    android:fitsSystemWindows="false"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_pub_tweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/lay_8"
+        android:paddingTop="@dimen/lay_8">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/lay_4"
+            android:layout_marginTop="@dimen/lay_4"
+            android:background="@drawable/bg_pub"
+            android:paddingBottom="2.0dip"
+            android:paddingLeft="@dimen/lay_8"
+            android:paddingRight="@dimen/lay_8"
+            android:paddingTop="2.0dip"
+            android:text="@string/pub_tweet"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_12" />
+
+        <FrameLayout
+            android:layout_width="48.0dip"
+            android:layout_height="48.0dip"
+            android:background="@drawable/bg_pub_tweet">
+
+            <ImageView
+                android:layout_width="30.0dip"
+                android:layout_height="30.0dip"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_new_tweet"
+                android:tint="@color/white" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pub_article"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/lay_8"
+        android:paddingTop="@dimen/lay_8">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/lay_4"
+            android:layout_marginTop="@dimen/lay_4"
+            android:background="@drawable/bg_pub"
+            android:paddingBottom="2.0dip"
+            android:paddingLeft="@dimen/lay_8"
+            android:paddingRight="@dimen/lay_8"
+            android:paddingTop="2.0dip"
+            android:text="@string/pub_article"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_12" />
+
+        <FrameLayout
+            android:layout_width="48.0dip"
+            android:layout_height="48.0dip"
+            android:background="@drawable/bg_pub_article">
+
+            <ImageView
+                android:layout_width="30.0dip"
+                android:layout_height="30.0dip"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_new_article"
+                android:tint="@color/white" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_pub_blog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/lay_8"
+        android:paddingTop="@dimen/lay_8">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/lay_4"
+            android:layout_marginTop="@dimen/lay_4"
+            android:background="@drawable/bg_pub"
+            android:paddingBottom="2.0dip"
+            android:paddingLeft="@dimen/lay_8"
+            android:paddingRight="@dimen/lay_8"
+            android:paddingTop="2.0dip"
+            android:text="@string/pub_blog"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_12" />
+
+        <FrameLayout
+            android:layout_width="48.0dip"
+            android:layout_height="48.0dip"
+            android:background="@drawable/bg_pub_blog">
+
+            <ImageView
+                android:layout_width="30.0dip"
+                android:layout_height="30.0dip"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_new_blog"
+                android:tint="@color/white" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btn_pub"
+        android:layout_height="@dimen/lay_48"
+        android:layout_width="@dimen/lay_48"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:padding="2dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_nav_add_actived" />
+
+</RelativeLayout>
+
+
