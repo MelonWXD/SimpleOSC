@@ -14,7 +14,7 @@ import com.dongua.simpleosc.ui.news.SubFragment;
 import java.util.List;
 
 /**
- * Created by duoyi on 17-12-13.
+ * Created by Leiws on 17-12-13.
  */
 
 public abstract class BaseRecyclerAdapter<T extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<T> implements View.OnClickListener, View.OnLongClickListener {

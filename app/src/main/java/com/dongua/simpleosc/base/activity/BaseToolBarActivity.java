@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import com.dongua.simpleosc.R;
 
 /**
- * Created by duoyi on 17-11-25.
+ * Created by Leiws on 17-11-25.
  */
 
 public abstract class BaseToolBarActivity extends BaseActivity {

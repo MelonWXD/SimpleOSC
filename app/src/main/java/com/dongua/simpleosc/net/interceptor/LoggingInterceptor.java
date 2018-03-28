@@ -23,7 +23,7 @@ import static com.dongua.simpleosc.utils.SharedPreferenceUtil.REFRESH_TOKEN;
 
 /**
  * author: Lewis
- * data: On 17-11-24.
+ * date: On 17-11-24.
  */
 
 public class LoggingInterceptor implements Interceptor {

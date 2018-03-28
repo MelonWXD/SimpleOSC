@@ -18,7 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * Created by duoyi on 17-11-18.
+ * Created by Leiws on 17-11-18.
  */
 
 public class DiscoverFragment extends BaseToolBarFragment {

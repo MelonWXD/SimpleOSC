@@ -14,7 +14,7 @@ import com.orhanobut.logger.PrettyFormatStrategy;
 import org.greenrobot.greendao.database.Database;
 
 /**
- * Created by dongua on 17-8-6.
+ * Created by Lewis on 17-8-6.
  */
 
 public class App extends Application {

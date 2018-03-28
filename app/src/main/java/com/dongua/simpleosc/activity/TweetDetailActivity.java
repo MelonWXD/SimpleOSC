@@ -22,7 +22,7 @@ import static com.dongua.simpleosc.ui.tweet.VpTweetFragment.TWEET_USR_ID;
 
 /**
  * author: Lewis
- * data: On 18-2-26.
+ * date: On 18-2-26.
  */
 
 public class TweetDetailActivity extends BaseToolBarActivity {

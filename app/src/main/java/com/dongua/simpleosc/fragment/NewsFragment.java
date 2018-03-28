@@ -24,7 +24,7 @@ import static com.dongua.simpleosc.bean.NewsTab.TYPE_NEWS;
 import static com.dongua.simpleosc.bean.NewsTab.TYPE_POST;
 
 /**
- * Created by duoyi on 17-11-18.
+ * Created by Leiws on 17-11-18.
  */
 
 public class NewsFragment extends BaseViewPagerFragment {

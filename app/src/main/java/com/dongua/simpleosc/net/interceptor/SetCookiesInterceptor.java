@@ -13,7 +13,7 @@ import okhttp3.Response;
 import static com.dongua.simpleosc.utils.SharedPreferenceUtil.PREF_COOKIE;
 
 /**
- * Created by duoyi on 17-11-24.
+ * Created by Leiws on 17-11-24.
  */
 
 public class SetCookiesInterceptor implements Interceptor {

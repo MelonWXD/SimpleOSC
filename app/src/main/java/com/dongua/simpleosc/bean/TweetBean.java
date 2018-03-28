@@ -10,7 +10,7 @@ import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * author: Lewis
- * data: On 18-1-22.
+ * date: On 18-1-22.
  */
 @Entity
 public class TweetBean implements Parcelable{

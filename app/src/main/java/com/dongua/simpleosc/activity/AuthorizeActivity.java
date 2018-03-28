@@ -24,7 +24,7 @@ import static com.dongua.simpleosc.LaunchActivity.CODE_KEY;
 import static com.dongua.simpleosc.net.RetrofitClient.*;
 
 /**
- * Created by duoyi on 17-11-24.
+ * Created by Leiws on 17-11-24.
  */
 
 public class AuthorizeActivity extends BaseActivity {

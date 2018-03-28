@@ -35,7 +35,7 @@ import static com.dongua.simpleosc.utils.Util.dateFormat;
 
 /**
  * author: Lewis
- * data: On 18-1-22.
+ * date: On 18-1-22.
  */
 
 public class VpTweetFragment extends BaseRecyclerFragment<TweetBean> implements TweetContract.View {

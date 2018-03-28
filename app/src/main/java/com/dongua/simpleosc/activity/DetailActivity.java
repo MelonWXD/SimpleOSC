@@ -38,7 +38,7 @@ import okhttp3.ResponseBody;
 
 
 /**
- * Created by duoyi on 17-12-23.
+ * Created by Leiws on 17-12-23.
  */
 
 public class DetailActivity extends BaseToolBarActivity implements View.OnClickListener {

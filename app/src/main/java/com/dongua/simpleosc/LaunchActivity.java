@@ -33,7 +33,7 @@ import static com.dongua.simpleosc.utils.SharedPreferenceUtil.REFRESH_TOKEN;
 import static com.dongua.simpleosc.utils.SharedPreferenceUtil.TOKEN_EXPIRE;
 
 /**
- * Created by duoyi on 17-11-24.
+ * Created by Leiws on 17-11-24.
  */
 
 public class LaunchActivity extends BaseActivity {

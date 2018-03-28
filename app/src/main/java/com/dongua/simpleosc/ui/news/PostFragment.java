@@ -35,7 +35,7 @@ import static com.dongua.simpleosc.fragment.MeFragment.DEFAULT_AVATAR;
 import static com.dongua.simpleosc.utils.Util.dateFormat;
 
 /**
- * Created by duoyi on 17-11-27.
+ * Created by Leiws on 17-11-27.
  */
 
 public class PostFragment extends BaseRecyclerFragment<PostBean> implements NewsContract.View<PostBean> {

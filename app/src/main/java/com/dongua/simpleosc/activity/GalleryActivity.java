@@ -38,7 +38,7 @@ import static com.dongua.simpleosc.ui.tweet.VpTweetFragment.SUDOKU_URLS;
 
 /**
  * author: Lewis
- * data: On 18-2-24.
+ * date: On 18-2-24.
  */
 
 public class GalleryActivity extends BaseActivity {

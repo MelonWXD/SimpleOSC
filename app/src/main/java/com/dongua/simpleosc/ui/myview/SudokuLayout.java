@@ -26,7 +26,7 @@ import java.util.List;
 
 /**
  * author: Lewis
- * data: On 18-2-1.
+ * date: On 18-2-1.
  */
 
 public class SudokuLayout extends ViewGroup implements View.OnClickListener {

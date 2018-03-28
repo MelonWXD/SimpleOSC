@@ -29,7 +29,7 @@ import static com.dongua.simpleosc.utils.Util.str2Date;
 
 /**
  * author: Lewis
- * data: On 18-1-23.
+ * date: On 18-1-23.
  */
 
 public class TweetModel implements TweetContract.Model {

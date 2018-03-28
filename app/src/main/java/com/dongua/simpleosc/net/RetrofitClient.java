@@ -25,7 +25,7 @@ import static com.dongua.simpleosc.utils.SharedPreferenceUtil.TOKEN_EXPIRE;
 
 
 /**
- * Created by duoyi on 17-11-22.
+ * Created by Leiws on 17-11-22.
  */
 
 public class RetrofitClient {

@@ -25,7 +25,7 @@ import butterknife.BindView;
 
 
 /**
- * Created by duoyi on 17-11-27.
+ * Created by Leiws on 17-11-27.
  */
 
 public abstract class BaseRecyclerFragment<T extends Parcelable> extends BaseFragment {

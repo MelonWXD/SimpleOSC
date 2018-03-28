@@ -17,7 +17,7 @@ import com.orhanobut.logger.Logger;
 import java.util.Locale;
 
 /**
- * Created by duoyi on 17-12-11.
+ * Created by Leiws on 17-12-11.
  */
 
 public class LoadMoreView extends View {

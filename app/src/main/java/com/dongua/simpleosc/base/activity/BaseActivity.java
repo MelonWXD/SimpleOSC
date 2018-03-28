@@ -24,7 +24,7 @@ import butterknife.Unbinder;
 import static com.dongua.simpleosc.utils.Util.isMIUI;
 
 /**
- * Created by duoyi on 17-11-15.
+ * Created by Leiws on 17-11-15.
  */
 
 public abstract class BaseActivity extends AppCompatActivity {

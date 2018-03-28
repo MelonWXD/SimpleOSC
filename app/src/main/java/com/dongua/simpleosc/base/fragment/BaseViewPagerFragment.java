@@ -3,7 +3,7 @@ package com.dongua.simpleosc.base.fragment;
 import android.support.v7.widget.Toolbar;
 
 /**
- * Created by duoyi on 17-11-20.
+ * Created by Leiws on 17-11-20.
  */
 
 public abstract class BaseViewPagerFragment extends BaseToolBarFragment {

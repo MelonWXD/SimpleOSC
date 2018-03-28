@@ -23,7 +23,7 @@ import java.util.Random;
 
 /**
  * author: Lewis
- * data: On 18-1-25.
+ * date: On 18-1-25.
  */
 
 public class NameImageView extends AppCompatImageView {

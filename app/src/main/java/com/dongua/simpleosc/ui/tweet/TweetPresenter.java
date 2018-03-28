@@ -10,7 +10,7 @@ import static com.dongua.simpleosc.ui.tweet.VpTweetFragment.TYPE_MINE;
 
 /**
  * author: Lewis
- * data: On 18-1-23.
+ * date: On 18-1-23.
  */
 
 public class TweetPresenter implements TweetContract.Presenter, TweetContract.OnRequestListener {

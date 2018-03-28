@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.dongua.simpleosc.AppManager;
 
 /**
- * Created by duoyi on 17-11-25.
+ * Created by Leiws on 17-11-25.
  */
 
 public class UIUtil {

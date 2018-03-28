@@ -7,7 +7,7 @@ import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * author: Lewis
- * data: On 18-1-25.
+ * date: On 18-1-25.
  */
 @Entity
 public class UserBean {

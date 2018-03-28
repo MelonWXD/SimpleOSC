@@ -1,7 +1,7 @@
 package com.dongua.simpleosc;
 
 /**
- * Created by dongua on 17-8-17.
+ * Created by Lewis on 17-8-17.
  */
 
 import android.app.Activity;

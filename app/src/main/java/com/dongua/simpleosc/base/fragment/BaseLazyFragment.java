@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 
 /**
- * Created by duoyi on 17-12-29.
+ * Created by Leiws on 17-12-29.
  */
 
 public abstract class BaseLazyFragment extends BaseFragment {

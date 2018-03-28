@@ -33,7 +33,7 @@ import static com.dongua.simpleosc.bean.NewsTab.TYPE_POST;
 import static com.dongua.simpleosc.utils.Util.str2Date;
 
 /**
- * Created by duoyi on 17-12-20.
+ * Created by Leiws on 17-12-20.
  */
 
 public class NewsModel<T> implements NewsContract.Model<T> {

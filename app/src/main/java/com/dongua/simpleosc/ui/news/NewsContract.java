@@ -7,7 +7,7 @@ import com.dongua.simpleosc.bean.SubBean;
 import java.util.List;
 
 /**
- * Created by duoyi on 17-12-8.
+ * Created by Leiws on 17-12-8.
  */
 
 public interface NewsContract {

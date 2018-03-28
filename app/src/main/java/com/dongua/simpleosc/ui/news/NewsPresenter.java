@@ -3,7 +3,7 @@ package com.dongua.simpleosc.ui.news;
 import java.util.List;
 
 /**
- * Created by duoyi on 17-12-20.
+ * Created by Leiws on 17-12-20.
  */
 
 public class NewsPresenter<T> implements NewsContract.Presenter,NewsContract.OnRequestListener<T> {

@@ -24,7 +24,7 @@ import butterknife.OnClick;
 
 /**
  * author: Lewis
- * data: On 18-3-21.
+ * date: On 18-3-21.
  */
 
 public class PubActivity extends BaseActivity {

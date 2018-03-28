@@ -26,7 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.ResponseBody;
 
 /**
- * Created by duoyi on 17-11-18.
+ * Created by Leiws on 17-11-18.
  */
 
 public class MeFragment extends BaseFragment {

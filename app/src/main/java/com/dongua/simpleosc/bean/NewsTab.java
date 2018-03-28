@@ -3,7 +3,7 @@ package com.dongua.simpleosc.bean;
 import java.io.Serializable;
 
 /**
- * Created by duoyi on 17-11-27.
+ * Created by Leiws on 17-11-27.
  */
 
 public class NewsTab implements Serializable {

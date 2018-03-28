@@ -34,7 +34,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * Created by duoyi on 17-11-18.
+ * Created by Leiws on 17-11-18.
  */
 
 public class BottomNavFragment extends BaseFragment {

@@ -19,7 +19,7 @@ import static com.dongua.simpleosc.utils.SharedPreferenceUtil.ACCESS_TOKEN;
 import static com.dongua.simpleosc.utils.SharedPreferenceUtil.REFRESH_TOKEN;
 
 /**
- * Created by duoyi on 17-12-18.
+ * Created by Leiws on 17-12-18.
  */
 
 public abstract class BaseObserver<T> implements Observer<T> {
