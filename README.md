@@ -12,5 +12,5 @@
 
 # todo   
 每个用户的详情页  
-tweet用户最新发送问题:Latest和Mine数据库id冲突  
+ 
 retrofit gson 手动解析  
